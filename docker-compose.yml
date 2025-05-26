@@ -19,6 +19,8 @@ services:
       - "3001:3001"
     networks:
       - essaybox-network
+    env_file:
+      - server/.env
     depends_on:
       - db
   db:
