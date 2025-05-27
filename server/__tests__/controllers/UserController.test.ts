@@ -49,5 +49,61 @@ describe("UserController", () => {
             })
             expect(prisma.user.create).toHaveBeenCalled()
         })
+
+        test("should throw an error if a field was not provided", async () => {
+            const mockUser = {
+                email: "",
+                password: "password123"
+            };
+
+            await expect(UserController.registerUser(mockUser.email, mockUser.password))
+            .rejects.toThrow("Email or password have not been provided")
+            expect(prisma.user.create).not.toHaveBeenCalled()
+        })
+
+        test("should throw an error if a user with such email address already exists", async () => {
+            const mockUser = {
+                email: "test@123.com",
+                password: "password123"
+            };
+
+            argon2.hash.mockResolvedValue("hashed-pass")
+            prisma.user.findUnique.mockResolvedValue({
+                id: 1,
+                email: "test@123.com",
+                password: "test123",
+                name: "test",
+                verified: false,
+                isAdmin: false,
+                createdAt: new Date(),
+                updatedAt: new Date()
+            })
+
+            await expect(UserController.registerUser(mockUser.email, mockUser.password))
+            .rejects.toThrow("User with this email already exists")
+            expect(prisma.user.create).not.toHaveBeenCalled()
+        })
+
+        test("should throw an error if a field provided only consists of whitespace", async () => {
+            const mockUser = {
+                email: "  ",
+                password: "password123"
+            };
+
+            await expect(UserController.registerUser(mockUser.email, mockUser.password))
+            .rejects.toThrow("Email or password have not been provided")
+            expect(prisma.user.create).not.toHaveBeenCalled()
+        })
+        
+        test("should throw an error if the provided password is too short", async () => {
+            const mockUser = {
+                email: "test@123.com",
+                password: "passwor"
+            };
+
+            await expect(UserController.registerUser(mockUser.email, mockUser.password))
+            .rejects.toThrow("Password is shorter than 8 characters")
+            expect(prisma.user.create).not.toHaveBeenCalled()
+        })
     })
 })

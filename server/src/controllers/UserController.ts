@@ -16,11 +16,11 @@ export class UserController {
             throw new Error("User with this email already exists")
         }
 
-        const pass = await argon2.hash(password)
+        const pass = await argon2.hash(password.trim())
 
         user = await prisma.user.create({
             data: {
-                email,
+                email: email.trim(),
                 password: pass,
                 name: email.split('@')[0]
             }
