@@ -1,0 +1,52 @@
+import passport from "passport"
+import { Strategy as GoogleStrategy } from "passport-google-oauth20"
+import prisma from "../../prisma/PrismaClient"
+import { randomBytes } from "crypto"
+import type { User } from "../generated/prisma"
+
+passport.use(
+    new GoogleStrategy(
+        {
+            clientID: process.env.GOOGLE_CLIENT_ID!,
+            clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
+            callbackURL: "/auth/google/callback"
+        },
+        async (accessToken, refreshToken, profile, done) => {
+            try {
+                const email = profile.emails?.[0].value
+                if (!email) {
+                    return done(new Error("No email found."), false)
+                }
+
+                let user = await prisma.user.findFirst({ where: { email } })
+                if (!user) {
+                    user = await prisma.user.create({
+                        data: {
+                            email,
+                            name: email.split('@')[0],
+                            password: randomBytes(32).toString(),
+                            verified: true
+                        }
+                    })
+                }
+
+                return done(null, user)
+            } catch(error) {
+                return done(error, false)
+            }
+        }
+    )
+)
+
+passport.serializeUser((user: any, done) => {
+    done(null, user.id)
+})
+
+passport.deserializeUser(async (obj: User, done) => {
+    try {
+        const user = await prisma.user.findUnique({ where: { id: obj.id } })
+        done(null, user || false)
+    } catch(error) {
+        return done(error, false)
+    }
+})
