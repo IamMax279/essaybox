@@ -17,7 +17,7 @@ app.use(express.json())
 app.use(passport.initialize())
 app.use(passport.session())
 
-//route handlers
+// route handlers
 app.use(userRouter)
 
 const PORT = process.env.PORT || 3001

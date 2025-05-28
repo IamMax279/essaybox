@@ -1,5 +1,4 @@
 import { Request, Response, Router } from "express";
-import { RestResponse } from "../types/ResponseTypes";
 import { UserController } from "../controllers/UserController";
 
 const userRouter = Router()
