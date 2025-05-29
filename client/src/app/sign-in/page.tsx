@@ -8,9 +8,12 @@ import { SiGoogle } from "react-icons/si";
 import BigButton from "@/components/BigButton"
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa"
 import { useState } from "react"
+import { useRouter } from "next/navigation"
 
 export default function SignIn() {
     const [secure, setSecure] = useState<boolean>(true)
+
+    const router = useRouter()
 
     const formik = useFormik({
         initialValues: {
@@ -37,7 +40,8 @@ export default function SignIn() {
                 </h2>
                 <div className="flex flex-row items-center py-2 px-3 mt-4 rounded-2xl border border-gray-300
                 sm:w-[344px] w-[248px] justify-center cursor-pointer hover:brightness-90 bg-white transition
-                duration-200 sm:space-x-0 space-x-1">
+                duration-200 sm:space-x-0 space-x-1"
+                onClick={() => window.location.href = "/api/auth/google"}>
                     <SiGoogle size={24} className="mr-2"/>
                     <p className="text-base font-heming">
                         Kontynuuj z Google
@@ -103,10 +107,11 @@ export default function SignIn() {
             </form>
             <div className="flex flex-row space-x-1 mt-4">
                 <p>
-                    Masz już konto?
+                    Nie masz konta?
                 </p>
-                <p className="text-bigbutton cursor-pointer hover:brightness-110 transition duration-200">
-                    Zaloguj się
+                <p className="text-bigbutton cursor-pointer hover:brightness-110 transition duration-200"
+                onClick={() => router.push('/sign-up')}>
+                    Zarejestruj się
                 </p>
             </div>
         </div>
