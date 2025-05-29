@@ -7,7 +7,7 @@ export class UserController {
         if (!email.trim() || !password.trim()) {
             throw new Error("Email or password have not been provided")
         }
-        if(password.trim().length < 8) {
+        if (password.trim().length < 8) {
             throw new Error("Password is shorter than 8 characters")
         }
 
@@ -29,6 +29,31 @@ export class UserController {
         return {
             success: true,
             message: "User created successfully"
+        }
+    }
+
+    static async signIn(email: string, password: string): Promise<RestResponse> {
+        if (!email.trim() || !password.trim()) {
+            throw new Error("Email or password have not been provided")
+        }
+
+        let user = await prisma.user.findUnique({ where: { email } })
+        if (!user) {
+            throw new Error("An account with this email address does not exist")
+        }
+
+        if (!user.verified) {
+            throw new Error("This account is not verified")
+        }
+
+        const areSame = await argon2.verify(user.password, password)
+        if (!areSame) {
+            throw new Error("Passwords don't match")
+        }
+
+        return {
+            success: true,
+            message: "User signed in successfully"
         }
     }
 }
