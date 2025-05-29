@@ -17,7 +17,7 @@ jobs:
           node-version: '20'
       
       - name: install deps
-        run: npm ci
+        run: npm install
         working-directory: ./server
 
       - name: run tests
