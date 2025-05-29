@@ -39,12 +39,16 @@ passport.use(
 )
 
 passport.serializeUser((user: any, done) => {
-    done(null, user.id)
+    let id = user.id
+    if(typeof id === 'bigint') {
+        id = id.toString()
+    }
+    done(null, id)
 })
 
-passport.deserializeUser(async (obj: User, done) => {
+passport.deserializeUser(async (id: string, done) => {
     try {
-        const user = await prisma.user.findUnique({ where: { id: obj.id } })
+        const user = await prisma.user.findUnique({ where: { id: BigInt(id) } })
         done(null, user || false)
     } catch(error) {
         return done(error, false)
