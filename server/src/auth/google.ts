@@ -2,7 +2,6 @@ import passport from "passport"
 import { Strategy as GoogleStrategy } from "passport-google-oauth20"
 import prisma from "../../prisma/PrismaClient"
 import { randomBytes } from "crypto"
-import type { User } from "../generated/prisma"
 
 passport.use(
     new GoogleStrategy(
@@ -24,8 +23,9 @@ passport.use(
                         data: {
                             email,
                             name: email.split('@')[0],
-                            password: randomBytes(32).toString(),
-                            verified: true
+                            password: randomBytes(32).toString("hex"),
+                            verified: true,
+                            provider: "google"
                         }
                     })
                 }
