@@ -9,12 +9,27 @@ import Logo from "../../../public/Logo.svg"
 import { SiGoogle } from "react-icons/si"
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa"
 import { useRouter } from "next/navigation"
+import { useMutation } from "@tanstack/react-query"
 import axios from "axios"
 
 export default function SignUp() {
     const [secure, setSecure] = useState<boolean>(true)
+    const [registerError, setRegisterError] = useState<string | null>(null)
 
     const router = useRouter()
+
+    const { mutate: handleRegister } = useMutation({
+        mutationFn: async ({ email, password }: { email: string, password: string }) => {
+            setRegisterError(null)
+            await axios.post("/api/auth/register", { email, password })
+        },
+        onSuccess: (data) => {
+            router.push("/sign-in")
+        },
+        onError: (error: any) => {
+            setRegisterError(error.response?.data.message || error.message)
+        }
+    })
 
     const formik = useFormik({
         initialValues: {
@@ -22,7 +37,7 @@ export default function SignUp() {
             password: ""
         },
         validationSchema: signUpSchema,
-        onSubmit: () => {}
+        onSubmit: (values) => handleRegister({ email: values.email, password: values.password })
     })
 
     return (
@@ -100,10 +115,14 @@ export default function SignUp() {
                         }
                     </div>
                 </div>
+                {registerError &&
+                <p className="flex self-center text-red-500 -mb-1 mt-2 text-center">
+                    {registerError}
+                </p>
+                }
                 <BigButton
                 text="Dalej"
                 width="sm:w-[344px] w-[248px]"
-                onPress={() => {}}
                 className="mt-4"/>
             </form>
             <div className="flex flex-row space-x-1 mt-4">

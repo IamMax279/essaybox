@@ -9,11 +9,27 @@ import BigButton from "@/components/BigButton"
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa"
 import { useState } from "react"
 import { useRouter } from "next/navigation"
+import { useMutation } from "@tanstack/react-query"
+import axios from "axios"
 
 export default function SignIn() {
     const [secure, setSecure] = useState<boolean>(true)
+    const [signInError, setSignInError] = useState<string | null>(null)
 
     const router = useRouter()
+
+        const { mutate: handleSignIn } = useMutation({
+        mutationFn: async ({ email, password }: { email: string, password: string }) => {
+            setSignInError(null)
+            await axios.post("/api/auth/sign-in", { email, password })
+        },
+        onSuccess: (data) => {
+            router.push("/")
+        },
+        onError: (error: any) => {
+            setSignInError(error.response?.data.message || error.message)
+        }
+    })
 
     const formik = useFormik({
         initialValues: {
@@ -21,7 +37,7 @@ export default function SignIn() {
             password: ""
         },
         validationSchema: signinSchema,
-        onSubmit: () => {}
+        onSubmit: (values) => handleSignIn({ email: values.email, password: values.password })
     })
 
     return (
@@ -99,6 +115,11 @@ export default function SignIn() {
                         }
                     </div>
                 </div>
+                {signInError &&
+                <p className="flex self-center text-red-500 -mb-1 mt-2 text-center">
+                    {signInError}
+                </p>
+                }
                 <BigButton
                 text="Dalej"
                 width="sm:w-[344px] w-[248px]"
