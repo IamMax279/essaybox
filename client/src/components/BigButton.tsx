@@ -1,6 +1,6 @@
 interface Props {
     width: string
-    onPress: () => void
+    onPress?: () => void
     text: string
     className?: string
 }
