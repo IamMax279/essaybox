@@ -1,5 +1,6 @@
 import { Request, Response, Router } from "express";
 import { UserController } from "../controllers/UserController";
+import prisma from "../../prisma/PrismaClient";
 
 const userRouter = Router()
 
@@ -32,7 +33,21 @@ const signIn = async (req: Request, res: Response): Promise<any> => {
     try {
         const { email, password } = req.body
         const result = await UserController.signIn(email, password)
-        return res.status(200).json(result)
+
+        const user = await prisma.user.findUnique({ where: { email } })
+        if (!user) {
+            throw new Error("Konto powiązane z tym adresem e-mail nie istnieje")
+        }
+
+        req.login(user, (err) => {
+            if (err) {
+                return res.status(500).json({
+                    success: false,
+                    message: "Session creation failed"
+                })
+            }
+            return res.status(200).json(result)
+        })
     } catch (error) {
         if (error instanceof Error && (
             error.message.includes("nie zostały podane") ||
