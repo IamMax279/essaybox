@@ -21,7 +21,12 @@ export default function SignIn() {
         const { mutate: handleSignIn, isPending } = useMutation({
         mutationFn: async ({ email, password }: { email: string, password: string }) => {
             setSignInError(null)
-            await axios.post("/api/auth/sign-in", { email, password })
+            // await axios.post("/api/auth/sign-in", { email, password })
+            await axios.post(
+                `${process.env.NEXT_PUBLIC_SERVER_URL}/user/sign-in`,
+                { email, password },
+                { withCredentials: true }
+            )
         },
         onSuccess: (data) => {
             router.push("/")
