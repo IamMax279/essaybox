@@ -18,7 +18,7 @@ export default function SignIn() {
 
     const router = useRouter()
 
-        const { mutate: handleSignIn } = useMutation({
+        const { mutate: handleSignIn, isPending } = useMutation({
         mutationFn: async ({ email, password }: { email: string, password: string }) => {
             setSignInError(null)
             await axios.post("/api/auth/sign-in", { email, password })
@@ -124,7 +124,10 @@ export default function SignIn() {
                 text="Dalej"
                 width="sm:w-[344px] w-[248px]"
                 onPress={() => {}}
-                className="mt-4"/>
+                className="mt-4"
+                loading={isPending}
+                type="submit"
+                />
             </form>
             <div className="flex flex-row space-x-1 mt-4">
                 <p>
