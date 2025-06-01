@@ -40,7 +40,7 @@ passport.use(
 
 passport.serializeUser((user: any, done) => {
     let id = user.id
-    if(typeof id === 'bigint') {
+    if (typeof id === 'bigint') {
         id = id.toString()
     }
     done(null, id)

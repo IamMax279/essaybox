@@ -10,6 +10,15 @@ jest.mock("../../prisma/PrismaClient", () => ({
     }
 }))
 
+jest.mock("../../src/services/EmailService", () => ({
+    EmailService: {
+        sendVerificationEmail: jest.fn().mockResolvedValue({
+            success: true,
+            message: "Email sent successfully"
+        })
+    }
+}))
+
 jest.mock("argon2", () => ({
     hash: jest.fn()
 }))
@@ -57,7 +66,7 @@ describe("UserController", () => {
             };
 
             await expect(UserController.registerUser(mockUser.email, mockUser.password))
-            .rejects.toThrow("Email or password have not been provided")
+            .rejects.toThrow("Email lub hasło nie zostały podane")
             expect(prisma.user.create).not.toHaveBeenCalled()
         })
 
@@ -80,7 +89,7 @@ describe("UserController", () => {
             })
 
             await expect(UserController.registerUser(mockUser.email, mockUser.password))
-            .rejects.toThrow("User with this email already exists")
+            .rejects.toThrow("Konto powiązane z tym adresem e-mail już istnieje")
             expect(prisma.user.create).not.toHaveBeenCalled()
         })
 
@@ -91,7 +100,7 @@ describe("UserController", () => {
             };
 
             await expect(UserController.registerUser(mockUser.email, mockUser.password))
-            .rejects.toThrow("Email or password have not been provided")
+            .rejects.toThrow("Email lub hasło nie zostały podane")
             expect(prisma.user.create).not.toHaveBeenCalled()
         })
         
@@ -102,7 +111,7 @@ describe("UserController", () => {
             };
 
             await expect(UserController.registerUser(mockUser.email, mockUser.password))
-            .rejects.toThrow("Password is shorter than 8 characters")
+            .rejects.toThrow("Hasło jest krótsze niż 8 znaków")
             expect(prisma.user.create).not.toHaveBeenCalled()
         })
     })
