@@ -29,7 +29,7 @@ export default function SignIn() {
             )
         },
         onSuccess: (data) => {
-            router.push("/")
+            router.push("/nowy")
         },
         onError: (error: any) => {
             setSignInError(error.response?.data.message || error.message)
