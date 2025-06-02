@@ -46,7 +46,7 @@ h2 {
   font-family: "Heming Variable", sans-serif;
 }
 
-p, input {
+p, input, textarea {
   font-family: "Outfit", sans-serif;
   font-style: normal;
 }
