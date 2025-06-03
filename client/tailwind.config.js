@@ -28,6 +28,9 @@ module.exports = {
       },
       colors: {
         bigbutton: '#1157a6'
+      },
+      screens: {
+        smll: '500px'
       }
     },
   },
