@@ -9,6 +9,6 @@ const password = yup.string()
 .min(8, "Zbyt krótkie hasło")
 
 export const signinSchema = yup.object().shape({
-    email: email,
-    password: password
+    email,
+    password
 })
