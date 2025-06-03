@@ -9,9 +9,12 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.0",
     "@heroui/modal": "^2.2.16",
     "@heroui/system": "^2.4.15",
     "@heroui/theme": "^2.4.15",
+    "@mui/material": "^7.1.1",
     "@nextui-org/button": "^2.2.9",
     "@nextui-org/system": "^2.4.6",
     "@nextui-org/theme": "^2.4.5",
