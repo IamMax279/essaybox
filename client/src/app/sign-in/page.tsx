@@ -125,11 +125,16 @@ export default function SignIn() {
                     {signInError}
                 </p>
                 }
+                <p className="text-bigbutton cursor-pointer hover:brightness-110 transition duration-200
+                flex self-center mt-2"
+                onClick={() => router.push('/forgot-password')}>
+                    Nie pamiętam hasła
+                </p>
                 <BigButton
                 text="Dalej"
                 width="sm:w-[344px] w-[248px]"
                 onPress={() => {}}
-                className="mt-4"
+                className="mt-3"
                 loading={isPending}
                 type="submit"
                 />
