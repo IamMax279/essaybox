@@ -58,7 +58,6 @@ export default function ChatLayout({ children }: { children: ReactNode }) {
                     onClick={() => setClicked(false)}/>
                 </div>
             </aside>
-
             {clicked && (
             <div
             className="fixed inset-0 bg-black/40 z-40 md:hidden transition-opacity duration-300"
@@ -66,7 +65,6 @@ export default function ChatLayout({ children }: { children: ReactNode }) {
             aria-label="Close menu overlay"
             />
             )}
-
             <main className="w-full">
                 {children}
             </main>
