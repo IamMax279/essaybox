@@ -86,4 +86,41 @@ export class UserController {
             message: "User verified successfully"
         }
     }
+
+    static async changePassword(password: string, token: string): Promise<RestResponse> {
+        if (!password.trim()) {
+            throw new Error("Hasło nie zostało podane")
+        }
+        if (password.length < 8) {
+            throw new Error("Hasło jest krótsze niż 8 znaków")
+        }
+        if (!token) {
+            throw new Error("Token nie został podany")
+        }
+        
+        const user = await prisma.user.findFirst({
+            where: {
+                passwordToken: token,
+                passwordTokenExpiry: { gt: new Date() }
+            }
+        })
+        if (!user) {
+            throw new Error("Nieprawidłowy lub wygasły token")
+        }
+
+        const hashed = await argon2.hash(password)
+        await prisma.user.update({
+            where: { id: user.id },
+            data: {
+                password: hashed,
+                passwordToken: null,
+                passwordTokenExpiry: null
+            }
+        })
+
+        return {
+            success: true,
+            message: "Hasło zostało zmienione"
+        }
+    }
 }
