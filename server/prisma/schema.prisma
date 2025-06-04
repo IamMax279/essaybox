@@ -25,6 +25,8 @@ model User {
   isAdmin Boolean @default(false)
   provider String @default("local")
   token String?
+  passwordToken String?
+  passwordTokenExpiry DateTime?
 
   @@map("users")
 }
