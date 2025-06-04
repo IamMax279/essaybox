@@ -1,13 +1,13 @@
 interface PromptProps {
-    topic: string
-    a1?: string
-    a2?: string
-    p1?: string
-    p2?: string
-    k1?: string
-    k2?: string
-    wordsLower: number
-    wordsUpper: number
+  topic: string
+  a1?: string
+  a2?: string
+  p1?: string
+  p2?: string
+  k1?: string
+  k2?: string
+  wordsLower: number
+  wordsUpper: number
 }
 
 export const p = ({ topic, wordsLower, wordsUpper }: PromptProps) => {

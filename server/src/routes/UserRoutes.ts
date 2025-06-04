@@ -1,6 +1,7 @@
 import { Request, Response, Router } from "express";
 import { UserController } from "../controllers/UserController";
 import prisma from "../../prisma/PrismaClient";
+import { EmailService } from "../services/EmailService";
 
 const userRouter = Router()
 
@@ -92,6 +93,74 @@ const verifyUser = async (req: Request, res: Response): Promise<any> => {
     }
 }
 
+const sendPasswordResetEmail = async (req: Request, res: Response): Promise<any> => {
+    try {
+        const { email } = req.body
+        const result = await EmailService.sendPasswordChangeEmail(email)
+        return res.status(200).json(result)
+    } catch (error) {
+        if (error instanceof Error && (
+            error.message.includes("Konto powiązane") ||
+            error.message.includes("przez Google") ||
+            error.message.includes("Coś poszło nie tak") ||
+            error.message.includes("Link do zmiany hasła")
+        )) {
+            return res.status(400).json({
+                success: false,
+                message: error.message
+            });
+        }
+
+        return res.status(500).json({
+            success: false,
+            message: "Internal server error"
+        });
+    }
+}
+
+const changePassword = async (req: Request, res: Response): Promise<any> => {
+    try {
+        const { password, token } = req.body
+        const result = await UserController.changePassword(password, token)
+        return res.status(200).json(result)
+    } catch (error) {
+        if (error instanceof Error && (
+            error.message.includes("Hasło nie") ||
+            error.message.includes("Hasło jest krótsze") ||
+            error.message.includes("Token nie został") ||
+            error.message.includes("Nieprawidłowy lub")
+        )) {
+            return res.status(400).json({
+                success: false,
+                message: error.message
+            });
+        }
+
+        return res.status(500).json({
+            success: false,
+            message: "Internal server error"
+        });
+    }
+}
+
+const logout = (req: Request, res: Response) => {
+    req.logOut?.((err) => {
+        if (err) {
+            return res.status(500).json({ success: false, message: "Logout failed" })
+        }
+
+        req.session.destroy(() => {
+            res.clearCookie('connect.sid', {
+                path: '/',
+                httpOnly: true,
+                secure: process.env.NODE_ENV === "production",
+                sameSite: "lax"
+            })
+            res.status(200).json({ success: true })
+        })
+    })
+}
+
 userRouter.post(
     '/user/register',
     registerUser
@@ -103,6 +172,18 @@ userRouter.post(
 userRouter.post(
     '/user/verify',
     verifyUser
+)
+userRouter.post(
+    '/user/forgot-password',
+    sendPasswordResetEmail
+)
+userRouter.post(
+    '/user/change-password',
+    changePassword
+)
+userRouter.post(
+    '/user/logout',
+    logout
 )
 
 export default userRouter
