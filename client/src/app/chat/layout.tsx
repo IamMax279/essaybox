@@ -12,7 +12,7 @@ export default function ChatLayout({ children }: { children: ReactNode }) {
     const [clicked, setClicked] = useState<boolean>(false)
 
     return (
-        <div className="h-screen flex flex-row bg-[#1E1E1E]">
+        <div className="flex flex-row bg-[#1E1E1E]">
             <aside className="w-72 border-r border-r-neutral-700 md:flex md:flex-col bg-[#141414]
             hidden">
                 <div className="flex flex-row self-center space-x-2 items-center p-4">
@@ -65,7 +65,7 @@ export default function ChatLayout({ children }: { children: ReactNode }) {
             aria-label="Close menu overlay"
             />
             )}
-            <main className="w-full">
+            <main className="w-full ">
                 {children}
             </main>
         </div>

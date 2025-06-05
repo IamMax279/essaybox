@@ -4,7 +4,7 @@ module.exports = {
   content: [
     "./src/**/*.{js,ts,jsx,tsx}",
     "./src/app/**/*.{js,ts,jsx,tsx}",
-    "./node_modules/@heroui/theme/dist/components/modal.js"
+    "./node_modules/@heroui/theme/dist/components/(dropdown|modal|menu|divider|popover|button|ripple|spinner).js"
   ],
   theme: {
     extend: {
@@ -27,7 +27,8 @@ module.exports = {
         ]
       },
       colors: {
-        bigbutton: '#1157a6'
+        bigbutton: '#1157a6',
+        dropdown: '#207ADF'
       },
       screens: {
         smll: '500px'
