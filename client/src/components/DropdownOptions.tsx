@@ -20,13 +20,22 @@ interface Props {
     mainItem: string
     textStyles?: string
     buttonStyles?: string
+    onChange?: (key: string) => void
 }
 
-export default function DropdownOptions({ text, className, items, mainItem, textStyles, buttonStyles }: Props) {
+export default function DropdownOptions({ text, className, items, mainItem, textStyles, buttonStyles, onChange }: Props) {
     const [selected, setSelected] = useState<any>(new Set([mainItem]))
 
     const selectedKey = Array.from(selected)[0] // tu i tak tylko 1 element
     const selectedValue = items.find(item => item.key === selectedKey)?.value ?? "";
+
+    const handleSelectionChange = (keys: any) => {
+        setSelected(keys)
+        const key = Array.from(keys)[0]
+        if (onChange) {
+            onChange(key as string)
+        }
+    }
 
     return (
         <div className={`inline-flex flex-row items-center rounded-xl h-10 bg-[#2A2A2A]
@@ -40,7 +49,7 @@ export default function DropdownOptions({ text, className, items, mainItem, text
                     <Button
                     variant="flat"
                     className={`capitalize text-white rounded-xl bg-dropdown font-outfit
-                    text-lg
+                    text-lg 
                     ${buttonStyles ? buttonStyles : ""}`}
                     >
                     {selectedValue}
@@ -52,7 +61,7 @@ export default function DropdownOptions({ text, className, items, mainItem, text
                     selectedKeys={selected}
                     selectionMode="single"
                     variant="flat"
-                    onSelectionChange={setSelected}
+                    onSelectionChange={handleSelectionChange}
                 >
                     {items.map((item) => (
                         <DropdownItem
