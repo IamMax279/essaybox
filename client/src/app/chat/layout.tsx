@@ -4,7 +4,7 @@ import { ReactNode } from "react";
 import Image from "next/image";
 import LogoWhite from "../../../public/LogoWhite.svg"
 import LogoWordsWhite from "../../../public/LogoWordsWhite.svg"
-import { FaBars, FaCross } from "react-icons/fa";
+import { FaBars } from "react-icons/fa";
 import { RxCross2 } from "react-icons/rx"
 import { useState } from "react";
 
@@ -13,8 +13,8 @@ export default function ChatLayout({ children }: { children: ReactNode }) {
 
     return (
         <div className="flex flex-row bg-[#1E1E1E]">
-            <aside className="w-72 border-r border-r-neutral-700 md:flex md:flex-col bg-[#141414]
-            hidden">
+            <aside className="hidden sdbr:fixed sdbr:top-0 sdbr:left-0 sdbr:h-full sdbr:w-64 sdbr:flex
+            sdbr:flex-col border-r border-r-neutral-700 bg-[#141414] z-30">
                 <div className="flex flex-row self-center space-x-2 items-center p-4">
                     <Image
                     src={LogoWhite}
@@ -31,7 +31,7 @@ export default function ChatLayout({ children }: { children: ReactNode }) {
                     />
                 </div>
             </aside>
-            <div className="md:hidden absolute top-8 left-5 z-50">
+            <div className="sdbr:hidden absolute top-8 left-5 z-50">
                 <FaBars
                 className={`${clicked ? "hidden" : "visible"} cursor-pointer text-gray-200 hover:brightness-75
                 transition ease-in-out duration-200`}
@@ -65,7 +65,7 @@ export default function ChatLayout({ children }: { children: ReactNode }) {
             aria-label="Close menu overlay"
             />
             )}
-            <main className="w-full ">
+            <main className="w-full sdbr:ml-64 h-screen overflow-y-auto scrollbar-thumb-gray-500 scrollbar-track-[#3b3b3b] scrollbar-thin">
                 {children}
             </main>
         </div>

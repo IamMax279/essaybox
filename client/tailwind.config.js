@@ -31,7 +31,9 @@ module.exports = {
         dropdown: '#207ADF'
       },
       screens: {
-        smll: '500px'
+        smll: '500px',
+        mxl: '1408px',
+        sdbr: '790px'
       }
     },
   },
