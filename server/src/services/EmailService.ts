@@ -1,5 +1,5 @@
 import { Resend } from "resend";
-import { RestResponse } from "../types/ResponseTypes";
+import { RestResponse } from "../../../@types";
 import { randomBytes } from "crypto";
 import prisma from "../../prisma/PrismaClient";
 

@@ -1,4 +1,5 @@
-import { Request, Response, Router } from "express";
+import { Router } from "express";
+import type { Request, Response } from "express";
 import { UserController } from "../controllers/UserController";
 import prisma from "../../prisma/PrismaClient";
 import { EmailService } from "../services/EmailService";
