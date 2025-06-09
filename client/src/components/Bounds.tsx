@@ -8,9 +8,10 @@ interface Props {
     className?: string
     min: 200 | 300 | 400
     max: 500 | 600 | 700
+    error: boolean
 }
 
-export default function Bounds({ upper, lower, onUpperChange, onLowerChange, className, min, max }: Props) {
+export default function Bounds({ upper, lower, onUpperChange, onLowerChange, className, min, max, error }: Props) {
     return (
         <div className={`flex flex-col
         ${className ? className : ""}`}
@@ -25,7 +26,7 @@ export default function Bounds({ upper, lower, onUpperChange, onLowerChange, cla
                 type="number"
                 className="text-white w-32"
                 size="md"
-                color={(lower > upper || (typeof lower === 'number' && lower < min)) ? "danger" : "primary"}
+                color={(lower > upper || (typeof lower === 'number' && lower < min) || error) ? "danger" : "primary"}
                 value={lower === "" ? "" : String(lower)}
                 onChange={(e) => onLowerChange(e.target.value)}
                 />
@@ -35,11 +36,16 @@ export default function Bounds({ upper, lower, onUpperChange, onLowerChange, cla
                 type="number"
                 className="text-white w-32"
                 size="md"
-                color={(upper < lower || (typeof upper === 'number' && upper > max)) ? "danger" : "primary"}
+                color={(upper < lower || (typeof upper === 'number' && upper > max) || error) ? "danger" : "primary"}
                 value={upper === "" ? "" : String(upper)}
                 onChange={(e) => onUpperChange(e.target.value)}
                 />
             </div>
+            {error &&
+            <p className="text-red-500 mt-1">
+                Nieprawidłowy zakres.
+            </p>
+            }
         </div>
     )
 }
