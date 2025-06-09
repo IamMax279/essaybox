@@ -6,6 +6,7 @@ import cors from "cors";
 import "./auth/google"
 import userRouter from "./routes/UserRoutes";
 import authRouter from "./routes/AuthRoutes";
+import aiRouter from "./routes/AIRoutes";
 
 dotenv.config()
 const app = express()
@@ -33,6 +34,7 @@ app.use(passport.session())
 // route handlers
 app.use(userRouter)
 app.use(authRouter)
+app.use(aiRouter)
 
 const PORT = process.env.PORT || 3001
 app.listen(PORT)
