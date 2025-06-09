@@ -35,7 +35,7 @@ export default function ResetPassword() {
                 throw new Error("Wystąpił błąd. Upewnij się, że korzystasz z linka wysłanego na adres e-mail.")
             }
 
-            await axios.post("/api/auth/reset-password", {
+            return await axios.post("/api/auth/reset-password", {
                 password, token
             })
         },

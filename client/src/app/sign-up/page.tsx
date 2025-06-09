@@ -29,7 +29,7 @@ export default function SignUp() {
     const { mutate: handleRegister, isPending } = useMutation({
         mutationFn: async ({ email, password }: { email: string, password: string }) => {
             setRegisterError(null)
-            await axios.post("/api/auth/register", { email, password })
+            return await axios.post("/api/auth/register", { email, password })
         },
         onSuccess: (data) => {
             setSuccess(true)
