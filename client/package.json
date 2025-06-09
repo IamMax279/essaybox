@@ -12,6 +12,7 @@
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.0",
     "@heroui/dropdown": "^2.3.20",
+    "@heroui/input": "^2.4.20",
     "@heroui/modal": "^2.2.16",
     "@heroui/system": "^2.4.16",
     "@heroui/theme": "^2.4.16",
