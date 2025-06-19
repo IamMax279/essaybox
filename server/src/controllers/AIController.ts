@@ -4,7 +4,8 @@ import { OpenAI } from "openai"
 
 export class AIController {
     private static openai = new OpenAI({
-        apiKey: process.env.OPENAI_API_KEY
+        apiKey: process.env.DEEPSEEK_API_KEY,
+        baseURL: "https://api.deepseek.com"
     })
 
     static async generateEssay(data: GenerationParams): Promise<AIResponse> {
@@ -14,21 +15,33 @@ export class AIController {
 
         const prompt = p({
             topic: data.topic,
+            thesis: data.thesisType === 'wlasna' ? data.thesis : undefined,
             wordsLower: data.lowerBound,
             wordsUpper: data.upperBound,
-            parasAmount: data.parasAmount
+            parasAmount: data.parasAmount,
+            parasData: data.parasData
         })
 
         const completion = await this.openai.chat.completions.create({
-            model: 'gpt-3.5-turbo',
+            model: 'deepseek-chat',
             messages: [
-                { role: "user", content: prompt }
+                {
+                    role: "system",
+                    content: "Jesteś nauczycielem języka polskiego. ZAWSZE generuj rozprawki dokładnie według podanej struktury. Nie pomijaj żadnego punktu."
+                },
+                {
+                    role: "user",
+                    content: prompt
+                }
             ]
         })
-        const essay = completion.choices[0].message.content
+        let essay = completion.choices[0].message.content?.replace(/[*#]/g, "")
         if (!essay) {
             throw new Error("Coś poszło nie tak przy generowaniu rozprawki")
         }
+
+        const words = essay.trim().split(/\s+/).filter(Boolean).length;
+        essay += `\n\n(${words} słów)`
 
         return {
             success: true,
