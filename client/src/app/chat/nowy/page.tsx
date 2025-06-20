@@ -18,10 +18,10 @@ export default function Nowy() {
     const [customTeza, setCustomTeza] = useState<string>("")
     const [parasAmount, setParasAmount] = useState<number>(2)
     const [lowerBound, setLowerBound] = useState<number | "">(300)
-    const [upperBound, setUpperBound] = useState<number | "">(350)
+    const [upperBound, setUpperBound] = useState<number | "">(400)
     const [paragraphs, setParagraphs] = useState<ParagraphData[]>([
-        { id: uuidv4(), argument: "ai_generated", customArgument: "", przyklad: "zakres_podstawowy", customPrzyklad: "", kontekst: "literacki", customKontekst: "" },
-        { id: uuidv4(), argument: "ai_generated", customArgument: "", przyklad: "zakres_podstawowy", customPrzyklad: "", kontekst: "literacki", customKontekst: "" }
+        { id: uuidv4(), argument: "ai_generated", customArgument: "", przyklad: "ai_generated", customPrzyklad: "", kontekst: "ai_generated", customKontekst: "" },
+        { id: uuidv4(), argument: "ai_generated", customArgument: "", przyklad: "ai_generated", customPrzyklad: "", kontekst: "ai_generated", customKontekst: "" }
     ])
     const [topicError, setTopicError] = useState<boolean>(false)
     const [minmaxError, setMinmaxError] = useState<boolean>(false)
@@ -53,9 +53,9 @@ export default function Nowy() {
                         id: uuidv4(),
                         argument: "ai_generated",
                         customArgument: "",
-                        przyklad: "zakres_podstawowy",
+                        przyklad: "ai_generated",
                         customPrzyklad: "",
-                        kontekst: "literacki",
+                        kontekst: "ai_generated",
                         customKontekst: ""
                     })
                 ]

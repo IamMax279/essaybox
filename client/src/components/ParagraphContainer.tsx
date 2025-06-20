@@ -36,7 +36,13 @@ export default function ParagraphContainer({ order, className, values, onChange 
                 mainItem={values.argument}
                 textStyles="px-4"
                 buttonStyles="sm:w-[182px] w-[162px]"
-                onChange={key => onChange({ argument: key })}
+                onChange={key => {
+                    if (values.argument === "wlasny" && key === "ai_generated") {
+                        onChange({ argument: key, customArgument: "" })
+                    } else {
+                        onChange({ argument: key })
+                    }
+                }}
                 />
                 {values.argument === "wlasny" && (
                 <input
@@ -52,16 +58,21 @@ export default function ParagraphContainer({ order, className, values, onChange 
                 text="Przykład"
                 className='mt-5 bg-[#3B3B3B]'
                 items={Array.of(
-                    { key: "zakres_podstawowy", value: "Zakres Podstawowy" },
-                    { key: "zakres_rozszerzony", value: "Zakres Rozszerzony" },
-                    { key: "inne", value: "Inne" }
+                    { key: "ai_generated", value: "AI Generated" },
+                    { key: "wlasny", value: "Własny" }
                 )}
                 mainItem={values.przyklad}
                 textStyles="px-4"
                 buttonStyles="sm:w-[192px] w-[172px]"
-                onChange={key => onChange({ przyklad: key })}
+                onChange={key => {
+                    if (values.przyklad === "wlasny" && key === "ai_generated") {
+                        onChange({ przyklad: key, customPrzyklad: "" })
+                    } else {
+                        onChange({ przyklad: key })
+                    }
+                }}
                 />
-                {values.przyklad === "inne" && (
+                {values.przyklad === "wlasny" && (
                 <input
                 type="text"
                 className="mt-2 p-2 bg-[#3b3b3b] text-white rounded-lg
@@ -75,23 +86,26 @@ export default function ParagraphContainer({ order, className, values, onChange 
                 text="Kontekst"
                 className={`${values.kontekst !== "wlasny" ? "my-5" : "mt-5"} bg-[#3B3B3B] `}
                 items={Array.of(
-                    { key: "literacki", value: "Literacki" },
-                    { key: "historyczny", value: "Historyczny" },
-                    { key: "biograficzny", value: "Biograficzny" },
-                    { key: "filozoficzny", value: "Filozoficzny" },
+                    { key: "ai_generated", value: "AI Generated" },
                     { key: "wlasny", value: "Własny" }
                 )}
                 mainItem={values.kontekst}
                 textStyles="px-4"
                 buttonStyles="sm:w-[192px] w-[172px]"
-                onChange={key => onChange({ kontekst: key })}
+                onChange={key => {
+                    if (values.kontekst === "wlasny" && key != "wlasny") {
+                        onChange({ kontekst: key, customKontekst: "" })
+                    } else {
+                        onChange({ kontekst: key })
+                    }
+                }}
                 />
                 {values.kontekst === "wlasny" && (
                 <input
                 type="text"
                 className="mt-2 mb-5 p-2 bg-[#3b3b3b] text-white rounded-lg
                 outline-none sm:w-[286px] w-[266px]"
-                placeholder="Wpisz tytuł utworu..."
+                placeholder="np. utwór, wydarzenie historyczne itp."
                 value={values.customKontekst || ""}
                 onChange={e => onChange({ customKontekst: e.target.value })}
                 />
