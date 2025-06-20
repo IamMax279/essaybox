@@ -26,34 +26,6 @@ export const p = ({
     `).join('\n')
   }
 
-  let przyklady = ""
-  if (parasData && parasData.length) {
-    przyklady = parasData.map((para, idx) => `
-      ${para.przyklad === 'zakres_podstawowy'
-        ?
-        `UWAGA! W ${idx+1} akapicie odwołaj się do lektury z zakresu podstawowego.`
-        :
-        para.przyklad === 'zakres_rozszerzony'
-        ?
-        `UWAGA! W ${idx+1} akapicie odwołaj się do lektury z zakresu rozszerzonego.`
-        :
-        undefined
-        }
-    `).join('\n')
-  }
-
-  let konteksty = ""
-  if (parasData && parasData.length) {
-    konteksty = parasData.map((para, idx) => `
-      ${para.kontekst === 'literacki' || para.kontekst === 'historyczny' || para.kontekst === 'biograficzny' || para.kontekst === 'filozoficzny'
-        ?
-        `UWAGA! W ${idx+1} akapicie zastosuj kontekst ${para.kontekst}`
-        :
-        undefined
-        }
-    `).join('\n')
-  }
-
   return `Napisz rozprawkę na temat: "${topic}". Ma mieć od ${wordsLower} do ${wordsUpper} słów i trzymać się ściśle poniższej struktury:
 
 ---
@@ -64,16 +36,8 @@ export const p = ({
 - Przedstaw wyraźne stanowisko (2-3 zdania) wobec tematu, ${thesis ? `korzystając z tej tezy: ${thesis}` : "formułując jednozdaniową tezę. Nie pisz ogólników — teza powinna zawierać konkretne stanowisko."}
 
 2. Rozwinięcie – ${parasAmount === 1 ? "1 akapit. MUSI być w tej kolejności:" : `${parasAmount} akapity. Każdy z nich MUSI być w tej kolejności:`}
-a) Argument jako pierwsze zdanie – jasne, logiczne, jednozdaniowe stwierdzenie głównej myśli akapitu.
-b) Przykład z lektury obowiązkowej - zastosuj się do tego:
-Ma on zawierać 3-4 zdania w których przywołana jest konkretna sytuacja z wybranej lektury, A NIE OGÓLNA OCENA SYTUACJI DANEJ POSTACI.
-c) Kontekst literacki, filozoficzny lub biograficzny powiązany z przykładem – również z poziomu podstawowego. Ma on zawierać 3-4 zdania w których przywołana jest konkretna sytuacja z wybranej lektury innej
-innej niż tej, w której odwołałeś się w przykładzie (kontekst - dodatkowe informacje, odniesienia lub przykłady, które pomagają zrozumieć i interpretować omawiany temat, wzbogacają argumentację oraz pogłębiają analizę).
-d) Wniosek częściowy – dwa zdania podsumowujące sens akapitu.
-
-${przyklady ? `Zastosuj się do podanych kontekstów: ${przyklady}`: ""}
-${konteksty ? `Zastosuj się do podanych kontekstów: ${konteksty}`: ""}
-
+1. Argument jako pierwsze zdanie – jasne, logiczne, jednozdaniowe stwierdzenie głównej myśli akapitu.
+2. Przykład z lektury obowiązkowej z zakresu podstawowego - 
 Zakres podstawowy:
 Biblia, w tym fragmenty Księgi Rodzaju, Księgi Hioba, Księgi Koheleta, Księgi Psalmów,
 Apokalipsy św. Jana
@@ -109,25 +73,11 @@ Ignacy Krasicki, bajki
 Adam Mickiewicz, Dziady cz. II, Pan Tadeusz (księgi: I, II, IV, X, XI, XII)
 Aleksander Fredro, Zemsta
 Juliusz Słowacki, Balladyna
-),
-Zakres rozszerzony:
-Homer, Odyseja (fragmenty)
-Dante Alighieri, Boska Komedia (fragmenty)
-Jan Kochanowski, Treny (jako cykl poetycki)
-William Szekspir, Hamlet
-Juliusz Słowacki, Kordian
-realistyczna lub naturalistyczna powieść europejska (Honoré de Balzac, Ojciec Goriot
-ub Charles Dickens, Klub Pickwicka, lub Mikołaj Gogol, Martwe dusze, lub Gustaw
-Flaubert, Pani Bovary)
-Franz Kafka, Proces (fragmenty)
-Michaił Bułhakow, Mistrz i Małgorzata
-Stanisław Ignacy Witkiewicz, Szewcy
-Bruno Schulz, wybrane opowiadania z tomu Sklepy cynamonowe
-Tadeusz Konwicki, Mała Apokalipsa
-Janusz Głowacki, Antygona w Nowym Jorku
-Sławomir Mrożek, wybrane opowiadanie
-wybrany esej Gustawa Herlinga-Grudzińskiego, Zbigniewa Herberta
-.
+Ma on zawierać 3-4 zdania w których przywołana jest konkretna sytuacja z wybranej lektury, A NIE OGÓLNA OCENA SYTUACJI DANEJ POSTACI.
+Podawaj wyłącznie fakty zgodne z lekturami szkolnymi.
+3. Kontekst literacki, filozoficzny lub biograficzny powiązany z przykładem – ma on zawierać 3-4 zdania w których przywołana jest konkretna sytuacja z wybranej lektury, wydarzenia historycznego lub przesłanie filozofii
+(kontekst - dodatkowe informacje, odniesienia lub przykłady, które pomagają zrozumieć i interpretować omawiany temat, wzbogacają argumentację oraz pogłębiają analizę).
+4. Wniosek częściowy – dwa zdania podsumowujące sens akapitu.
 
 Uwaga: Każdy akapit MUSI zaczynać się od argumentu — to warunek konieczny.
 
@@ -139,7 +89,6 @@ Uwaga: Każdy akapit MUSI zaczynać się od argumentu — to warunek konieczny.
 ---
 
 WAŻNE:
-- Używaj wyłącznie lektur z zakresu podstawowego szkoły średniej. Nie korzystaj z przypadkowych dzieł.
 - Unikaj zbyt ogólnych sformułowań. Wszystko ma być rzeczowe i konkretne.
 - Nie używaj symboli typu * lub #
 
@@ -159,10 +108,18 @@ Obie relacje – Soni z Raskolnikowem i Jezusa z Marią Magdaleną – pokazują
 Akapit 2)
 Relacja z drugą osobą może też prowadzić do cierpienia i rozczarowania, ale mimo to kształtuje dojrzałość emocjonalną człowieka.
 W Lalce Bolesława Prusa relacja Stanisława Wokulskiego z Izabelą Łęcką wywarła ogromny wpływ na jego życie. Zakochany bezgranicznie w arystokratce, idealizował ją i podporządkował jej swoje działania. Gdy odkrył jej płytkość i brak uczuć, przeżył głębokie rozczarowanie. Mimo tego doświadczenia, relacja ta zmusiła go do refleksji nad sensem własnych działań i miejscem w społeczeństwie.
-Kontekstem literackim może być tu Makbet Williama Szekspira – tytułowy bohater pod wpływem żony, Lady Makbet, dokonuje zbrodni, co prowadzi go do szaleństwa i zguby. Ich relacja oparta była na ambicji i manipulacji, co pokazuje, że wpływ drugiej osoby może być także destrukcyjny.
+Podobna sytuacja ma miejsce w Makbecie Williama Szekspira – tytułowy bohater pod wpływem żony, Lady Makbet, dokonuje zbrodni, co prowadzi go do szaleństwa i zguby. Ich relacja oparta była na ambicji i manipulacji, co pokazuje, że wpływ drugiej osoby może być także destrukcyjny.
 Zarówno Wokulski, jak i Makbet, ponoszą konsekwencje relacji, w które się zaangażowali, ale doświadczenia te prowadzą ich do wewnętrznego przełomu, choć o zupełnie różnym charakterze.
 
 Zakończenie)
 Relacja z drugim człowiekiem potrafi kształtować osobowość, wpływać na wybory moralne i emocjonalne dojrzewanie. Teza, że relacje mają ogromny wpływ na rozwój człowieka, została potwierdzona przez losy bohaterów Zbrodni i kary, Lalki oraz Makbeta.
+
+WAŻNE: Argumenty mają być różne - nie powtarzaj argumentu, którego już użyłeś,
+nawet jeśli jest sformułowany innymi słowami.
+WAŻNE: Unikaj fraz typu "Kontekstem może być...", zamiast tego pisz coś w stylu "Podobna sytuacja ukazana jest w..."
+WAŻNE: Nie pisz na końcu ile słów ma rozprawka.
+BARDZO WAŻNE: UWZGLĘDNIAJ JAK NAJWIĘCEJ TREŚCI Z UŻYTYCH LEKTUR (na przykład nazwy postaci). 
+ZADBAJ O TO ABY POJAWIAŁO SIĘ W NICH JAK NAWIĘCEJ IMION BOHATERÓW
+BARDZO WAŻNE: UPEWNIJ SIĘ, ŻE ROZRPAWKA MA OD ${wordsLower} DO ${wordsUpper} SŁÓW.
 `;
 };
