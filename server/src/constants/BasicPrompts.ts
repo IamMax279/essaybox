@@ -19,11 +19,36 @@ export const p = ({
   let rozwiniecie = ""
   if (parasData && parasData.length) {
     rozwiniecie = parasData.map((para, idx) => `
-      Akapit ${idx + 1})
+      W AKAPICIE ${idx + 1} I NIGDZIE INDZIEJ UŻYJ:
       ${para.customArgument ? `Argument: ${para.customArgument}` : undefined}
-      ${para.customPrzyklad ? `Przyklad: ${para.customPrzyklad}` : undefined}
+      ${para.customPrzyklad ? `Przykład: ${para.customPrzyklad}` : undefined}
       ${para.customKontekst ? `Kontekst: ${para.customKontekst}` : undefined}
     `).join('\n')
+  }
+
+  let test = ""
+  if (parasData && parasData.length) {
+    test = parasData.map((para, idx) => `
+      W AKAPICE ${idx + 1} ZASTOSUJ:
+      ${para.customArgument ? `UŻYJ ARGUMENTU: ${para.customArgument}` : "NAPISZ ARGUMENT"}
+      ${para.customPrzyklad ? `UŻYJ PRZYKLADU: ${para.customPrzyklad}` : "NAPISZ PRZYKLAD"}
+      ${para.customKontekst ? `UŻYJ KONTEKSTU: ${para.customKontekst}` : "NAPISZ KONTEKSTU"}
+    `)
+    .join('\n')
+  }
+
+  const paragraphs = []
+  if (parasData && parasData.length) {
+    for (let i = 0; i < parasData.length; i++) {
+      const data = parasData[i]
+      const instructions = `
+      W AKAPICIE ${i + 1} ZASTOSUJ:
+      ${data.customArgument ? `UŻYJ ARGUMENTU: ${data.customArgument}` : "NAPISZ ARGUMENT"}
+      ${data.customPrzyklad ? `UŻYJ PRZYKŁADU: ${data.customPrzyklad}` : "NAPISZ PRZYKŁAD"}
+      ${data.customKontekst ? `UŻYJ KONTEKSTU: ${data.customKontekst}` : "NAPISZ KONTEKSTU"}
+      `
+      paragraphs.push(instructions)
+    }
   }
 
   return `Napisz rozprawkę na temat: "${topic}". Ma mieć od ${wordsLower} do ${wordsUpper} słów i trzymać się ściśle poniższej struktury:
@@ -92,8 +117,6 @@ WAŻNE:
 - Unikaj zbyt ogólnych sformułowań. Wszystko ma być rzeczowe i konkretne.
 - Nie używaj symboli typu * lub #
 
-${rozwiniecie ? `Zastosuj się do podanych danych: ${rozwiniecie}` : ""}
-
 Wzoruj się na tej rozprawce:
 📝 Rozprawka: Jak relacja z drugą osobą kształtuje człowieka?
 Wstęp)
@@ -101,13 +124,13 @@ Relacje z innymi ludźmi mają ogromny wpływ na nasze życie, postawy i wybory.
 
 Akapit 1)
 Bliska relacja z drugim człowiekiem może być źródłem przemiany moralnej i duchowej.
-W Zbrodni i karze Fiodora Dostojewskiego kluczową rolę w przemianie głównego bohatera, Rodiona Raskolnikowa, odgrywa Sonia – prosta, wierząca dziewczyna, która mimo własnych dramatów okazuje mu współczucie i zrozumienie. Dzięki relacji z nią Raskolnikow przechodzi od stanu wyobcowania i pychy do pokory i skruchy – to właśnie Sonia staje się przewodnikiem w jego duchowym odrodzeniu. Jej obecność skłania go do przyznania się do winy i odbycia kary, co prowadzi do jego moralnego oczyszczenia.
+W powieści Zbrodnia i kara Fiodora Dostojewskiego taka przemiana dokonuje się pod wpływem relacji między Rodionem Raskolnikowem a Sonią Marmieładową. Sonia, mimo młodego wieku i tragicznej sytuacji życiowej — jest zmuszona do prostytucji, by utrzymać rodzinę — zachowuje wiarę, dobroć i ogromne współczucie dla innych. Kluczowa scena, w której Sonia czyta Raskolnikowowi fragment Ewangelii o cierpieniu i odkupieniu, staje się momentem przełomowym. To właśnie jej obecność, szczera troska i niewzruszona wiara pomagają bohaterowi przełamać pychę i poczucie wyobcowania. Raskolnikow zaczyna rozumieć, że jego teoria o „wyjątkowym człowieku” nie usprawiedliwia zbrodni i że prawdziwa wartość życia tkwi w miłości i pokorze.
 Podobny motyw odnajdujemy w Biblii, w relacji Jezusa z Marią Magdaleną. Choć kobieta była potępiana przez społeczeństwo, Jezus okazał jej akceptację i przebaczenie, co doprowadziło do jej duchowej przemiany. Jego postawa pokazuje, że miłość, wyrozumiałość i bliskość mogą wyzwalać w człowieku dobro i prowadzić go ku lepszej wersji siebie.
 Obie relacje – Soni z Raskolnikowem i Jezusa z Marią Magdaleną – pokazują, że bliskość z drugim człowiekiem może być impulsem do wewnętrznej przemiany i odkrycia prawdziwych wartości.
 
 Akapit 2)
 Relacja z drugą osobą może też prowadzić do cierpienia i rozczarowania, ale mimo to kształtuje dojrzałość emocjonalną człowieka.
-W Lalce Bolesława Prusa relacja Stanisława Wokulskiego z Izabelą Łęcką wywarła ogromny wpływ na jego życie. Zakochany bezgranicznie w arystokratce, idealizował ją i podporządkował jej swoje działania. Gdy odkrył jej płytkość i brak uczuć, przeżył głębokie rozczarowanie. Mimo tego doświadczenia, relacja ta zmusiła go do refleksji nad sensem własnych działań i miejscem w społeczeństwie.
+W Lalce Bolesława Prusa przykład relacji Stanisława Wokulskiego z Izabelą Łęcką doskonale to ilustruje. Wokulski, człowiek ambitny i pełen pasji, zakochuje się bezgranicznie w pięknej arystokratce, która jest jego przeciwieństwem — próżna, powierzchowna i zapatrzona w świat arystokracji. Szczególnie wymowna jest scena, gdy Wokulski, mimo swoich osiągnięć i szczerych uczuć, próbuje zdobyć uznanie Izabeli, a ona traktuje go z lekceważeniem i chłodem. Jego idealizacja Izabeli prowadzi do rozczarowania, gdy dostrzega jej egoizm i brak głębszych uczuć.
 Podobna sytuacja ma miejsce w Makbecie Williama Szekspira – tytułowy bohater pod wpływem żony, Lady Makbet, dokonuje zbrodni, co prowadzi go do szaleństwa i zguby. Ich relacja oparta była na ambicji i manipulacji, co pokazuje, że wpływ drugiej osoby może być także destrukcyjny.
 Zarówno Wokulski, jak i Makbet, ponoszą konsekwencje relacji, w które się zaangażowali, ale doświadczenia te prowadzą ich do wewnętrznego przełomu, choć o zupełnie różnym charakterze.
 
@@ -121,5 +144,8 @@ WAŻNE: Nie pisz na końcu ile słów ma rozprawka.
 BARDZO WAŻNE: UWZGLĘDNIAJ JAK NAJWIĘCEJ TREŚCI Z UŻYTYCH LEKTUR (na przykład nazwy postaci). 
 ZADBAJ O TO ABY POJAWIAŁO SIĘ W NICH JAK NAWIĘCEJ IMION BOHATERÓW
 BARDZO WAŻNE: UPEWNIJ SIĘ, ŻE ROZRPAWKA MA OD ${wordsLower} DO ${wordsUpper} SŁÓW.
+BARDZO WAŻNE: NIE UŻYWAJ DWA RAZY LEKTURY, KTÓREJ JUŻ UŻYŁEŚ
+BARDZO WAŻNE: PRZED GENEROWANIEM KAŻDEGO AKAPITU PRZECZYTAJ JEGO WYTYCZNE:\n${test}\n
+BARDZO WAŻNE: Jeśli zamienisz kolejność lektur lub użyjesz ich w innym akapicie niż wskazano, odpowiedź jest niepoprawna i należy ją napisać od nowa.
 `;
 };
