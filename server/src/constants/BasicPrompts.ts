@@ -43,9 +43,9 @@ export const p = ({
       const data = parasData[i]
       const instructions = `
       W AKAPICIE ${i + 1} ZASTOSUJ:
-      ${data.customArgument ? `UŻYJ ARGUMENTU: ${data.customArgument}` : "NAPISZ ARGUMENT"}
-      ${data.customPrzyklad ? `UŻYJ PRZYKŁADU: ${data.customPrzyklad}` : "NAPISZ PRZYKŁAD"}
-      ${data.customKontekst ? `UŻYJ KONTEKSTU: ${data.customKontekst}` : "NAPISZ KONTEKSTU"}
+      NAJPIERW ${data.customArgument ? `UŻYJ ARGUMENTU: ${data.customArgument}` : "NAPISZ ARGUMENT"}
+      POTEM ${data.customPrzyklad ? `UŻYJ PRZYKŁADU: ${data.customPrzyklad}. NAPISZ 3-4 ZDANIA` : `NAPISZ PRZYKŁAD ${data.customKontekst ? `INNY NIŻ ${data.customKontekst}` : ""}. NAPISZ 3-4 ZDANIA.`}
+      I NA KONIEC ${data.customKontekst ? `UŻYJ KONTEKSTU: ${data.customKontekst}. NAPISZ 3-4 ZDANIA` : "NAPISZ KONTEKST (3-4 ZDANIA)"}
       `
       paragraphs.push(instructions)
     }
@@ -104,6 +104,12 @@ Podawaj wyłącznie fakty zgodne z lekturami szkolnymi.
 (kontekst - dodatkowe informacje, odniesienia lub przykłady, które pomagają zrozumieć i interpretować omawiany temat, wzbogacają argumentację oraz pogłębiają analizę).
 4. Wniosek częściowy – dwa zdania podsumowujące sens akapitu.
 
+UWAGA: KAŻDY AKAPIT MA SKŁADAĆ SIĘ Z POWYŻSZYCH ELEMENTÓW W NASTĘPUJĄCEJ KOLEJNOŚCI:
+- ARGUMENT
+- PRZYKŁAD
+- KONTEKST
+- WNIOSEK CZĘŚCIOWY
+
 Uwaga: Każdy akapit MUSI zaczynać się od argumentu — to warunek konieczny.
 
 ---
@@ -145,7 +151,7 @@ BARDZO WAŻNE: UWZGLĘDNIAJ JAK NAJWIĘCEJ TREŚCI Z UŻYTYCH LEKTUR (na przykł
 ZADBAJ O TO ABY POJAWIAŁO SIĘ W NICH JAK NAWIĘCEJ IMION BOHATERÓW
 BARDZO WAŻNE: UPEWNIJ SIĘ, ŻE ROZRPAWKA MA OD ${wordsLower} DO ${wordsUpper} SŁÓW.
 BARDZO WAŻNE: NIE UŻYWAJ DWA RAZY LEKTURY, KTÓREJ JUŻ UŻYŁEŚ
-BARDZO WAŻNE: PRZED GENEROWANIEM KAŻDEGO AKAPITU PRZECZYTAJ JEGO WYTYCZNE:\n${test}\n
+BARDZO WAŻNE: PRZED GENEROWANIEM KAŻDEGO AKAPITU PRZECZYTAJ JEGO WYTYCZNE:\n${paragraphs}\n
 BARDZO WAŻNE: Jeśli zamienisz kolejność lektur lub użyjesz ich w innym akapicie niż wskazano, odpowiedź jest niepoprawna i należy ją napisać od nowa.
 `;
 };
