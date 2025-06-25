@@ -44,7 +44,7 @@ export const p = ({
       const instructions = `
       W AKAPICIE ${i + 1} ZASTOSUJ:
       NAJPIERW ${data.customArgument ? `UŻYJ ARGUMENTU: ${data.customArgument}` : "NAPISZ ARGUMENT"}
-      POTEM ${data.customPrzyklad ? `UŻYJ PRZYKŁADU: ${data.customPrzyklad}. NAPISZ 3-4 ZDANIA` : `NAPISZ PRZYKŁAD ${data.customKontekst ? `INNY NIŻ ${data.customKontekst}` : ""}. NAPISZ 3-4 ZDANIA.`}
+      POTEM ${data.customPrzyklad ? `UŻYJ PRZYKŁADU: ${data.customPrzyklad}. NAPISZ 3-4 ZDANIA` : `NAPISZ PRZYKŁAD ${data.customKontekst ? `NIE UŻYWAJĄC LEKTURY ${data.customKontekst}` : ""}. NAPISZ 3-4 ZDANIA.`}
       I NA KONIEC ${data.customKontekst ? `UŻYJ KONTEKSTU: ${data.customKontekst}. NAPISZ 3-4 ZDANIA` : "NAPISZ KONTEKST (3-4 ZDANIA)"}
       `
       paragraphs.push(instructions)
@@ -128,20 +128,52 @@ Wzoruj się na tej rozprawce:
 Wstęp)
 Relacje z innymi ludźmi mają ogromny wpływ na nasze życie, postawy i wybory. To dzięki nim uczymy się empatii, odpowiedzialności, a także kształtujemy system wartości. Uważam, że relacja z drugą osobą ma fundamentalne znaczenie w kształtowaniu człowieka – wpływa na jego charakter, decyzje i rozwój wewnętrzny.
 
-Akapit 1)
-Bliska relacja z drugim człowiekiem może być źródłem przemiany moralnej i duchowej.
-W powieści Zbrodnia i kara Fiodora Dostojewskiego taka przemiana dokonuje się pod wpływem relacji między Rodionem Raskolnikowem a Sonią Marmieładową. Sonia, mimo młodego wieku i tragicznej sytuacji życiowej — jest zmuszona do prostytucji, by utrzymać rodzinę — zachowuje wiarę, dobroć i ogromne współczucie dla innych. Kluczowa scena, w której Sonia czyta Raskolnikowowi fragment Ewangelii o cierpieniu i odkupieniu, staje się momentem przełomowym. To właśnie jej obecność, szczera troska i niewzruszona wiara pomagają bohaterowi przełamać pychę i poczucie wyobcowania. Raskolnikow zaczyna rozumieć, że jego teoria o „wyjątkowym człowieku” nie usprawiedliwia zbrodni i że prawdziwa wartość życia tkwi w miłości i pokorze.
-Podobny motyw odnajdujemy w Biblii, w relacji Jezusa z Marią Magdaleną. Choć kobieta była potępiana przez społeczeństwo, Jezus okazał jej akceptację i przebaczenie, co doprowadziło do jej duchowej przemiany. Jego postawa pokazuje, że miłość, wyrozumiałość i bliskość mogą wyzwalać w człowieku dobro i prowadzić go ku lepszej wersji siebie.
-Obie relacje – Soni z Raskolnikowem i Jezusa z Marią Magdaleną – pokazują, że bliskość z drugim człowiekiem może być impulsem do wewnętrznej przemiany i odkrycia prawdziwych wartości.
+${
+  parasData?.length === 1 ?
+  `Akapit 1)
+  Bliska relacja z drugim człowiekiem może być źródłem przemiany moralnej i duchowej.
+  W powieści "Zbrodnia i kara Fiodora" Dostojewskiego taka przemiana dokonuje się pod wpływem relacji między Rodionem Raskolnikowem a Sonią Marmieładową. Sonia, mimo młodego wieku i tragicznej sytuacji życiowej — jest zmuszona do prostytucji, by utrzymać rodzinę — zachowuje wiarę, dobroć i ogromne współczucie dla innych. Kluczowa scena, w której Sonia czyta Raskolnikowowi fragment Ewangelii o cierpieniu i odkupieniu, staje się momentem przełomowym. To właśnie jej obecność, szczera troska i niewzruszona wiara pomagają bohaterowi przełamać pychę i poczucie wyobcowania. Raskolnikow zaczyna rozumieć, że jego teoria o „wyjątkowym człowieku” nie usprawiedliwia zbrodni i że prawdziwa wartość życia tkwi w miłości i pokorze.
+  Podobny motyw odnajdujemy w Biblii, w relacji Jezusa z Marią Magdaleną. Choć kobieta była potępiana przez społeczeństwo, Jezus okazał jej akceptację i przebaczenie, co doprowadziło do jej duchowej przemiany. Jego postawa pokazuje, że miłość, wyrozumiałość i bliskość mogą wyzwalać w człowieku dobro i prowadzić go ku lepszej wersji siebie.
+  Obie relacje – Soni z Raskolnikowem i Jezusa z Marią Magdaleną – pokazują, że bliskość z drugim człowiekiem może być impulsem do wewnętrznej przemiany i odkrycia prawdziwych wartości.
+  `
+  :
+  parasData?.length === 2 ?
+  `
+  Akapit 1)
+  Bliska relacja z drugim człowiekiem może być źródłem przemiany moralnej i duchowej.
+  W powieści "Zbrodnia i kara" Fiodora Dostojewskiego taka przemiana dokonuje się pod wpływem relacji między Rodionem Raskolnikowem a Sonią Marmieładową. Sonia, mimo młodego wieku i tragicznej sytuacji życiowej — jest zmuszona do prostytucji, by utrzymać rodzinę — zachowuje wiarę, dobroć i ogromne współczucie dla innych. Kluczowa scena, w której Sonia czyta Raskolnikowowi fragment Ewangelii o cierpieniu i odkupieniu, staje się momentem przełomowym. To właśnie jej obecność, szczera troska i niewzruszona wiara pomagają bohaterowi przełamać pychę i poczucie wyobcowania. Raskolnikow zaczyna rozumieć, że jego teoria o „wyjątkowym człowieku” nie usprawiedliwia zbrodni i że prawdziwa wartość życia tkwi w miłości i pokorze.
+  Podobny motyw odnajdujemy w Biblii, w relacji Jezusa z Marią Magdaleną. Choć kobieta była potępiana przez społeczeństwo, Jezus okazał jej akceptację i przebaczenie, co doprowadziło do jej duchowej przemiany. Jego postawa pokazuje, że miłość, wyrozumiałość i bliskość mogą wyzwalać w człowieku dobro i prowadzić go ku lepszej wersji siebie.
+  Obie relacje – Soni z Raskolnikowem i Jezusa z Marią Magdaleną – pokazują, że bliskość z drugim człowiekiem może być impulsem do wewnętrznej przemiany i odkrycia prawdziwych wartości.
 
-Akapit 2)
-Relacja z drugą osobą może też prowadzić do cierpienia i rozczarowania, ale mimo to kształtuje dojrzałość emocjonalną człowieka.
-W Lalce Bolesława Prusa przykład relacji Stanisława Wokulskiego z Izabelą Łęcką doskonale to ilustruje. Wokulski, człowiek ambitny i pełen pasji, zakochuje się bezgranicznie w pięknej arystokratce, która jest jego przeciwieństwem — próżna, powierzchowna i zapatrzona w świat arystokracji. Szczególnie wymowna jest scena, gdy Wokulski, mimo swoich osiągnięć i szczerych uczuć, próbuje zdobyć uznanie Izabeli, a ona traktuje go z lekceważeniem i chłodem. Jego idealizacja Izabeli prowadzi do rozczarowania, gdy dostrzega jej egoizm i brak głębszych uczuć.
-Podobna sytuacja ma miejsce w Makbecie Williama Szekspira – tytułowy bohater pod wpływem żony, Lady Makbet, dokonuje zbrodni, co prowadzi go do szaleństwa i zguby. Ich relacja oparta była na ambicji i manipulacji, co pokazuje, że wpływ drugiej osoby może być także destrukcyjny.
-Zarówno Wokulski, jak i Makbet, ponoszą konsekwencje relacji, w które się zaangażowali, ale doświadczenia te prowadzą ich do wewnętrznego przełomu, choć o zupełnie różnym charakterze.
+  Akapit 2)
+  Relacja z drugą osobą może też prowadzić do cierpienia i rozczarowania, ale mimo to kształtuje dojrzałość emocjonalną człowieka.
+  W "Lalce" Bolesława Prusa przykład relacji Stanisława Wokulskiego z Izabelą Łęcką doskonale to ilustruje. Wokulski, człowiek ambitny i pełen pasji, zakochuje się bezgranicznie w pięknej arystokratce, która jest jego przeciwieństwem — próżna, powierzchowna i zapatrzona w świat arystokracji. Szczególnie wymowna jest scena, gdy Wokulski, mimo swoich osiągnięć i szczerych uczuć, próbuje zdobyć uznanie Izabeli, a ona traktuje go z lekceważeniem i chłodem. Jego idealizacja Izabeli prowadzi do rozczarowania, gdy dostrzega jej egoizm i brak głębszych uczuć.
+  Podobna sytuacja ma miejsce w "Makbecie" Williama Szekspira – tytułowy bohater pod wpływem żony, Lady Makbet, dokonuje zbrodni, co prowadzi go do szaleństwa i zguby. Ich relacja oparta była na ambicji i manipulacji, co pokazuje, że wpływ drugiej osoby może być także destrukcyjny.
+  Zarówno Wokulski, jak i Makbet, ponoszą konsekwencje relacji, w które się zaangażowali, ale doświadczenia te prowadzą ich do wewnętrznego przełomu, choć o zupełnie różnym charakterze.
+  `
+  :
+  `
+  Akapit 1)
+  Bliska relacja z drugim człowiekiem może być źródłem przemiany moralnej i duchowej.
+  W powieści "Zbrodnia i kara" Fiodora Dostojewskiego taka przemiana dokonuje się pod wpływem relacji między Rodionem Raskolnikowem a Sonią Marmieładową. Sonia, mimo młodego wieku i tragicznej sytuacji życiowej — jest zmuszona do prostytucji, by utrzymać rodzinę — zachowuje wiarę, dobroć i ogromne współczucie dla innych. Kluczowa scena, w której Sonia czyta Raskolnikowowi fragment Ewangelii o cierpieniu i odkupieniu, staje się momentem przełomowym. To właśnie jej obecność, szczera troska i niewzruszona wiara pomagają bohaterowi przełamać pychę i poczucie wyobcowania. Raskolnikow zaczyna rozumieć, że jego teoria o „wyjątkowym człowieku” nie usprawiedliwia zbrodni i że prawdziwa wartość życia tkwi w miłości i pokorze.
+  Podobny motyw odnajdujemy w Biblii, w relacji Jezusa z Marią Magdaleną. Choć kobieta była potępiana przez społeczeństwo, Jezus okazał jej akceptację i przebaczenie, co doprowadziło do jej duchowej przemiany. Jego postawa pokazuje, że miłość, wyrozumiałość i bliskość mogą wyzwalać w człowieku dobro i prowadzić go ku lepszej wersji siebie.
+  Obie relacje – Soni z Raskolnikowem i Jezusa z Marią Magdaleną – pokazują, że bliskość z drugim człowiekiem może być impulsem do wewnętrznej przemiany i odkrycia prawdziwych wartości.
+
+  Akapit 2)
+  Relacja z drugą osobą może też prowadzić do cierpienia i rozczarowania, ale mimo to kształtuje dojrzałość emocjonalną człowieka.
+  W "Lalce" Bolesława Prusa przykład relacji Stanisława Wokulskiego z Izabelą Łęcką doskonale to ilustruje. Wokulski, człowiek ambitny i pełen pasji, zakochuje się bezgranicznie w pięknej arystokratce, która jest jego przeciwieństwem — próżna, powierzchowna i zapatrzona w świat arystokracji. Szczególnie wymowna jest scena, gdy Wokulski, mimo swoich osiągnięć i szczerych uczuć, próbuje zdobyć uznanie Izabeli, a ona traktuje go z lekceważeniem i chłodem. Jego idealizacja Izabeli prowadzi do rozczarowania, gdy dostrzega jej egoizm i brak głębszych uczuć.
+  Podobna sytuacja ma miejsce w "Makbecie" Williama Szekspira – tytułowy bohater pod wpływem żony, Lady Makbet, dokonuje zbrodni, co prowadzi go do szaleństwa i zguby. Ich relacja oparta była na ambicji i manipulacji, co pokazuje, że wpływ drugiej osoby może być także destrukcyjny.
+  Zarówno Wokulski, jak i Makbet, ponoszą konsekwencje relacji, w które się zaangażowali, ale doświadczenia te prowadzą ich do wewnętrznego przełomu, choć o zupełnie różnym charakterze.
+
+  Akapit 3)
+  Relacje z innymi często wystawiają na próbę nasze wartości i odsłaniają prawdziwą naturę. W "Dżumie" Camusa przyjaźń doktora Rieux z Tarrou pokazuje, jak bliskość z drugim człowiekiem może wzmacniać moralne przekonania. Ich wspólna walka z epidemią i rozmowy o sensie cierpienia utwierdzają Rieux w humanitaryzmie - nawet wobec absurdalnego zła pozostaje wierny idei solidarności.
+  Podobna sytuacja jest ukazana w "Chłopach" Reymonta. Romans Antka i Jagny oraz namiętność, która ich łączy, odsłania najgorsze cechy charakterów: Antek staje się egoistą gotowym do konfliktu z ojcem, a Jagna - uległą wobec własnych pragnień. Ich relacja nie prowadzi do rozwoju, lecz do moralnego upadku, pokazując, jak uczucia mogą zaślepić.
+  Te przykłady dowodzą, że relacje są lustrem, w którym widzimy swoje prawdziwe oblicze. Mogą nas wzmacniać w wartościach lub ujawniać słabości, ale zawsze kształtują naszą tożsamość.
+  `
+}
 
 Zakończenie)
-Relacja z drugim człowiekiem potrafi kształtować osobowość, wpływać na wybory moralne i emocjonalne dojrzewanie. Teza, że relacje mają ogromny wpływ na rozwój człowieka, została potwierdzona przez losy bohaterów Zbrodni i kary, Lalki oraz Makbeta.
+Relacje z innymi ludźmi odgrywają ogromną rolę w naszym życiu – mogą pomóc w zmianie na lepsze, jak w przypadku Raskolnikowa, albo doprowadzić do cierpienia, co pokazują losy Wokulskiego i Makbeta. Dzięki takim doświadczeniom człowiek dojrzewa, uczy się czego unikać, co naprawdę ważne, i zaczyna lepiej rozumieć siebie oraz innych.
 
 WAŻNE: Argumenty mają być różne - nie powtarzaj argumentu, którego już użyłeś,
 nawet jeśli jest sformułowany innymi słowami.
