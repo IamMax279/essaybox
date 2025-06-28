@@ -11,6 +11,7 @@ import { useMutation } from '@tanstack/react-query';
 import axios from 'axios';
 import Bounds from '@/components/Bounds';
 import type { ParagraphData, GenerationParams } from "../../../../../@types"
+import { useTypewriter } from '@/hooks/useTypewriter';
 
 export default function Nowy() {
     const [topic, setTopic] = useState<string>("")
@@ -25,6 +26,10 @@ export default function Nowy() {
     ])
     const [topicError, setTopicError] = useState<boolean>(false)
     const [minmaxError, setMinmaxError] = useState<boolean>(false)
+    const [essay, setEssay] = useState<string | null>(null)
+    const [generated, setGenerated] = useState<boolean>(false)
+
+    const typewriter = useTypewriter(essay ?? "", 50)
 
     const { mutate: handleGeneration, isPending } = useMutation({
         mutationFn: async (data: GenerationParams) => {
@@ -36,6 +41,8 @@ export default function Nowy() {
         },
         onSuccess: (data) => {
             console.log("response:", data)
+            setEssay(data.data.essay)
+            setGenerated(true)
         },
         onError: (error) => {
             console.log("error:", error)
@@ -132,11 +139,11 @@ export default function Nowy() {
         <div>
             <form
             onSubmit={(e) => handleSubmit(e)}
-            className='flex flex-col items-center w-full p-8 min-h-screen'>
+            className={`${generated ? 'hidden' : 'flex'} flex-col items-center w-full p-8 min-h-screen`}>
                 <div className="relative lg:w-[720px] md:w-[520px] w-4/5 min-w-[220px]">
                     <TextareaAutosize
                     className={`resize-none outline-none p-4 rounded-xl w-full bg-[#3b3b3b] text-white
-                    scrollbar-thumb-gray-500 scrollbar-track-[#3b3b3b] scrollbar-thin
+                    scrollbar-thumb-gray-500 scrollbar-track-[#3b3b3b] shadow-[0_2px_10px_0_#121212] scrollbar-thin
                     ${topicError ? "border border-red-500" : ""}`}
                     aria-label="minimum height"
                     minRows={2}
@@ -146,22 +153,22 @@ export default function Nowy() {
                     onChange={(e) => setTopic(e.target.value)}
                     />
                     {!topicError ?
-                    <p className={`absolute right-0 -bottom-5 ${topic.length <= 160 ? "text-[#3b3b3b]" : "text-red-500"}`}>
-                        {topic.length} / 160
+                    <p className={`absolute right-0 -bottom-5 ${topic.length <= 400 ? "text-[#3b3b3b]" : "text-red-500"}`}>
+                        {topic.length} / 400
                     </p>
                     :
                     <>
                         <p className={`absolute left-0 -bottom-5 text-red-500`}>
                             Zbyt krótki temat.
                         </p>
-                        <p className={`absolute right-0 -bottom-5 ${topic.length <= 160 ? "text-[#3b3b3b]" : "text-red-500"}`}>
-                            {topic.length} / 160
+                        <p className={`absolute right-0 -bottom-5 ${topic.length <= 400 ? "text-[#3b3b3b]" : "text-red-500"}`}>
+                            {topic.length} / 400
                         </p>
                     </>
                     }
                 </div>
                 <div className='flex flex-row justify-center items-center mt-8 space-x-4
-                rounded-xl bg-[#2A2A2A] p-5 lg:w-[720px] md:w-[520px] w-4/5 min-w-[220px]'>
+                rounded-xl bg-[#2A2A2A] p-5 lg:w-[720px] md:w-[520px] w-4/5 min-w-[220px] shadow-[0_2px_10px_0_#121212]'>
                     <IoMdInformationCircleOutline
                     color='#3B3B3B'
                     size={36}
@@ -190,7 +197,7 @@ export default function Nowy() {
                 <input
                 type="text"
                 className="mt-4 p-4 bg-[#3b3b3b] text-white lg:w-[720px]
-                md:w-[520px] w-4/5 min-w-[220px] outline-none rounded-lg"
+                md:w-[520px] w-4/5 min-w-[220px] outline-none rounded-lg shadow-[0_2px_10px_0_#121212]"
                 placeholder="Wpisz własną tezę..."
                 value={customTeza}
                 onChange={e => setCustomTeza(e.target.value)}
@@ -268,6 +275,16 @@ export default function Nowy() {
                 loading={isPending}
                 />
             </form>
+            {typewriter &&
+            <div className='flex mx-auto lg:w-[720px] md:w-[520px] w-[70%] min-w-[220px]
+                border border-bigbutton/45 rounded-lg bg-[#141414] my-12'>
+                <div className="font-mono text-base leading-relaxed p-6 w-full min-h-12 
+                whitespace-pre-wrap break-words text-gray-200">
+                    <span className="tracking-wide font-outfit">{typewriter}</span>
+                    <span className="animate-pulse ml-0.5 text-white">|</span>
+                </div>
+            </div>
+            }
         </div>
     )
 }
