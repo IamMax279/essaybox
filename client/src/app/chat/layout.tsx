@@ -65,7 +65,7 @@ export default function ChatLayout({ children }: { children: ReactNode }) {
             aria-label="Close menu overlay"
             />
             )}
-            <main className="w-full sdbr:ml-64 h-screen overflow-y-auto scrollbar-thumb-gray-500 scrollbar-track-[#3b3b3b] scrollbar-thin">
+            <main className="notebook-grid w-full sdbr:ml-64 h-screen overflow-y-auto scrollbar-thumb-gray-500 scrollbar-track-[#3b3b3b] scrollbar-thin">
                 {children}
             </main>
         </div>

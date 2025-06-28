@@ -51,6 +51,12 @@ p, input, textarea {
   font-style: normal;
 }
 
+.notebook-grid {
+  background-image: 
+  repeating-linear-gradient(to right, #252525 0 1px, transparent 1px 23px),
+  repeating-linear-gradient(to bottom, #252525 0 1px, transparent 1px 23px);
+}
+
 input[type="number"]::-webkit-inner-spin-button,
 input[type="number"]::-webkit-outer-spin-button {
   -webkit-appearance: none;
