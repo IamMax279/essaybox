@@ -12,6 +12,8 @@ import axios from 'axios';
 import Bounds from '@/components/Bounds';
 import type { ParagraphData, GenerationParams } from "../../../../../@types"
 import { useTypewriter } from '@/hooks/useTypewriter';
+import Image from 'next/image';
+import Logo from "../../../../public/LogoWhite.svg"
 
 export default function Nowy() {
     const [topic, setTopic] = useState<string>("")
@@ -28,6 +30,7 @@ export default function Nowy() {
     const [minmaxError, setMinmaxError] = useState<boolean>(false)
     const [essay, setEssay] = useState<string | null>(null)
     const [generated, setGenerated] = useState<boolean>(false)
+    const [typewriterDone, setTypewriterDone] = useState<boolean>(false)
 
     const typewriter = useTypewriter(essay ?? "", 50)
 
@@ -112,6 +115,14 @@ export default function Nowy() {
             setMinmaxError(false);
         }
     }, [lowerBound, upperBound, parasAmount])
+
+    useEffect(() => {
+        if (typewriter === (essay ?? "")) {
+            setTypewriterDone(true)
+        } else {
+            setTypewriterDone(false)
+        }
+    }, [essay, typewriter])
 
     const handleMin = () => {
         switch(parasAmount) {
@@ -276,8 +287,14 @@ export default function Nowy() {
                 />
             </form>
             {typewriter &&
-            <div className='flex mx-auto lg:w-[720px] md:w-[520px] w-[70%] min-w-[220px]
-                border border-bigbutton/45 rounded-lg bg-[#141414] my-12'>
+            <div className='relative flex flex-row mx-auto lg:w-[656px] md:w-[420px] w-[70%] min-w-[220px]
+                border border-bigbutton/70 rounded-lg bg-[#141414] my-12'>
+                <Image
+                src={Logo}
+                alt='logo'
+                className={`hidden md:block md:absolute md:top-2 md:-left-[54px] md:w-10 md:h-10
+                ${!typewriterDone ? 'spinning-logo' : ''}`}
+                />
                 <div className="font-mono text-base leading-relaxed p-6 w-full min-h-12 
                 whitespace-pre-wrap break-words text-gray-200">
                     <span className="tracking-wide font-outfit">{typewriter}</span>

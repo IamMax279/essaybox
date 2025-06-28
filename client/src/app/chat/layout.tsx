@@ -35,7 +35,7 @@ export default function ChatLayout({ children }: { children: ReactNode }) {
                 <FaBars
                 className={`${clicked ? "hidden" : "visible"} cursor-pointer text-gray-200 hover:brightness-75
                 transition ease-in-out duration-200`}
-                size={24}
+                size={32}
                 onClick={() => setClicked(true)}/>
             </div>
             <aside 
