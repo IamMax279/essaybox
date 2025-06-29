@@ -41,7 +41,7 @@ export class AIController {
             messages: [
                 {
                     role: "system",
-                    content: `Jesteś nauczycielem języka polskiego. ZAWSZE generuj rozprawki dokładnie według podanej struktury. Nie pomijaj żadnego punktu. Jeśli użytkownik podał w którym miejscu masz odwołać się do danej lektury, odwołuj się do niej TYLKO W TYM MIEJSCU. Używaj każdej lektury tylko raz. ${paragraphs} BARDZO WAŻNE: Jeśli zamienisz kolejność lektur lub użyjesz ich w innym akapicie niż wskazano, odpowiedź jest niepoprawna i należy ją napisać od nowa.`
+                    content: `Jesteś nauczycielem języka polskiego. ZAWSZE generuj rozprawki dokładnie według podanej struktury. Nie pomijaj żadnego punktu. Nie popełniaj błędów rzeczowych i dokładnie sprawdź informacje. Jeśli użytkownik podał w którym miejscu masz odwołać się do danej lektury, odwołuj się do niej TYLKO W TYM MIEJSCU. Używaj każdej lektury tylko raz. ${paragraphs} BARDZO WAŻNE: Jeśli zamienisz kolejność lektur lub użyjesz ich w innym akapicie niż wskazano, odpowiedź jest niepoprawna i należy ją napisać od nowa.`
                 },
                 {
                     role: "user",
