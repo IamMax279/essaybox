@@ -7,6 +7,7 @@ import "./auth/google"
 import userRouter from "./routes/UserRoutes";
 import authRouter from "./routes/AuthRoutes";
 import aiRouter from "./routes/AIRoutes";
+import essayRouter from "./routes/EssayRoutes";
 
 dotenv.config()
 const app = express()
@@ -35,6 +36,7 @@ app.use(passport.session())
 app.use(userRouter)
 app.use(authRouter)
 app.use(aiRouter)
+app.use(essayRouter)
 
 const PORT = process.env.PORT || 3001
 app.listen(PORT)
