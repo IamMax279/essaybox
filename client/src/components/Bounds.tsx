@@ -7,7 +7,7 @@ interface Props {
     onLowerChange: (val: string) => void
     className?: string
     min: 200 | 300 | 400
-    max: 500 | 600 | 700
+    max: 300 | 500 | 600
     error: boolean
 }
 

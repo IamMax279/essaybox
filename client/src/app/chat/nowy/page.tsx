@@ -138,11 +138,11 @@ export default function Nowy() {
     const handleMax = () => {
         switch(parasAmount) {
             case 1:
-                return 500
+                return 300
             case 2:
-                return 600
+                return 500
             case 3:
-                return 700
+                return 600
         }
     }
 
