@@ -26,3 +26,9 @@ export interface GenerationParams {
     lowerBound: number
     upperBound: number
 }
+
+export interface EssayData {
+    title: string
+    content: string
+    urlIdentifier: string
+}
