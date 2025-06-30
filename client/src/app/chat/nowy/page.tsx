@@ -59,6 +59,8 @@ export default function Nowy() {
             if (prev.length < count) {
                 return [
                     ...prev,
+                    //add a new array of length count-prev.length
+                    //use spread operator to merge the two arrays
                     ...Array(count - prev.length).fill({
                         id: uuidv4(),
                         argument: "ai_generated",
