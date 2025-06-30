@@ -4,7 +4,12 @@ export interface RestResponse {
 }
 
 export interface AIResponse extends RestResponse {
-    essay: string
+    essay: string,
+    title: string
+}
+
+export interface EssayResponse extends RestResponse {
+    urlIdentifier: string
 }
 
 export interface ParagraphData {
@@ -30,5 +35,4 @@ export interface GenerationParams {
 export interface EssayData {
     title: string
     content: string
-    urlIdentifier: string
 }

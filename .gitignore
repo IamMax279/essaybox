@@ -8,3 +8,7 @@ client/.next/
 server/dist/
 
 server/src/generated/prisma
+
+@types/index.d.ts
+@types/index.js
+@types/tsconfig.tsbuildinfo
