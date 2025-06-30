@@ -1,8 +1,9 @@
 import { Router } from "express";
 import type { Request, Response } from "express";
 import { AIController } from "../controllers/AIController";
+import { EssayController } from "../controllers/EssayController";
 import { isAuthenticated } from "../middleware/AuthMiddleware";
-import type { GenerationParams } from "../../../@types";
+import type { EssayData, GenerationParams } from "../../../@types";
 
 const aiRouter = Router()
 
@@ -29,7 +30,24 @@ const generateEssay = async (req: Request, res: Response): Promise<any> => {
         }
         const result = await AIController.generateEssay(params)
 
-        return res.status(200).json(result)
+        let userId
+        if (req.isAuthenticated() && req.user) {
+            const user = req.user as { id: bigint }
+            userId = user.id
+        }
+
+        const response = await EssayController.createEssay(
+            {
+                title: result.title,
+                content: result.essay
+            } as EssayData,
+            userId!
+        )
+
+        return res.status(200).json({
+            essay: result.essay,
+            urlIdentifier: response.urlIdentifier
+        })
     } catch (error) {
         console.log("ERROR:", error)
         if (error instanceof Error && (
@@ -51,7 +69,7 @@ const generateEssay = async (req: Request, res: Response): Promise<any> => {
 
 aiRouter.post(
     '/ai/generate-essay',
-    //isAuthenticated,
+    isAuthenticated,
     generateEssay
 )
 

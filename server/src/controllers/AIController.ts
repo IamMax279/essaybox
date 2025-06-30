@@ -60,6 +60,7 @@ export class AIController {
         return {
             success: true,
             message: "Essay generated successfully",
+            title: data.topic.trim(),
             essay
         }
     }

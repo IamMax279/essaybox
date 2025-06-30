@@ -6,7 +6,7 @@
     "start:dev": "nodemon --watch src/**/*.ts --exec ts-node src/main.ts",
     "build": "npm run clean && npm run compile",
     "clean": "rimraf dist",
-    "compile": "tsc",
+    "compile": "tsc -b",
     "start:prod": "node dist/src/main.js",
     "test": "jest",
     "test:watch": "jest --watchAll"
