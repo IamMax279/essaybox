@@ -1,6 +1,6 @@
 import prisma from "../../prisma/PrismaClient"
 import argon2 from "argon2"
-import { AIResponse, RestResponse } from "../../../@types"
+import { AIResponse, AllEssaysResponse, RestResponse } from "../../../@types"
 import { EmailService } from "../services/EmailService"
 import { AuthService } from "../services/AuthService"
 
@@ -147,6 +147,22 @@ export class UserController {
             success: true,
             message: "Essay found successfully",
             essay: essay.content
+        }
+    }
+
+    static async getAllEssays(userId: bigint): Promise<AllEssaysResponse> {
+        if (!userId) {
+            throw new Error("Id użytkownika nie zostało podane")
+        }
+
+        const essays = await prisma.essay.findMany({
+            where: { userId }
+        })
+
+        return {
+            success: true,
+            message: "Essays found successfully",
+            essays
         }
     }
 }

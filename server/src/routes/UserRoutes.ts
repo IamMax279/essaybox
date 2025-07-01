@@ -180,6 +180,33 @@ const getEssay = async (req: Request, res: Response): Promise<any> => {
     }
 }
 
+const getAllEssays = async (req: Request, res: Response): Promise<any> => {
+    try {
+        let userId
+        if (req.isAuthenticated() && req.user) {
+            const user = req.user as { id: bigint }
+            userId = user.id
+        }
+
+        const result = await UserController.getAllEssays(userId!)
+        return res.status(200).json(result)
+    } catch (error) {
+        if (error instanceof Error && (
+            error.message.includes("Id użytkownika")
+        )) {
+            return res.status(400).json({
+                success: false,
+                message: error.message
+            })
+        }
+
+        return res.status(500).json({
+            success: false,
+            message: "Internal server error"
+        });
+    }
+}
+
 const logout = (req: Request, res: Response) => {
     req.logOut?.((err) => {
         if (err) {
@@ -223,6 +250,11 @@ userRouter.post(
     //isAuthenticated
     getEssay
 ),
+userRouter.post(
+    '/user/get-all-essays',
+    //isAuthenticated
+    getAllEssays
+)
 userRouter.post(
     '/user/logout',
     logout

@@ -8,6 +8,10 @@ export interface AIResponse extends RestResponse {
     title?: string
 }
 
+export interface AllEssaysResponse extends RestResponse {
+    essays: EssayData[]
+}
+
 export interface EssayResponse extends RestResponse {
     urlIdentifier: string
 }
@@ -35,4 +39,5 @@ export interface GenerationParams {
 export interface EssayData {
     title: string
     content: string
+    urlIdentifier?: string
 }
