@@ -11,9 +11,6 @@ import { useMutation } from '@tanstack/react-query';
 import axios from 'axios';
 import Bounds from '@/components/Bounds';
 import type { ParagraphData, GenerationParams } from "../../../../../@types"
-import { useTypewriter } from '@/hooks/useTypewriter';
-import Image from 'next/image';
-import Logo from "../../../../public/LogoWhite.svg"
 import { useRouter } from 'next/navigation';
 
 export default function Nowy() {
@@ -29,13 +26,8 @@ export default function Nowy() {
     ])
     const [topicError, setTopicError] = useState<boolean>(false)
     const [minmaxError, setMinmaxError] = useState<boolean>(false)
-    const [essay, setEssay] = useState<string | null>(null)
-    const [generated, setGenerated] = useState<boolean>(false)
-    const [typewriterDone, setTypewriterDone] = useState<boolean>(false)
 
     const router = useRouter()
-
-    const typewriter = useTypewriter(essay ?? "", 50)
 
     const { mutate: handleGeneration, isPending } = useMutation({
         mutationFn: async (data: GenerationParams) => {
@@ -46,14 +38,8 @@ export default function Nowy() {
             )
         },
         onSuccess: (data) => {
-            console.log("response:", data)
-            setEssay(data.data.essay)
-
             const id = data.data.urlIdentifier
             router.replace(`/chat/${id}`)
-
-            //?
-            setGenerated(true)
         },
         onError: (error) => {
             console.log("error:", error)
@@ -126,14 +112,6 @@ export default function Nowy() {
         }
     }, [lowerBound, upperBound, parasAmount])
 
-    useEffect(() => {
-        if (typewriter === (essay ?? "")) {
-            setTypewriterDone(true)
-        } else {
-            setTypewriterDone(false)
-        }
-    }, [essay, typewriter])
-
     const handleMin = () => {
         switch(parasAmount) {
             case 1:
@@ -160,7 +138,7 @@ export default function Nowy() {
         <div>
             <form
             onSubmit={(e) => handleSubmit(e)}
-            className={`${generated ? 'hidden' : 'flex'} flex-col items-center w-full p-8 min-h-screen`}>
+            className={`flex flex-col items-center w-full p-8 min-h-screen`}>
                 <div className="relative lg:w-[720px] md:w-[520px] w-4/5 min-w-[220px]">
                     <TextareaAutosize
                     className={`resize-none outline-none p-4 rounded-xl w-full bg-[#3b3b3b] text-white
@@ -296,22 +274,6 @@ export default function Nowy() {
                 loading={isPending}
                 />
             </form>
-            {typewriter &&
-            <div className='relative flex flex-row mx-auto lg:w-[656px] md:w-[420px] w-[70%] min-w-[220px]
-                border border-bigbutton/70 rounded-lg bg-[#141414] my-12'>
-                <Image
-                src={Logo}
-                alt='logo'
-                className={`hidden md:block md:absolute md:top-2 md:-left-[54px] md:w-10 md:h-10
-                ${!typewriterDone ? 'spinning-logo' : ''}`}
-                />
-                <div className="font-mono text-base leading-relaxed p-6 w-full min-h-12 
-                whitespace-pre-wrap break-words text-gray-200">
-                    <span className="tracking-wide font-outfit">{typewriter}</span>
-                    <span className="animate-pulse ml-0.5 text-white">|</span>
-                </div>
-            </div>
-            }
         </div>
     )
 }
