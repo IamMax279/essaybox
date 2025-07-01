@@ -14,6 +14,7 @@ import type { ParagraphData, GenerationParams } from "../../../../../@types"
 import { useTypewriter } from '@/hooks/useTypewriter';
 import Image from 'next/image';
 import Logo from "../../../../public/LogoWhite.svg"
+import { useRouter } from 'next/navigation';
 
 export default function Nowy() {
     const [topic, setTopic] = useState<string>("")
@@ -32,6 +33,8 @@ export default function Nowy() {
     const [generated, setGenerated] = useState<boolean>(false)
     const [typewriterDone, setTypewriterDone] = useState<boolean>(false)
 
+    const router = useRouter()
+
     const typewriter = useTypewriter(essay ?? "", 50)
 
     const { mutate: handleGeneration, isPending } = useMutation({
@@ -45,6 +48,11 @@ export default function Nowy() {
         onSuccess: (data) => {
             console.log("response:", data)
             setEssay(data.data.essay)
+
+            const id = data.data.urlIdentifier
+            router.replace(`/chat/${id}`)
+
+            //?
             setGenerated(true)
         },
         onError: (error) => {
