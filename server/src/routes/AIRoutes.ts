@@ -41,7 +41,7 @@ const generateEssay = async (req: Request, res: Response): Promise<any> => {
                 title: result.title,
                 content: result.essay
             } as EssayData,
-            userId!
+            BigInt(25)//userId!
         )
 
         return res.status(200).json({
@@ -69,7 +69,7 @@ const generateEssay = async (req: Request, res: Response): Promise<any> => {
 
 aiRouter.post(
     '/ai/generate-essay',
-    isAuthenticated,
+    //isAuthenticated,
     generateEssay
 )
 
