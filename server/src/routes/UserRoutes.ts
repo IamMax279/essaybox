@@ -3,6 +3,7 @@ import type { Request, Response } from "express";
 import { UserController } from "../controllers/UserController";
 import prisma from "../../prisma/PrismaClient";
 import { EmailService } from "../services/EmailService";
+import { isAuthenticated } from "../middleware/AuthMiddleware";
 
 const userRouter = Router()
 
@@ -10,6 +11,7 @@ const registerUser = async (req: Request, res: Response): Promise<any> => {
     try {
         const { email, password } = req.body
         const result = await UserController.registerUser(email, password)
+
         return res.status(200).json(result)
     } catch (error) {
         if (error instanceof Error && (
@@ -75,6 +77,7 @@ const verifyUser = async (req: Request, res: Response): Promise<any> => {
     try {
         const { token } = req.body
         const result = await UserController.verifyUser(token)
+
         return res.status(200).json(result)
     } catch (error) {
         if (error instanceof Error && (
@@ -98,6 +101,7 @@ const sendPasswordResetEmail = async (req: Request, res: Response): Promise<any>
     try {
         const { email } = req.body
         const result = await EmailService.sendPasswordChangeEmail(email)
+
         return res.status(200).json(result)
     } catch (error) {
         if (error instanceof Error && (
@@ -123,6 +127,7 @@ const changePassword = async (req: Request, res: Response): Promise<any> => {
     try {
         const { password, token } = req.body
         const result = await UserController.changePassword(password, token)
+
         return res.status(200).json(result)
     } catch (error) {
         if (error instanceof Error && (
@@ -135,6 +140,37 @@ const changePassword = async (req: Request, res: Response): Promise<any> => {
                 success: false,
                 message: error.message
             });
+        }
+
+        return res.status(500).json({
+            success: false,
+            message: "Internal server error"
+        });
+    }
+}
+
+const getEssay = async (req: Request, res: Response): Promise<any> => {
+    try {
+        const { essayId } = req.body
+        let userId
+
+        if (req.isAuthenticated() && req.user) {
+            const user = req.user as { id: bigint }
+            userId = user.id
+        }
+
+        const result = await UserController.getEssay(BigInt(25)/*userId!*/, essayId)
+        return res.status(200).json(result)
+    } catch (error) {
+        if (error instanceof Error && (
+            error.message.includes("Id użytkownika") ||
+            error.message.includes("Użytkownik o takim") ||
+            error.message.includes("Ten użytkownik")
+        )) {
+            return res.status(400).json({
+                success: false,
+                message: error.message
+            })
         }
 
         return res.status(500).json({
@@ -182,6 +218,11 @@ userRouter.post(
     '/user/change-password',
     changePassword
 )
+userRouter.post(
+    '/user/get-essay',
+    //isAuthenticated
+    getEssay
+),
 userRouter.post(
     '/user/logout',
     logout

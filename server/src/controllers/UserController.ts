@@ -1,6 +1,6 @@
 import prisma from "../../prisma/PrismaClient"
 import argon2 from "argon2"
-import { RestResponse } from "../../../@types"
+import { AIResponse, RestResponse } from "../../../@types"
 import { EmailService } from "../services/EmailService"
 import { AuthService } from "../services/AuthService"
 
@@ -120,7 +120,33 @@ export class UserController {
 
         return {
             success: true,
-            message: "Hasło zostało zmienione"
+            message: "Password changed successfully"
+        }
+    }
+
+    static async getEssay(userId: bigint, essayUuid: string): Promise<AIResponse> {
+        if (!userId) {
+            throw new Error("Id użytkownika nie zostało podane")
+        }
+
+        const user = await prisma.user.findFirst({
+            where: { id: userId }
+        })
+        if (!user) {
+            throw new Error("Użytkownik o takim id nie istnieje")
+        }
+
+        const essay = await prisma.essay.findFirst({
+            where: { userId: user.id, urlIdentifier: essayUuid }
+        })
+        if (!essay) {
+            throw new Error("Ten użytkownik nie posiada rozprawki o takim uuid")
+        }
+
+        return {
+            success: true,
+            message: "Essay found successfully",
+            essay: essay.content
         }
     }
 }
