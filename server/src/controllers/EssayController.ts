@@ -1,4 +1,4 @@
-import type { EssayData, EssayResponse } from "../../../@types";
+import type { EssayData, EssayResponse, RestResponse } from "../../../@types";
 import prisma from "../../prisma/PrismaClient";
 
 export class EssayController {
@@ -19,6 +19,24 @@ export class EssayController {
             success: true,
             message: "Essay created successfully",
             urlIdentifier: essay.urlIdentifier
+        }
+    }
+
+    static async findByUuid(uuid: string): Promise<RestResponse> {
+        if (!uuid.trim()) {
+            throw new Error("Uuid nie zostało podane")
+        }
+
+        const essay = await prisma.essay.findFirst({
+            where: { urlIdentifier: uuid }
+        })
+        if (!essay) {
+            throw new Error("Rozprawka o takim uuid nie istnieje")
+        }
+
+        return {
+            success: true,
+            message: "Essay found successfully"
         }
     }
 }

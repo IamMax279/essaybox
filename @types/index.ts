@@ -5,7 +5,7 @@ export interface RestResponse {
 
 export interface AIResponse extends RestResponse {
     essay: string,
-    title: string
+    title?: string
 }
 
 export interface EssayResponse extends RestResponse {
