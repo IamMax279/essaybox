@@ -1,15 +1,44 @@
 "use client"
 
-import { ReactNode } from "react";
+import { ReactNode, useEffect } from "react";
 import Image from "next/image";
 import LogoWhite from "../../../public/LogoWhite.svg"
 import LogoWordsWhite from "../../../public/LogoWordsWhite.svg"
 import { FaBars } from "react-icons/fa";
 import { RxCross2 } from "react-icons/rx"
 import { useState } from "react";
+import { useMutation } from "@tanstack/react-query";
+import axios from "axios";
+import { EssayData } from "../../../../@types";
+import { useRouter } from "next/navigation";
+import { IoCreateOutline } from "react-icons/io5";
 
 export default function ChatLayout({ children }: { children: ReactNode }) {
     const [clicked, setClicked] = useState<boolean>(false)
+    const [essays, setEssays] = useState<EssayData[]>([])
+
+    const router = useRouter()
+
+    const { mutate: getAllEssays, isPending } = useMutation({
+        mutationFn: async () => {
+            return await axios.get(
+                `${process.env.NEXT_PUBLIC_SERVER_URL}/user/get-all-essays`,
+                {
+                    withCredentials: true
+                }
+            )
+        },
+        onSuccess: (data) => {
+            setEssays(data.data.essays)
+        },
+        onError: (error) => {
+            console.log("Error fetching user's essays:", error)
+        }
+    })
+
+    useEffect(() => {
+        getAllEssays()
+    }, [])
 
     return (
         <div className="flex flex-row bg-[#1E1E1E]">
@@ -30,6 +59,34 @@ export default function ChatLayout({ children }: { children: ReactNode }) {
                     className="mt-2"
                     />
                 </div>
+                <div className="flex flex-row items-center space-x-2 ml-1 mr-2 mt-2
+                rounded-lg cursor-pointer hover:bg-[#1E1E1E] p-2 transition-all
+                ease-in-out duration-250"
+                onClick={() => router.push('/chat/nowy')}>
+                    <IoCreateOutline
+                    size={28}
+                    className="text-white"
+                    />
+                    <p className="text-white font-heming relative top-[2px]">
+                        Nowa rozprawka
+                    </p>
+                </div>
+                {(essays.length > 0) &&
+                <div className="mt-6 flex flex-col space-y-2">
+                    <h2 className="ml-3 font-heming text-white/50">
+                        Rozprawki
+                    </h2>
+                    {essays.map((e, i) => (
+                        <p
+                        key={i}
+                        className="text-white rounded-lg cursor-pointer ml-1 mr-2 text-[15px]
+                        hover:bg-[#1E1E1E] p-2 transition-all ease-in-out duration-250"
+                        onClick={() => router.push(`/chat/${e.urlIdentifier}`)}>
+                            {e.title.length > 27 ? e.title.substring(0, 27) + "..." : e.title}
+                        </p>
+                    ))}
+                </div>
+                }
             </aside>
             <div className="sdbr:hidden absolute top-8 left-5 z-50">
                 <FaBars
@@ -57,6 +114,34 @@ export default function ChatLayout({ children }: { children: ReactNode }) {
                     size={32}
                     onClick={() => setClicked(false)}/>
                 </div>
+                <div className="flex flex-row items-center space-x-2 mx-2
+                    rounded-lg cursor-pointer hover:bg-[#1E1E1E] p-2 transition-all
+                    ease-in-out duration-250"
+                    onClick={() => router.push('/chat/nowy')}>
+                    <IoCreateOutline
+                    size={28}
+                    className="text-white"
+                    />
+                    <p className="text-white font-heming relative top-[2px]">
+                        Nowa rozprawka
+                    </p>
+                </div>
+                {(essays.length > 0) &&
+                <div className="mt-6 flex flex-col space-y-2">
+                    <h2 className="ml-4 font-heming text-white">
+                        Rozprawki
+                    </h2>
+                    {essays.map((e, i) => (
+                        <p
+                        key={i}
+                        className="text-white font-thin rounded-lg cursor-pointer mx-2 text-[15px]
+                        hover:bg-[#1E1E1E] p-2 transition-all ease-in-out duration-250"
+                        onClick={() => router.push(`/chat/${e.urlIdentifier}`)}>
+                            {e.title.length > 26 ? e.title.substring(0, 27) + "..." : e.title}
+                        </p>
+                    ))}
+                </div>
+                }
             </aside>
             {clicked && (
             <div
