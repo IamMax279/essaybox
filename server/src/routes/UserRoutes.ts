@@ -188,7 +188,7 @@ const getAllEssays = async (req: Request, res: Response): Promise<any> => {
             userId = user.id
         }
 
-        const result = await UserController.getAllEssays(userId!)
+        const result = await UserController.getAllEssays(BigInt(25)/*userId!*/)
         return res.status(200).json(result)
     } catch (error) {
         if (error instanceof Error && (
@@ -250,7 +250,7 @@ userRouter.post(
     //isAuthenticated
     getEssay
 ),
-userRouter.post(
+userRouter.get(
     '/user/get-all-essays',
     //isAuthenticated
     getAllEssays
