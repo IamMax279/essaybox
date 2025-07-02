@@ -51,7 +51,7 @@ export const p = ({
     }
   }
 
-  return `Napisz rozprawkę na temat: "${topic}". Ma mieć od ${wordsLower} do ${wordsUpper} słów i trzymać się ściśle poniższej struktury:
+  return `Napisz rozprawkę na temat: "${topic}". Ma mieć od ${wordsLower + 50} do ${wordsUpper + 50} słów i trzymać się ściśle poniższej struktury:
 
 ---
 
@@ -61,8 +61,8 @@ export const p = ({
 - Przedstaw wyraźne stanowisko (2-3 zdania) wobec tematu, ${thesis ? `korzystając z tej tezy: ${thesis}` : "formułując jednozdaniową tezę. Nie pisz ogólników — teza powinna zawierać konkretne stanowisko."}
 
 2. Rozwinięcie – ${parasAmount === 1 ? "1 akapit. MUSI być w tej kolejności:" : `${parasAmount} akapity. Każdy z nich MUSI być w tej kolejności:`}
-1. Argument jako pierwsze zdanie – jasne, logiczne, jednozdaniowe stwierdzenie głównej myśli akapitu.
-2. Przykład z lektury obowiązkowej z zakresu podstawowego - 
+a) Argument jako pierwsze zdanie – jasne, logiczne, jednozdaniowe stwierdzenie głównej myśli akapitu.
+b) Przykład z lektury obowiązkowej z zakresu podstawowego - 
 Zakres podstawowy:
 Biblia, w tym fragmenty Księgi Rodzaju, Księgi Hioba, Księgi Koheleta, Księgi Psalmów,
 Apokalipsy św. Jana
@@ -100,15 +100,9 @@ Aleksander Fredro, Zemsta
 Juliusz Słowacki, Balladyna
 Ma on zawierać 3-4 zdania w których przywołana jest konkretna sytuacja z wybranej lektury, A NIE OGÓLNA OCENA SYTUACJI DANEJ POSTACI.
 Podawaj wyłącznie fakty zgodne z lekturami szkolnymi.
-3. Kontekst literacki, filozoficzny lub biograficzny powiązany z przykładem – ma on zawierać 3-4 zdania w których przywołana jest konkretna sytuacja z wybranej lektury, wydarzenia historycznego lub przesłanie filozofii
+c) Kontekst literacki, filozoficzny lub biograficzny powiązany z przykładem – ma on zawierać 3-4 zdania w których przywołana jest konkretna sytuacja z wybranej lektury, wydarzenia historycznego lub przesłanie filozofii
 (kontekst - dodatkowe informacje, odniesienia lub przykłady, które pomagają zrozumieć i interpretować omawiany temat, wzbogacają argumentację oraz pogłębiają analizę).
-4. Wniosek częściowy – dwa zdania podsumowujące sens akapitu.
-
-UWAGA: KAŻDY AKAPIT MA SKŁADAĆ SIĘ Z POWYŻSZYCH ELEMENTÓW W NASTĘPUJĄCEJ KOLEJNOŚCI:
-- ARGUMENT
-- PRZYKŁAD
-- KONTEKST
-- WNIOSEK CZĘŚCIOWY
+d) Wniosek częściowy – dwa zdania podsumowujące sens akapitu.
 
 Uwaga: Każdy akapit MUSI zaczynać się od argumentu — to warunek konieczny.
 
@@ -162,11 +156,15 @@ WAŻNE: Argumenty mają być różne - nie powtarzaj argumentu, którego już u�
 nawet jeśli jest sformułowany innymi słowami.
 WAŻNE: Unikaj fraz typu "Kontekstem może być...", zamiast tego pisz coś w stylu "Podobna sytuacja ukazana jest w..."
 WAŻNE: Nie pisz na końcu ile słów ma rozprawka.
-BARDZO WAŻNE: UWZGLĘDNIAJ JAK NAJWIĘCEJ TREŚCI Z UŻYTYCH LEKTUR (na przykład nazwy postaci). 
-ZADBAJ O TO ABY POJAWIAŁO SIĘ W NICH JAK NAWIĘCEJ IMION BOHATERÓW
 BARDZO WAŻNE: NIE UŻYWAJ DWA RAZY LEKTURY, KTÓREJ JUŻ UŻYŁEŚ
 BARDZO WAŻNE: PRZEDSTAW KONKRETNE SYTUACJE Z LEKTUR KTÓRYCH UŻYWASZ
-BARDZO WAŻNE: UPEWNIJ SIĘ, ŻE ROZRPAWKA MA OD ${wordsLower} DO ${wordsUpper} SŁÓW.
+UWAGA: KAŻDY AKAPIT MA SKŁADAĆ SIĘ Z POWYŻSZYCH ELEMENTÓW W NASTĘPUJĄCEJ KOLEJNOŚCI:
+- ARGUMENT
+- PRZYKŁAD (NA NIM MASZ SIĘ SKUPIĆ - MA ON BYĆ NAJBARDZIEJ ROZWINIĘTY W CAŁYM AKAPICIE)
+- KONTEKST
+- WNIOSEK CZĘŚCIOWY
+BARDZO WAŻNE: UWZGLĘDNIAJ KONKRETNE SYTUACJE Z LEKTUR
+BARDZO WAŻNE: UPEWNIJ SIĘ, ŻE ROZRPAWKA MA OD ${wordsLower + 50} DO ${wordsUpper + 50} SŁÓW.
 BARDZO WAŻNE: PRZED GENEROWANIEM KAŻDEGO AKAPITU PRZECZYTAJ JEGO WYTYCZNE:\n${paragraphs}\n
 `;
 };
