@@ -1,6 +1,6 @@
 import prisma from "../../prisma/PrismaClient"
 import argon2 from "argon2"
-import { AIResponse, AllEssaysResponse, RestResponse } from "../../../@types"
+import { AIResponse, AllEssaysResponse, EssayData, RestResponse } from "../../../@types"
 import { EmailService } from "../services/EmailService"
 import { AuthService } from "../services/AuthService"
 
@@ -155,9 +155,18 @@ export class UserController {
             throw new Error("Id użytkownika nie zostało podane")
         }
 
-        const essays = await prisma.essay.findMany({
-            where: { userId }
+        const result = await prisma.essay.findMany({
+            where: { userId },
+            orderBy: { 
+                createdAt: 'desc'
+            }
         })
+
+        const essays = result.map(e => ({
+            title: e.title,
+            content: e.content,
+            urlIdentifier: e.urlIdentifier
+        } as EssayData))
 
         return {
             success: true,
