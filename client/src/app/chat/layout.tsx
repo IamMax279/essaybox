@@ -43,36 +43,39 @@ export default function ChatLayout({ children }: { children: ReactNode }) {
     return (
         <div className="flex flex-row bg-[#1E1E1E]">
             <aside className="hidden sdbr:fixed sdbr:top-0 sdbr:left-0 sdbr:h-full sdbr:w-64 sdbr:flex
-            sdbr:flex-col border-r border-r-neutral-700 bg-[#141414] z-30">
-                <div className="flex flex-row self-center space-x-2 items-center p-4">
-                    <Image
-                    src={LogoWhite}
-                    alt="icon"
-                    width={32}
-                    height={32}
-                    />
-                    <Image
-                    src={LogoWordsWhite}
-                    alt="name"
-                    width={100}
-                    height={28}
-                    className="mt-2"
-                    />
-                </div>
-                <div className="flex flex-row items-center space-x-2 ml-1 mr-2 mt-2
-                rounded-lg cursor-pointer hover:bg-[#1E1E1E] p-2 transition-all
-                ease-in-out duration-250"
-                onClick={() => router.push('/chat/nowy')}>
-                    <IoCreateOutline
-                    size={28}
-                    className="text-white"
-                    />
-                    <p className="text-white font-heming relative top-[2px]">
-                        Nowa rozprawka
-                    </p>
+            sdbr:flex-col border-r border-r-neutral-700 bg-[#141414] z-30
+            overflow-y-auto scrollbar-thumb-gray-500 scrollbar-track-[#3b3b3b] scrollbar-thin">
+                <div className="flex flex-col sticky top-0 z-50 mb-6 border-b border-b-[#2E2E2E] bg-[#141414]">
+                    <div className="flex flex-row self-center space-x-2 items-center p-4">
+                        <Image
+                        src={LogoWhite}
+                        alt="icon"
+                        width={32}
+                        height={32}
+                        />
+                        <Image
+                        src={LogoWordsWhite}
+                        alt="name"
+                        width={100}
+                        height={28}
+                        className="mt-2"
+                        />
+                    </div>
+                    <div className="flex flex-row items-center space-x-2 ml-1 mr-2 mt-2 mb-1
+                    rounded-lg cursor-pointer hover:bg-[#1E1E1E] p-2 transition-all
+                    ease-in-out duration-250"
+                    onClick={() => router.push('/chat/nowy')}>
+                        <IoCreateOutline
+                        size={28}
+                        className="text-white"
+                        />
+                        <p className="text-white font-heming relative top-[2px]">
+                            Nowa rozprawka
+                        </p>
+                    </div>
                 </div>
                 {(essays.length > 0) &&
-                <div className="mt-6 flex flex-col space-y-2">
+                <div className="mt-2 flex flex-col space-y-2 relative z-60">
                     <h2 className="ml-3 font-heming text-white/50">
                         Rozprawki
                     </h2>
@@ -96,39 +99,41 @@ export default function ChatLayout({ children }: { children: ReactNode }) {
                 onClick={() => setClicked(true)}/>
             </div>
             <aside 
-            className={`fixed top-0 left-0 smll:w-64 w-[185px] h-full border-r border-r-neutral-700 flex flex-col
-            bg-[#141414] z-50 md:hidden
+            className={`fixed top-0 left-0 smll:w-64 w-[185px] overflow-y-auto max-h-screen border-r border-r-neutral-700 flex flex-col
+            scrollbar-thumb-gray-500 scrollbar-track-[#3b3b3b] scrollbar-thin bg-[#141414] z-50 md:hidden
             duration-300 ease-in-out
             ${clicked ? "translate-x-0" : "-translate-x-full"}`}
             >
-                <div className="flex flex-row space-x-2 justify-between items-center p-4">
-                    <Image
-                    src={LogoWhite}
-                    alt="icon"
-                    width={32}
-                    height={32}
-                    />
-                    <RxCross2
-                    className="cursor-pointer text-gray-200 hover:brightness-75
-                    transition ease-in-out duration-200"
-                    size={32}
-                    onClick={() => setClicked(false)}/>
-                </div>
-                <div className="flex flex-row items-center space-x-2 mx-2
-                    rounded-lg cursor-pointer hover:bg-[#1E1E1E] p-2 transition-all
-                    ease-in-out duration-250"
-                    onClick={() => router.push('/chat/nowy')}>
-                    <IoCreateOutline
-                    size={28}
-                    className="text-white"
-                    />
-                    <p className="text-white font-heming relative top-[2px]">
-                        Nowa rozprawka
-                    </p>
+                <div className="flex flex-col sticky top-0 z-50 mb-6 border-b border-b-[#2E2E2E] bg-[#141414]">
+                    <div className="flex flex-row space-x-2 justify-between items-center p-4">
+                        <Image
+                        src={LogoWhite}
+                        alt="icon"
+                        width={32}
+                        height={32}
+                        />
+                        <RxCross2
+                        className="cursor-pointer text-gray-200 hover:brightness-75
+                        transition ease-in-out duration-200"
+                        size={32}
+                        onClick={() => setClicked(false)}/>
+                    </div>
+                    <div className="flex flex-row items-center space-x-2 mx-2
+                        rounded-lg cursor-pointer hover:bg-[#1E1E1E] p-2 transition-all
+                        ease-in-out duration-250"
+                        onClick={() => router.push('/chat/nowy')}>
+                        <IoCreateOutline
+                        size={28}
+                        className="text-white"
+                        />
+                        <p className="text-white font-heming relative top-[2px]">
+                            Nowa rozprawka
+                        </p>
+                    </div>
                 </div>
                 {(essays.length > 0) &&
-                <div className="mt-6 flex flex-col space-y-2">
-                    <h2 className="ml-4 font-heming text-white">
+                <div className="mt-2 flex flex-col space-y-2 relative z-60">
+                    <h2 className="ml-4 font-heming text-white/50">
                         Rozprawki
                     </h2>
                     {essays.map((e, i) => (
