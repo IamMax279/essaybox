@@ -12,6 +12,10 @@ export interface AllEssaysResponse extends RestResponse {
     essays: EssayData[]
 }
 
+export interface EssayPortionsResponse extends AllEssaysResponse {
+    hasMore: boolean
+}
+
 export interface EssayResponse extends RestResponse {
     urlIdentifier: string
 }

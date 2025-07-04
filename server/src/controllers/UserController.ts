@@ -1,6 +1,6 @@
 import prisma from "../../prisma/PrismaClient"
 import argon2 from "argon2"
-import { AIResponse, AllEssaysResponse, EssayData, RestResponse } from "../../../@types"
+import { AIResponse, AllEssaysResponse, EssayData, EssayPortionsResponse, RestResponse } from "../../../@types"
 import { EmailService } from "../services/EmailService"
 import { AuthService } from "../services/AuthService"
 
@@ -172,6 +172,41 @@ export class UserController {
             success: true,
             message: "Essays found successfully",
             essays
+        }
+    }
+
+    static async getNEssays(userId: bigint, n: number): Promise<EssayPortionsResponse> {
+        if (!userId) {
+            throw new Error("Id użytkownika nie zostało podane")
+        }
+        if (!n) {
+            throw new Error("Number of essays not specified")
+        }
+
+        const result = await prisma.essay.findMany({
+            where: { userId },
+            orderBy: { 
+                createdAt: 'desc'
+            },
+            take: n
+        })
+
+        const essays = result.map(e => ({
+            title: e.title,
+            content: e.content,
+            urlIdentifier: e.urlIdentifier
+        } as EssayData))
+
+        const count = await prisma.essay.count({
+            where: { userId }
+        })
+        const hasMore = n < count
+
+        return {
+            success: true,
+            message: "Essays found successfully",
+            essays,
+            hasMore
         }
     }
 }
