@@ -7,9 +7,12 @@ export class EssayController {
             throw new Error("Niekompletne dane")
         }
 
+        const trimmed = data.title.trim()
+        const title = trimmed[0].toLocaleUpperCase() + trimmed.substring(1)
+
         const essay = await prisma.essay.create({
             data: {
-                title: data.title,
+                title,
                 content: data.content,
                 userId
             }
