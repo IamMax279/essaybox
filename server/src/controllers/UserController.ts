@@ -180,7 +180,7 @@ export class UserController {
             throw new Error("Id użytkownika nie zostało podane")
         }
         if (!n) {
-            throw new Error("Number of essays not specified")
+            throw new Error("N nie zostało podane")
         }
 
         const result = await prisma.essay.findMany({

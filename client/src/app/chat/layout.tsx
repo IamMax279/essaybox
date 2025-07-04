@@ -12,24 +12,29 @@ import axios from "axios";
 import { EssayData } from "../../../../@types";
 import { useRouter } from "next/navigation";
 import { IoCreateOutline } from "react-icons/io5";
+import BigButton from "@/components/BigButton";
 
 export default function ChatLayout({ children }: { children: ReactNode }) {
     const [clicked, setClicked] = useState<boolean>(false)
     const [essays, setEssays] = useState<EssayData[]>([])
+    const [initialAmount, setInitialAmount] = useState<number>(15)
+    const [hasMore, setHasMore] = useState<boolean>(false)
 
     const router = useRouter()
 
-    const { mutate: getAllEssays, isPending } = useMutation({
+    const { mutate: getNEssays, isPending } = useMutation({
         mutationFn: async () => {
-            return await axios.get(
-                `${process.env.NEXT_PUBLIC_SERVER_URL}/user/get-all-essays`,
-                {
-                    withCredentials: true
-                }
+            return await axios.post(
+                `${process.env.NEXT_PUBLIC_SERVER_URL}/user/get-n-essays`,
+                { n: initialAmount },
+                { withCredentials: true }
             )
         },
         onSuccess: (data) => {
+            setInitialAmount(prev => prev + 20)
+
             setEssays(data.data.essays)
+            setHasMore(data.data.hasMore)
         },
         onError: (error) => {
             console.log("Error fetching user's essays:", error)
@@ -37,7 +42,7 @@ export default function ChatLayout({ children }: { children: ReactNode }) {
     })
 
     useEffect(() => {
-        getAllEssays()
+        getNEssays()
     }, [])
 
     return (
@@ -79,15 +84,31 @@ export default function ChatLayout({ children }: { children: ReactNode }) {
                     <h2 className="ml-3 font-heming text-white/50">
                         Rozprawki
                     </h2>
-                    {essays.map((e, i) => (
-                        <p
-                        key={i}
-                        className="text-white rounded-lg cursor-pointer ml-1 mr-2 text-[15px]
-                        hover:bg-[#1E1E1E] p-2 transition-all ease-in-out duration-250"
-                        onClick={() => router.push(`/chat/${e.urlIdentifier}`)}>
-                            {e.title.length > 27 ? e.title.substring(0, 27) + "..." : e.title}
-                        </p>
-                    ))}
+                    <div className="flex flex-col space-y-2">
+                        {essays.map((e, i) => (
+                            <p
+                            key={i}
+                            className="text-white rounded-lg cursor-pointer ml-1 mr-2 text-[15px]
+                            hover:bg-[#1E1E1E] p-2 transition-all ease-in-out duration-250"
+                            onClick={() => router.push(`/chat/${e.urlIdentifier}`)}>
+                                {e.title.length > 27 ? e.title.substring(0, 27) + "..." : e.title}
+                            </p>
+                        ))}
+                        {hasMore &&
+                        <>
+                            <BigButton
+                            text='Więcej...'
+                            width="w-48"
+                            className='my-2 self-center'
+                            bg="bg-[#2A2A2A]/60"
+                            type='submit'
+                            loading={isPending}
+                            onPress={() => getNEssays()}
+                            />
+                            <div className="my-2"></div>
+                        </>
+                        }
+                    </div>
                 </div>
                 }
             </aside>
