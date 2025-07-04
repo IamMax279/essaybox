@@ -12,6 +12,7 @@ import axios from 'axios';
 import Bounds from '@/components/Bounds';
 import type { ParagraphData, GenerationParams } from "../../../../../@types"
 import { useRouter } from 'next/navigation';
+import { useEssayList } from '@/providers/EssayListProvider';
 
 export default function Nowy() {
     const [topic, setTopic] = useState<string>("")
@@ -27,6 +28,8 @@ export default function Nowy() {
     const [topicError, setTopicError] = useState<boolean>(false)
     const [minmaxError, setMinmaxError] = useState<boolean>(false)
 
+    const { refetchEssays } = useEssayList()
+
     const router = useRouter()
 
     const { mutate: handleGeneration, isPending } = useMutation({
@@ -38,6 +41,9 @@ export default function Nowy() {
             )
         },
         onSuccess: (data) => {
+            //trigger a refetch in the layout in order to update the essay list
+            refetchEssays()
+
             const id = data.data.urlIdentifier
             router.replace(`/chat/${id}`)
         },
