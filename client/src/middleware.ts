@@ -33,7 +33,7 @@ export async function middleware(request: NextRequest) {
 
     const data = await response.json()
     if (!data.success) {
-      return NextResponse.redirect(new URL("/chat/nowy", request.url))
+      return NextResponse.redirect(new URL("/chat/nowy" + request.url.search, request.url))
     }
   }
 

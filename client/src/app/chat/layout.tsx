@@ -14,6 +14,7 @@ import { useRouter } from "next/navigation";
 import { IoCreateOutline } from "react-icons/io5";
 import BigButton from "@/components/BigButton";
 import { EssayListContext } from "@/providers/EssayListProvider";
+import { MdAccountCircle } from "react-icons/md";
 
 export default function ChatLayout({ children }: { children: ReactNode }) {
     const [clicked, setClicked] = useState<boolean>(false)
@@ -50,7 +51,15 @@ export default function ChatLayout({ children }: { children: ReactNode }) {
 
     return (
         <EssayListContext value={{ essays, setEssays, refetchEssays }}>
-            <div className="flex flex-row bg-[#1E1E1E]">
+            <div className="flex flex-row bg-[#1E1E1E] relative">
+                <div className="absolute top-8 sdbr:right-8 right-5">
+                    <MdAccountCircle
+                    size={36}
+                    className="text-gray-200 cursor-pointer hover:brightness-75
+                    transition ease-in-out duration-200"
+                    onClick={() => router.push('/account')}
+                    />
+                </div>
                 <aside className="hidden sdbr:fixed sdbr:top-0 sdbr:left-0 sdbr:h-full sdbr:w-64 sdbr:flex
                 sdbr:flex-col border-r border-r-neutral-700 bg-[#141414] z-30
                 overflow-y-auto scrollbar-thumb-gray-500 scrollbar-track-[#3b3b3b] scrollbar-thin">
@@ -95,7 +104,7 @@ export default function ChatLayout({ children }: { children: ReactNode }) {
                                     className="text-white rounded-lg cursor-pointer ml-1 mr-2 text-[15px]
                                     hover:bg-[#1E1E1E] p-2 transition-all ease-in-out duration-250"
                                     onClick={() => router.push(`/chat/${e.urlIdentifier}`)}>
-                                        {e.title.length > 27 ? e.title.substring(0, 27) + "..." : e.title}
+                                        {e.title.length > 26 ? e.title.substring(0, 26) + "..." : e.title}
                                     </p>
                                     {i === essays.length - 1 &&
                                     <div className="my-2"></div>
@@ -172,7 +181,7 @@ export default function ChatLayout({ children }: { children: ReactNode }) {
                                     className="text-white font-thin rounded-lg cursor-pointer mx-2 text-[15px]
                                     hover:bg-[#1E1E1E] p-2 transition-all ease-in-out duration-250"
                                     onClick={() => router.push(`/chat/${e.urlIdentifier}`)}>
-                                        {e.title.length > 26 ? e.title.substring(0, 27) + "..." : e.title}
+                                        {e.title.length > 18 ? e.title.substring(0, 18) + "..." : e.title}
                                     </p>
                                     {i === essays.length - 1 &&
                                     <div className="my-2"></div>
@@ -183,7 +192,7 @@ export default function ChatLayout({ children }: { children: ReactNode }) {
                             <>
                                 <BigButton
                                 text='Więcej...'
-                                width="w-48"
+                                width="md:w-48 w-36"
                                 className='mb-2 self-center'
                                 bg="bg-[#2A2A2A]/60"
                                 type='submit'

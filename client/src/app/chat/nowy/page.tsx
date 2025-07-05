@@ -45,7 +45,7 @@ export default function Nowy() {
             refetchEssays()
 
             const id = data.data.urlIdentifier
-            router.replace(`/chat/${id}`)
+            router.push(`/chat/${id}?brandnew=true`)
         },
         onError: (error) => {
             console.log("error:", error)
