@@ -53,8 +53,8 @@ p, input, textarea {
 
 .notebook-grid {
   background-image: 
-  repeating-linear-gradient(to right, #252525 0 1px, transparent 1px 23px),
-  repeating-linear-gradient(to bottom, #252525 0 1px, transparent 1px 23px);
+  repeating-linear-gradient(to right, #252525 0 1px, transparent 1px 1.5rem),
+  repeating-linear-gradient(to bottom, #252525 0 1px, transparent 1px 1.5rem);
 }
 
 input[type="number"]::-webkit-inner-spin-button,
