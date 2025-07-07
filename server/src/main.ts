@@ -8,6 +8,7 @@ import userRouter from "./routes/UserRoutes";
 import authRouter from "./routes/AuthRoutes";
 import aiRouter from "./routes/AIRoutes";
 import essayRouter from "./routes/EssayRoutes";
+import paymentsRouter from "./routes/PaymentsRoutes"
 
 dotenv.config()
 const app = express()
@@ -37,6 +38,7 @@ app.use(userRouter)
 app.use(authRouter)
 app.use(aiRouter)
 app.use(essayRouter)
+app.use(paymentsRouter)
 
 const PORT = process.env.PORT || 3001
 app.listen(PORT)
