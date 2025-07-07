@@ -20,6 +20,10 @@ export interface EssayResponse extends RestResponse {
     urlIdentifier: string
 }
 
+export interface SubscriptionPurchaseResponse extends RestResponse {
+    url: string
+}
+
 export interface ParagraphData {
     id: string
     argument: string
