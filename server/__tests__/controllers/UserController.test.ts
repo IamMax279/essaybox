@@ -70,6 +70,17 @@ describe("UserController", () => {
             expect(prisma.user.create).not.toHaveBeenCalled()
         })
 
+        test("should throw an error if none of the fields were provided", async () => {
+            const mockUser = {
+                email: "",
+                password: ""
+            };
+
+            await expect(UserController.registerUser(mockUser.email, mockUser.password))
+            .rejects.toThrow("Email lub hasło nie zostały podane")
+            expect(prisma.user.create).not.toHaveBeenCalled()
+        })
+
         test("should throw an error if a user with such email address already exists", async () => {
             const mockUser = {
                 email: "test@123.com",
