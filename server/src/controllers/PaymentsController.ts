@@ -28,14 +28,14 @@ export class PaymentsController {
         }
 
         const session = await stripe.checkout.sessions.create({
-            payment_method_types: ['card', 'blik'],
+            payment_method_types: ['card'],
             mode: 'subscription',
             line_items: [
-                { price: 'price_1RiKWSIqrP8tyF9HFuzzGgdF', quantity: 1 }
+                { price: 'price_1RjPmfIqrP8tyF9HaIcVL572', quantity: 1 }
             ],
             customer: stripeCustomerId,
-            success_url: `http://localhost:3000?success=true`,
-            cancel_url: `http://localhost:3000?success=false`
+            success_url: `http://localhost:3000/account?success=true`,
+            cancel_url: `http://localhost:3000/account?success=false`
         })
         
         return {
