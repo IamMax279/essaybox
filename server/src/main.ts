@@ -9,6 +9,7 @@ import authRouter from "./routes/AuthRoutes";
 import aiRouter from "./routes/AIRoutes";
 import essayRouter from "./routes/EssayRoutes";
 import paymentsRouter from "./routes/PaymentsRoutes"
+import stripeRouter from "./routes/StripeWebhook";
 
 dotenv.config()
 const app = express()
@@ -39,6 +40,7 @@ app.use(authRouter)
 app.use(aiRouter)
 app.use(essayRouter)
 app.use(paymentsRouter)
+app.use(stripeRouter)
 
 const PORT = process.env.PORT || 3001
 app.listen(PORT)
