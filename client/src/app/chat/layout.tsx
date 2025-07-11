@@ -15,12 +15,20 @@ import { IoCreateOutline } from "react-icons/io5";
 import BigButton from "@/components/BigButton";
 import { EssayListContext } from "@/providers/EssayListProvider";
 import { MdAccountCircle } from "react-icons/md";
+import {
+  Modal,
+  ModalContent,
+  ModalBody,
+  ModalFooter
+} from "@heroui/modal";
+import { Button } from "@nextui-org/button"
 
 export default function ChatLayout({ children }: { children: ReactNode }) {
     const [clicked, setClicked] = useState<boolean>(false)
     const [essays, setEssays] = useState<EssayData[]>([])
     const [initialAmount, setInitialAmount] = useState<number>(20)
     const [hasMore, setHasMore] = useState<boolean>(false)
+    const [accountActive, setAccountActive] = useState<boolean>(false)
 
     const router = useRouter()
 
@@ -57,7 +65,7 @@ export default function ChatLayout({ children }: { children: ReactNode }) {
                     size={36}
                     className="text-gray-200 cursor-pointer hover:brightness-75
                     transition ease-in-out duration-200"
-                    onClick={() => router.push('/account')}
+                    onClick={() => setAccountActive(true)}
                     />
                 </div>
                 <aside className="hidden sdbr:fixed sdbr:top-0 sdbr:left-0 sdbr:h-full sdbr:w-64 sdbr:flex
@@ -217,6 +225,49 @@ export default function ChatLayout({ children }: { children: ReactNode }) {
                     {children}
                 </main>
             </div>
+            {accountActive &&
+            <Modal
+            isOpen={true}
+            isDismissable={true}
+            onOpenChange={setAccountActive}
+            hideCloseButton={true}
+            size="4xl"
+            className="flex self-center mx-4 h-96 shadow-[0_2px_16px_0_#121212]
+            bg-[#1E1E1E]/90 border border-neutral-700"
+            >
+                <ModalContent className='pt-4 pb-2'>
+                    <>
+                    <ModalBody
+                    className="flex flex-col items-start">
+                        <div className="flex flex-row">
+                            <h1 className="font-heming text-2xl text-white">
+                                D
+                            </h1>
+                            <h1 className="font-heming text-2xl text-white relative right-[3px]">
+                                ane Konta
+                            </h1>
+                        </div>
+                        <div className="flex flex-col w-full mt-2">
+                            <label className="text-white font-heming">
+                                E-mail
+                            </label>
+                            <div className="mt-1 p-2 border border-neutral-700 rounded-lg w-full">
+
+                            </div>
+                        </div>
+                    </ModalBody>
+                    <ModalFooter className='flex flex-row justify-center items-center gap-4'>
+                        <Button className='bg-bigbutton font-semibold text-white
+                        hover:brightness-110 transition ease-in-out duration-200
+                        px-8 py-2 font-outfit'
+                        onPress={() => setAccountActive(false)}>
+                        OK
+                        </Button>
+                    </ModalFooter>
+                    </>
+                </ModalContent>
+            </Modal>
+            }
         </EssayListContext>
     )
 }

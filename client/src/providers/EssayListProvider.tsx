@@ -1,7 +1,6 @@
 import React, { createContext, useContext } from "react";
 import type { EssayData } from "../../../@types";
 
-
 export interface EssayListContextType {
     essays: EssayData[]
     setEssays: React.Dispatch<React.SetStateAction<EssayData[]>>
