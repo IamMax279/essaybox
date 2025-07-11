@@ -237,6 +237,34 @@ const getNEssays = async (req: Request, res: Response): Promise<any> => {
     }
 }
 
+const getUserAccountData = async (req: Request, res: Response): Promise<any> => {
+    try {
+        let userId
+        if (req.isAuthenticated() && req.user) {
+            const user = req.user as { id: bigint }
+            userId = user.id
+        }
+
+        const result = await UserController.getUserAccountData(userId!)
+        return res.status(200).json(result)
+    } catch (error) {
+        if (error instanceof Error && (
+            error.message.includes("Id użytkownika") ||
+            error.message.includes("Użytkownik o takim")
+        )) {
+            return res.status(400).json({
+                success: false,
+                message: error.message
+            })
+        }
+
+        return res.status(500).json({
+            success: false,
+            message: "Internal server error"
+        })
+    }
+}
+
 const logout = (req: Request, res: Response) => {
     req.logOut?.((err) => {
         if (err) {
@@ -289,6 +317,11 @@ userRouter.post(
     '/user/get-n-essays',
     //isAuthenticated,
     getNEssays
+)
+userRouter.get(
+    '/user/get-user-account-data',
+    //isAuthenticated,
+    getUserAccountData
 )
 userRouter.post(
     '/user/logout',

@@ -20,6 +20,10 @@ export interface EssayResponse extends RestResponse {
     urlIdentifier: string
 }
 
+export interface AccountDataResponse extends RestResponse {
+    email: string
+}
+
 export interface SubscriptionPurchaseResponse extends RestResponse {
     url: string
 }

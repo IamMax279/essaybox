@@ -1,6 +1,6 @@
 import prisma from "../../prisma/PrismaClient"
 import argon2 from "argon2"
-import { AIResponse, AllEssaysResponse, EssayData, EssayPortionsResponse, RestResponse } from "../../../@types"
+import { AccountDataResponse, AIResponse, AllEssaysResponse, EssayData, EssayPortionsResponse, RestResponse } from "../../../@types"
 import { EmailService } from "../services/EmailService"
 import { AuthService } from "../services/AuthService"
 
@@ -207,6 +207,25 @@ export class UserController {
             message: "Essays found successfully",
             essays,
             hasMore
+        }
+    }
+
+    static async getUserAccountData(userId: bigint): Promise<AccountDataResponse> {
+        if (!userId) {
+            throw new Error("Id użytkownika nie zostało podane")
+        }
+
+        const user = await prisma.user.findFirst({
+            where: { id: userId }
+        })
+        if (!user) {
+            throw new Error("Użytkownik o takim id nie istnieje")
+        }
+
+        return {
+            success: true,
+            message: "Data found successfully",
+            email: user.email
         }
     }
 }
