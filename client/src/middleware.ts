@@ -2,18 +2,48 @@ import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
 export async function middleware(request: NextRequest) {
-  const cookie = request.cookies.get('connect.sid')
+  const cookie = request.cookies.get('connect.sid')?.value
   const { pathname } = request.nextUrl
 
   const authPages = ["/sign-up", "/sign-in", "/verify-email"]
   const authorized = ["/chat/nowy"]
 
-  if (cookie && authPages.some((page) => (pathname.startsWith(page) || pathname === '/'))) {
-    return NextResponse.redirect(new URL("/chat/nowy", request.url)) // request.url is the base url
+  if (authPages.some((page) => pathname.startsWith(page)) || pathname === '/') {
+    console.log("Gerger")
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_SERVER_URL}/user/is-logged-in`,
+      { 
+        method: 'GET',
+        headers: {
+          Cookie: cookie ? `connect.sid=${cookie}` : ""
+        }
+      }
+    )
+
+    const data = await response.json()
+    console.log("DATA1:", data)
+    if (data.success) {
+      return NextResponse.redirect(new URL("/chat/nowy", request.url))
+    }
   }
 
-  if (!cookie && authorized.some((page) => pathname.startsWith(page))) {
-    return NextResponse.redirect(new URL("/sign-in", request.url))
+  if (authorized.some((page) => pathname.startsWith(page))) {
+    console.log("Gerger2")
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_SERVER_URL}/user/is-logged-in`,
+      { 
+        method: 'GET',
+        headers: {
+          Cookie: cookie ? `connect.sid=${cookie}` : ""
+        }
+      }
+    )
+
+    const data = await response.json()
+    console.log("DATA2:", data)
+    if (!data.success) {
+      return NextResponse.redirect(new URL("/sign-in", request.url))
+    }
   }
 
   if (pathname.startsWith('/chat') && !pathname.startsWith('/chat/nowy')) {
@@ -37,9 +67,26 @@ export async function middleware(request: NextRequest) {
     }
   }
 
+  if (pathname.startsWith('/reset-password')) {
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_SERVER_URL}/user/is-logged-in`,
+      { 
+        method: 'GET',
+        headers: {
+          Cookie: cookie ? `connect.sid=${cookie}` : ""
+        }
+      }
+    )
+
+    const data = await response.json()
+    if (!data.success) {
+      return NextResponse.redirect(new URL("/sign-in", request.url))
+    }
+  }
+
   return NextResponse.next()
 }
 
 export const config = {
-  matcher: ["/", "/sign-up", "/verify-email", "/sign-in", "/chat/:path*"],
+  matcher: ["/", "/sign-up", "/verify-email", "/sign-in", "/chat/:path*", "/reset-password"],
 };
