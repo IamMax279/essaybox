@@ -21,11 +21,16 @@ export interface EssayResponse extends RestResponse {
 }
 
 export interface AccountDataResponse extends RestResponse {
-    email: string
+    userData: UserData
 }
 
 export interface SubscriptionPurchaseResponse extends RestResponse {
     url: string
+}
+
+export interface UserData {
+    email: string
+    provider: string
 }
 
 export interface ParagraphData {
