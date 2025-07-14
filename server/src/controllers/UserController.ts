@@ -225,7 +225,34 @@ export class UserController {
         return {
             success: true,
             message: "Data found successfully",
-            email: user.email
+            userData: {
+                email: user.email,
+                provider: user.provider
+            }
+        }
+    }
+
+    static async deleteUserAccount(userId: bigint): Promise<RestResponse> {
+        if (!userId) {
+            throw new Error("Id użytkownika nie zostało podane")
+        }
+
+        const user = await prisma.user.findFirst({
+            where: { id: userId }
+        })
+        if (!user) {
+            throw new Error("Użytkownik o takim id nie istnieje")
+        }
+
+        await prisma.$transaction([
+            prisma.subscription.deleteMany({ where: { userId } }),
+            prisma.essay.deleteMany({ where: { userId } }),
+            prisma.user.delete({ where: { id: userId } })
+        ])
+
+        return {
+            success: true,
+            message: "User deleted successfully"
         }
     }
 }
