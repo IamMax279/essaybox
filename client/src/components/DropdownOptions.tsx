@@ -7,6 +7,7 @@ import {
     DropdownSection,
     DropdownItem 
 } from "@heroui/dropdown";
+import { SharedSelection } from "@heroui/system";
 import { Button } from "@nextui-org/button";
 import { useState } from "react";
 
@@ -29,7 +30,7 @@ export default function DropdownOptions({ text, className, items, mainItem, text
     const selectedKey = Array.from(selected)[0] // tu i tak tylko 1 element
     const selectedValue = items.find(item => item.key === selectedKey)?.value ?? "";
 
-    const handleSelectionChange = (keys: any) => {
+    const handleSelectionChange = (keys: SharedSelection) => {
         setSelected(keys)
         const key = Array.from(keys)[0]
         if (onChange) {
