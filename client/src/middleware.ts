@@ -9,7 +9,6 @@ export async function middleware(request: NextRequest) {
   const authorized = ["/chat/nowy"]
 
   if (authPages.some((page) => pathname.startsWith(page)) || pathname === '/') {
-    console.log("Gerger")
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_SERVER_URL}/user/is-logged-in`,
       { 
@@ -21,14 +20,12 @@ export async function middleware(request: NextRequest) {
     )
 
     const data = await response.json()
-    console.log("DATA1:", data)
     if (data.success) {
       return NextResponse.redirect(new URL("/chat/nowy", request.url))
     }
   }
 
   if (authorized.some((page) => pathname.startsWith(page))) {
-    console.log("Gerger2")
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_SERVER_URL}/user/is-logged-in`,
       { 
@@ -40,7 +37,6 @@ export async function middleware(request: NextRequest) {
     )
 
     const data = await response.json()
-    console.log("DATA2:", data)
     if (!data.success) {
       return NextResponse.redirect(new URL("/sign-in", request.url))
     }
