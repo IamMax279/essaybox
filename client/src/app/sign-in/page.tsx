@@ -29,7 +29,8 @@ export default function SignIn() {
             )
         },
         onSuccess: (data) => {
-            router.push("/chat/nowy")
+            window.location.href = "/chat/nowy"
+            //router.push("/chat/nowy")
         },
         onError: (error: any) => {
             setSignInError(error.response?.data.message || error.message)
