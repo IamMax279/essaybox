@@ -9,7 +9,7 @@ import { RxCross2 } from "react-icons/rx"
 import { useState } from "react";
 import { useMutation } from "@tanstack/react-query";
 import axios from "axios";
-import { EssayData } from "../../../../@types";
+import type { EssayData, UserData } from "../../../../@types";
 import { useRouter } from "next/navigation";
 import { IoCreateOutline } from "react-icons/io5";
 import BigButton from "@/components/BigButton";
@@ -22,6 +22,7 @@ import {
   ModalFooter
 } from "@heroui/modal";
 import { Button } from "@nextui-org/button"
+import SmallButton from "@/components/SmallButton";
 
 export default function ChatLayout({ children }: { children: ReactNode }) {
     const [clicked, setClicked] = useState<boolean>(false)
@@ -29,6 +30,8 @@ export default function ChatLayout({ children }: { children: ReactNode }) {
     const [initialAmount, setInitialAmount] = useState<number>(20)
     const [hasMore, setHasMore] = useState<boolean>(false)
     const [accountActive, setAccountActive] = useState<boolean>(false)
+    const [userData, setUserData] = useState<UserData | null>(null)
+    const [options, setOptions] = useState<'konto' | 'subskrypcje'>('konto')
 
     const router = useRouter()
 
@@ -51,8 +54,43 @@ export default function ChatLayout({ children }: { children: ReactNode }) {
         }
     })
 
+    const { mutate: getUserAccountData } = useMutation({
+        mutationFn: async () => {
+            const response = await axios.get(
+                `${process.env.NEXT_PUBLIC_SERVER_URL}/user/get-user-account-data`,
+                { withCredentials: true }
+            )
+            return response.data
+        },
+        onSuccess: (data) => {
+            console.log("response:", data)
+            setUserData(data.userData)
+        },
+        onError: (error) => {
+            console.log(error)
+        }
+    })
+
+    const { mutate: logOut } = useMutation({
+        mutationFn: async () => {
+            const response = await axios.get(
+                `${process.env.NEXT_PUBLIC_SERVER_URL}/user/logout`,
+                { withCredentials: true }
+            )
+            return response.data
+        },
+        onSuccess: (data) => {
+            console.log("DATATAAAAeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeewr:", data)
+            window.location.href = '/sign-in'
+        },
+        onError: (error) => {
+            console.error(error)
+        }
+    })
+
     useEffect(() => {
         getNEssays()
+        getUserAccountData()
     }, [])
 
     const refetchEssays = () => getNEssays()
@@ -238,32 +276,78 @@ export default function ChatLayout({ children }: { children: ReactNode }) {
                 <ModalContent className='pt-4 pb-2'>
                     <>
                     <ModalBody
-                    className="flex flex-col items-start">
-                        <div className="flex flex-row">
-                            <h1 className="font-heming text-2xl text-white">
-                                D
-                            </h1>
-                            <h1 className="font-heming text-2xl text-white relative right-[3px]">
-                                ane Konta
-                            </h1>
+                    className="flex flex-row relative">
+                        <RxCross2
+                        className="absolute top-2 right-4 cursor-pointer text-gray-200 hover:brightness-75
+                        transition ease-in-out duration-200"
+                        size={30}
+                        onClick={() => setAccountActive(false)}
+                        />
+                        <div className="w-48 border-r border-r-neutral-700">
+                            {['konto', 'subskrypcje'].map((o, i) => (
+                                <div
+                                key={i}
+                                className="mb-2 text-white hover:brightness-75 transition-all
+                                duration-200 ease-in-out cursor-pointer font-heming"
+                                onClick={() => setOptions(o as 'konto' | 'subskrypcje')}>
+                                    {o[0].toUpperCase() + o.substring(1)}
+                                </div>
+                            ))}
                         </div>
-                        <div className="flex flex-col w-full mt-2">
-                            <label className="text-white font-heming">
-                                E-mail
-                            </label>
-                            <div className="mt-1 p-2 border border-neutral-700 rounded-lg w-full">
-
+                        {options === 'konto' ? 
+                        <div className="flex flex-col w-full space-y-4">
+                            <div className="flex flex-row">
+                                <h1 className="font-heming text-2xl text-white">
+                                    D
+                                </h1>
+                                <h1 className="font-heming text-2xl text-white relative right-[3px]">
+                                    ane Konta
+                                </h1>
                             </div>
+                            <div className="flex flex-col w-full mt-2">
+                                <label className="text-white font-heming">
+                                    E-mail
+                                </label>
+                                <div className="text-white font-outfit mt-1 p-2 border border-neutral-700 rounded-lg w-full">
+                                    {userData?.email}
+                                </div>
+                            </div>
+                            {userData?.provider !== 'google' &&
+                            <div className="flex flex-col w-full mt-2">
+                                <label className="text-white font-heming">
+                                    Hasło
+                                </label>
+                                <div className="text-white font-outfit mt-1 p-2 border border-neutral-700 rounded-lg w-full">
+                                    <div className="flex flex-row items-center justify-between">
+                                        <p>●●●●●●●●●</p>
+                                        <SmallButton
+                                        text="Zmień hasło"
+                                        onPress={() => router.push('/reset-password')}
+                                        />
+                                    </div>
+                                </div>
+                            </div>
+                            }
+                            <SmallButton
+                            text="Wyloguj"
+                            className="text-white"
+                            width="w-32"
+                            onPress={() => logOut()}
+                            />
+                            <SmallButton
+                            text="Usuń konto"
+                            className="text-white bg-red-800"
+                            width="w-32"
+                            border={false}
+                            onPress={() => router.push('/reset-password')}
+                            />
                         </div>
+                        :
+                        <div>
+                            {/* TODO: Subskrypcje */}
+                        </div>
+                        }
                     </ModalBody>
-                    <ModalFooter className='flex flex-row justify-center items-center gap-4'>
-                        <Button className='bg-bigbutton font-semibold text-white
-                        hover:brightness-110 transition ease-in-out duration-200
-                        px-8 py-2 font-outfit'
-                        onPress={() => setAccountActive(false)}>
-                        OK
-                        </Button>
-                    </ModalFooter>
                     </>
                 </ModalContent>
             </Modal>

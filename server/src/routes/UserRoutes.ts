@@ -245,7 +245,7 @@ const getUserAccountData = async (req: Request, res: Response): Promise<any> => 
             userId = user.id
         }
 
-        const result = await UserController.getUserAccountData(userId!)
+        const result = await UserController.getUserAccountData(BigInt(25)/*userId!*/)
         return res.status(200).json(result)
     } catch (error) {
         if (error instanceof Error && (
@@ -261,6 +261,20 @@ const getUserAccountData = async (req: Request, res: Response): Promise<any> => 
         return res.status(500).json({
             success: false,
             message: "Internal server error"
+        })
+    }
+}
+
+const isLoggedIn = (req: Request, res: Response): any => {
+    if (req.isAuthenticated && req.isAuthenticated()) {
+        return res.status(200).json({
+            success: true,
+            message: "User is logged in"
+        })
+    } else {
+        return res.status(401).json({
+            success: false,
+            message: "User is not logged in"
         })
     }
 }
@@ -307,7 +321,7 @@ userRouter.post(
     '/user/get-essay',
     //isAuthenticated
     getEssay
-),
+)
 userRouter.get(
     '/user/get-all-essays',
     //isAuthenticated
@@ -323,7 +337,11 @@ userRouter.get(
     //isAuthenticated,
     getUserAccountData
 )
-userRouter.post(
+userRouter.get(
+    '/user/is-logged-in',
+    isLoggedIn
+)
+userRouter.get(
     '/user/logout',
     logout
 )
