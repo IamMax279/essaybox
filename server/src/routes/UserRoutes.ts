@@ -159,7 +159,7 @@ const getEssay = async (req: Request, res: Response): Promise<any> => {
             userId = user.id
         }
 
-        const result = await UserController.getEssay(BigInt(25)/*userId!*/, essayId)
+        const result = await UserController.getEssay(userId!, essayId)
         return res.status(200).json(result)
     } catch (error) {
         if (error instanceof Error && (
@@ -188,7 +188,7 @@ const getAllEssays = async (req: Request, res: Response): Promise<any> => {
             userId = user.id
         }
 
-        const result = await UserController.getAllEssays(BigInt(25)/*userId!*/)
+        const result = await UserController.getAllEssays(userId!)
         return res.status(200).json(result)
     } catch (error) {
         if (error instanceof Error && (
@@ -217,7 +217,7 @@ const getNEssays = async (req: Request, res: Response): Promise<any> => {
             userId = user.id
         }
 
-        const result = await UserController.getNEssays(BigInt(25)/*userId!*/, n)
+        const result = await UserController.getNEssays(userId!, n)
         return res.status(200).json(result)
     } catch (error) {
         if (error instanceof Error && (
@@ -245,7 +245,7 @@ const getUserAccountData = async (req: Request, res: Response): Promise<any> => 
             userId = user.id
         }
 
-        const result = await UserController.getUserAccountData(BigInt(25)/*userId!*/)
+        const result = await UserController.getUserAccountData(userId!)
         return res.status(200).json(result)
     } catch (error) {
         if (error instanceof Error && (
@@ -297,6 +297,34 @@ const logout = (req: Request, res: Response) => {
     })
 }
 
+const deleteAccount = async (req: Request, res: Response): Promise<any> => {
+    try {
+        let userId
+        if (req.isAuthenticated() && req.user) {
+            const user = req.user as { id: bigint }
+            userId = user.id
+        }
+
+        const result = await UserController.deleteUserAccount(userId!)
+        return res.status(200).json(result)
+    } catch (error) {
+        if (error instanceof Error && (
+            error.message.includes("Id użytkownika") ||
+            error.message.includes("Użytkownik o")
+        )) {
+            return res.status(400).json({
+                success: false,
+                message: error.message
+            })
+        }
+
+        return res.status(500).json({
+            success: false,
+            message: "Internal server error"
+        })
+    }
+}
+
 userRouter.post(
     '/user/register',
     registerUser
@@ -344,6 +372,11 @@ userRouter.get(
 userRouter.get(
     '/user/logout',
     logout
+)
+userRouter.get(
+    '/user/delete-account',
+    //isAuthenticated,
+    deleteAccount
 )
 
 export default userRouter
