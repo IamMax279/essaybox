@@ -10,7 +10,7 @@ authRouter.get(
 authRouter.get(
     '/auth/google/callback',
     passport.authenticate("google", {
-        successRedirect: process.env.CLIENT_URL + "/nowy",
+        successRedirect: process.env.CLIENT_URL + "/chat/nowy",
         failureRedirect: process.env.CLIENT_URL + "/sign-in"
     })
 )
