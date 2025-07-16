@@ -45,7 +45,7 @@ export default function Home() {
         </div>
         <div></div>
       </section>
-      <section className="w-1/2">
+      <section className="w-1/2 bg-[#1E1E1E]">
 
       </section>
     </div>

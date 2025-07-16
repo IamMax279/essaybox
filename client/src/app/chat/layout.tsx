@@ -80,7 +80,6 @@ export default function ChatLayout({ children }: { children: ReactNode }) {
             return response.data
         },
         onSuccess: (data) => {
-            console.log("DATATAAAAeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeewr:", data)
             window.location.href = '/sign-in'
         },
         onError: (error) => {
