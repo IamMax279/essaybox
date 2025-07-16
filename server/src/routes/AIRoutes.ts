@@ -41,7 +41,7 @@ const generateEssay = async (req: Request, res: Response): Promise<any> => {
                 title: result.title,
                 content: result.essay
             } as EssayData,
-            BigInt(25)//userId!
+            userId!
         )
 
         return res.status(200).json({
