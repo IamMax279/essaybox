@@ -62,20 +62,18 @@ export default function Home() {
           <Image
           src={DisplayInputField1}
           alt="input1"
-          className="relative xl:bottom-8 xl:py-0 pt-y animate__animated animate__fadeInUp"
+          className="relative xl:bottom-8 xl:py-0 sm:w-[578px] xsmll:w-[420px] w-[350px] py-6 animate__animated animate__fadeInUp"
           />
           <div className="flex flex-row space-x-4 relative animate__animated animate__delay-1s animate__fadeInUp">
             <Image
             src={DisplayOutput1}
             alt="output1"
-            className="relative right-8 pb-6 xl:pb-0"
+            className="relative sm:right-8 right-7 pb-6 xl:pb-0 sm:w-[513px] xsmll:w-[380px] w-[300px]"
             />
             <Image
             src={LogoWhite}
             alt="logo"
-            width={52}
-            height={52}
-            className="absolute top-0 -right-8"
+            className="absolute top-0 sm:-right-8 -right-7 sm:w-[52px] sm:h-[52px] w-[40px] h-[40px]"
             />
           </div>
         </div>
@@ -86,20 +84,18 @@ export default function Home() {
           <Image
           src={DisplayInputField2}
           alt="input1"
-          className="relative xl:bottom-8 xl:py-0 py-6 animate__animated animate__fadeInUp"
+          className="relative xl:bottom-8 xl:py-0 sm:w-[578px] xsmll:w-[420px] w-[350px] py-6 animate__animated animate__fadeInUp"
           />
           <div className="flex flex-row space-x-4 relative animate__animated animate__delay-1s animate__fadeInUp">
             <Image
             src={DisplayOutput2}
             alt="output1"
-            className="relative right-8 pb-6 xl:pb-0"
+            className="relative sm:right-8 right-7 pb-6 xl:pb-0 sm:w-[513px] xsmll:w-[380px] w-[300px]"
             />
             <Image
             src={LogoWhite}
             alt="logo"
-            width={52}
-            height={52}
-            className="absolute top-0 -right-8"
+            className="absolute top-0 sm:-right-8 -right-7 sm:w-[52px] sm:h-[52px] w-[40px] h-[40px]"
             />
           </div>
         </div>
@@ -109,20 +105,18 @@ export default function Home() {
           <Image
           src={DisplayInputField3}
           alt="input1"
-          className="relative xl:bottom-8 xl:py-0 py-6 animate__animated animate__fadeInUp"
+          className="relative xl:bottom-8 xl:py-0 sm:w-[578px] xsmll:w-[420px] w-[350px] py-6 animate__animated animate__fadeInUp"
           />
           <div className="flex flex-row space-x-4 relative animate__animated animate__delay-1s animate__fadeInUp">
             <Image
             src={DisplayOutput3}
             alt="output1"
-            className="relative right-8 pb-6 xl:pb-0"
+            className="relative sm:right-8 right-7 pb-6 xl:pb-0 sm:w-[513px] xsmll:w-[380px] w-[300px]"
             />
             <Image
             src={LogoWhite}
             alt="logo"
-            width={52}
-            height={52}
-            className="absolute top-0 -right-8"
+            className="absolute top-0 sm:-right-8 -right-7 sm:w-[52px] sm:h-[52px] w-[40px] h-[40px]"
             />
           </div>
         </div>

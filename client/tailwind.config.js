@@ -33,7 +33,8 @@ module.exports = {
       screens: {
         smll: '500px',
         mxl: '1408px',
-        sdbr: '790px'
+        sdbr: '790px',
+        xsmll: '463px'
       }
     },
   },
