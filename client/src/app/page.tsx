@@ -14,10 +14,17 @@ import DisplayOutput1 from "../../public/DisplayOutput1.svg"
 import DisplayOutput2 from "../../public/DisplayOutput2.svg"
 import DisplayOutput3 from "../../public/DisplayOutput3.svg"
 import "animate.css";
+import { GoDotFill } from "react-icons/go";
+import { useEffect, useState } from "react";
 
 export default function Home() {
+  const [animation, setAnimation] = useState<number>(3)
   const router = useRouter()
-  const animation = useAnimation(3, 10000)
+
+  useEffect(() => {
+    const timer = setInterval(() => setAnimation(animation + 1), 10000)
+    return () => clearInterval(timer)
+  }, [animation])
 
   return (
     <div className="flex xl:flex-row flex-col xl:overflow-y-hidden">
@@ -55,7 +62,7 @@ export default function Home() {
         </div>
         <div></div>
       </section>
-      <section className="xl:w-1/2 bg-[#1E1E1E]">
+      <section className="xl:w-1/2 bg-[#1E1E1E] flex flex-col min-h-screen xl:h-full justify-between relative">
         {animation % 3 === 1 ?
         <div className="flex flex-col justify-center items-center min-h-screen xl:h-full"
         key={animation}>
@@ -121,6 +128,17 @@ export default function Home() {
           </div>
         </div>
         }
+        <div className="flex flex-row space-x-[2px] justify-center items-center absolute bottom-16 left-1/2">
+          {[0, 1, 2].map((i) => (
+            <GoDotFill
+              key={i}
+              size={14}
+              className={`cursor-pointer hover:text-gray-500 transition-all duration-200 ease-in-out
+              ${((animation % 3) === ((i + 1) % 3) ? "text-gray-600" : "text-gray-400")}`}
+              onClick={() => setAnimation(i + 1)}
+            />
+          ))}
+        </div>
       </section>
     </div>
   );
