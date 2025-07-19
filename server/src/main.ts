@@ -30,6 +30,8 @@ app.use(session({
         maxAge: 1000 * 60 * 60 * 24 * 7
     }
 }))
+
+app.use(stripeRouter)
 app.use(express.json())
 app.use(passport.initialize())
 app.use(passport.session())
@@ -40,7 +42,6 @@ app.use(authRouter)
 app.use(aiRouter)
 app.use(essayRouter)
 app.use(paymentsRouter)
-app.use(stripeRouter)
 
 const PORT = process.env.PORT || 3001
 app.listen(PORT)
