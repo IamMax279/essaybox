@@ -27,20 +27,6 @@ const webhook = async (req: Request, res: Response): Promise<any> => {
 
     switch (event.type) {
         case 'checkout.session.completed':
-            const session = event.data.object
-            const subscriptionId = session.subscription as string
-            const stripeCustomerId = session.customer as string
-
-            const subscription = await stripe.subscriptions.retrieve(subscriptionId) as Stripe.Subscription
-            const items = subscription.items.data
-            const periodEnd = items[0]?.current_period_end
-                ? new Date(items[0]?.current_period_end * 1000)
-                : null
-
-            console.log("current_period_start:", items[0]?.current_period_start)
-            console.log("current_period_end:", items[0]?.current_period_end)
-            console.log("periodEnd:", periodEnd)
-
             // const user = await prisma.user.findFirst({
             //     where: { stripeCustomerId }
             // })
@@ -64,6 +50,34 @@ const webhook = async (req: Request, res: Response): Promise<any> => {
             console.log("CHECKOUT SESSION COMPLETED")
             break
         case 'customer.subscription.created':
+            const subscription = event.data.object as Stripe.Subscription
+            const stripeSubscriptionId = subscription.id
+            const stripeCustomerId = subscription.customer as string
+
+            const items = subscription.items.data
+            const periodEnd = items[0].current_period_end
+                ? new Date(items[0].current_period_end * 1000)
+                : null
+            
+            const user = await prisma.user.findFirst({
+                where: { stripeCustomerId }
+            })
+            if (!user) {
+                console.log("User not found")
+                break
+            }
+
+            await prisma.subscription.create({
+                data: {
+                    stripeSubscriptionId,
+                    currentPeriodEnd: periodEnd!,
+                    userId: user.id
+                }
+            })
+            
+            console.log("current_period_start:", items[0]?.current_period_start);
+            console.log("current_period_end:", items[0]?.current_period_end);
+            console.log("periodEnd:", periodEnd);
             //TODO: implement logic
             console.log("CUSTOMER SUBSCRIPTION CREATED")
             break

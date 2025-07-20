@@ -52,7 +52,6 @@ model Essay {
 model Subscription {
   id BigInt @id @default(autoincrement())
   stripeSubscriptionId String @unique
-  status String
   currentPeriodEnd DateTime
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
