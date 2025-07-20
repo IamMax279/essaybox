@@ -34,8 +34,8 @@ export class PaymentsController {
                 { price: 'price_1RjPmfIqrP8tyF9HaIcVL572', quantity: 1 }
             ],
             customer: stripeCustomerId,
-            success_url: `http://localhost:3000/account?success=true`,
-            cancel_url: `http://localhost:3000/account?success=false`
+            success_url: `http://localhost:3000/chat/nowy?success=true`,
+            cancel_url: `http://localhost:3000/chat/nowy?success=false`
         })
         
         return {
