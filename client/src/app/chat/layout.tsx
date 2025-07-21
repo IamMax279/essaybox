@@ -71,6 +71,22 @@ export default function ChatLayout({ children }: { children: ReactNode }) {
         }
     })
 
+    const { mutate: subscriptionRedirect } = useMutation({
+        mutationFn: async () => {
+            const response = await axios.get(
+                `${process.env.NEXT_PUBLIC_SERVER_URL}/payments/subscribe`,
+                { withCredentials: true }
+            )
+            return response.data
+        },
+        onSuccess: (data) => {
+            window.location.href = data.url
+        },
+        onError: (error) => {
+            console.log("ERROROR", error)
+        }
+    })
+
     const { mutate: logOut } = useMutation({
         mutationFn: async () => {
             const response = await axios.get(
@@ -269,25 +285,26 @@ export default function ChatLayout({ children }: { children: ReactNode }) {
             onOpenChange={setAccountActive}
             hideCloseButton={true}
             size="4xl"
-            className="flex self-center mx-4 h-96 shadow-[0_2px_16px_0_#121212]
-            bg-[#1E1E1E]/90 border border-neutral-700"
+            className={`flex self-center mx-4 h-96 shadow-[0_2px_16px_0_#121212]
+            bg-[#1E1E1E]/90 border border-neutral-700 ${options === 'subskrypcje' ? "h-64" : ""}`}
             >
                 <ModalContent className='pt-4 pb-2'>
                     <>
                     <ModalBody
-                    className="flex flex-row relative">
+                    className={`flex flex-row relative`}>
                         <RxCross2
                         className="absolute top-2 right-4 cursor-pointer text-gray-200 hover:brightness-75
                         transition ease-in-out duration-200"
                         size={30}
                         onClick={() => setAccountActive(false)}
                         />
-                        <div className="w-48 border-r border-r-neutral-700">
+                        <div className={`${options === 'subskrypcje' ? "w-[120px]" : "w-[136px]"} border-r border-r-neutral-700`}>
                             {['konto', 'subskrypcje'].map((o, i) => (
                                 <div
                                 key={i}
-                                className="mb-2 text-white hover:brightness-75 transition-all
-                                duration-200 ease-in-out cursor-pointer font-heming"
+                                className={`mb-2 text-white hover:brightness-75 transition-all
+                                duration-200 ease-in-out cursor-pointer font-heming
+                                ${o === 'subskrypcje' ? "-mr-2" : ""}`}
                                 onClick={() => setOptions(o as 'konto' | 'subskrypcje')}>
                                     {o[0].toUpperCase() + o.substring(1)}
                                 </div>
@@ -343,6 +360,9 @@ export default function ChatLayout({ children }: { children: ReactNode }) {
                         </div>
                         :
                         <div>
+                            <div className="border border-bigbutton/70 rounded-lg h-full bg-[#1E1E1E] w-[350px]">
+
+                            </div>
                             {/* TODO: Subskrypcje */}
                         </div>
                         }
