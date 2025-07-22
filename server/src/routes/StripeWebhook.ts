@@ -27,25 +27,6 @@ const webhook = async (req: Request, res: Response): Promise<any> => {
 
     switch (event.type) {
         case 'checkout.session.completed':
-            // const user = await prisma.user.findFirst({
-            //     where: { stripeCustomerId }
-            // })
-            // if (!user) {
-            //     console.log("No user found")
-            //     break
-            // }
-
-            // const end = new Date()
-            // end.setDate(new Date().getDate() + 30)
-                
-            // await prisma.subscription.create({
-            //     data: {
-            //         stripeSubscriptionId: subscriptionId,
-            //         status: 'active',
-            //         currentPeriodEnd: end.toISOString(),
-            //         userId: user.id
-            //     }
-            // })
             //TODO: implement logic
             console.log("CHECKOUT SESSION COMPLETED")
             break
