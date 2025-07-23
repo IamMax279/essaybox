@@ -23,6 +23,7 @@ import {
 } from "@heroui/modal";
 import { Button } from "@nextui-org/button"
 import SmallButton from "@/components/SmallButton";
+import { FaCheck } from "react-icons/fa6";
 
 export default function ChatLayout({ children }: { children: ReactNode }) {
     const [clicked, setClicked] = useState<boolean>(false)
@@ -298,7 +299,8 @@ export default function ChatLayout({ children }: { children: ReactNode }) {
                         size={30}
                         onClick={() => setAccountActive(false)}
                         />
-                        <div className={`${options === 'subskrypcje' ? "w-[120px]" : "w-[136px]"} border-r border-r-neutral-700`}>
+                        <div className={`${options === 'subskrypcje' ? "w-[120px]" : "w-[136px]"} border-r border-r-neutral-700
+                        ${options === 'subskrypcje' ? 'relative bottom-2': ''}`}>
                             {['konto', 'subskrypcje'].map((o, i) => (
                                 <div
                                 key={i}
@@ -360,8 +362,45 @@ export default function ChatLayout({ children }: { children: ReactNode }) {
                         </div>
                         :
                         <div>
-                            <div className="border border-bigbutton/70 rounded-lg h-full bg-[#1E1E1E] w-[350px]">
-
+                            <div className="border border-bigbutton/70 rounded-lg h-full bg-[#1E1E1E] w-[330px] p-4
+                            flex flex-col relative bottom-2">
+                                <div className="flex flex-row justify-between items-center">
+                                    <p className="font-heming text-3xl text-white">
+                                        Pro
+                                    </p>
+                                    <p className="font-heming text-white">
+                                        39.99zł/msc
+                                    </p>
+                                </div>
+                                <div className="flex flex-row items-center text-bigbutton mt-2">
+                                    <FaCheck
+                                    size={24}
+                                    />
+                                    <p className="ml-2 text-white relative top-[2px]">
+                                        Do 100 rozprawek miesięcznie
+                                    </p>
+                                </div>
+                                <div className="flex flex-row items-center text-bigbutton mt-2">
+                                    <FaCheck
+                                    size={24}
+                                    />
+                                    <p className="ml-2 text-white relative top-[2px]">
+                                        Eksportowanie rozprawek do PDF
+                                    </p>
+                                </div>
+                                <div className="flex flex-row items-center text-bigbutton mt-2">
+                                    <FaCheck
+                                    size={24}
+                                    />
+                                    <p className="ml-2 text-white relative top-[2px]">
+                                        Opcja generowania 3 akapitów
+                                    </p>
+                                </div>
+                                <BigButton
+                                text="Subskrybuj"
+                                width="w-full"
+                                className="mt-4"
+                                />
                             </div>
                             {/* TODO: Subskrypcje */}
                         </div>
