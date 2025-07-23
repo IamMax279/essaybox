@@ -287,12 +287,12 @@ export default function ChatLayout({ children }: { children: ReactNode }) {
             hideCloseButton={true}
             size="4xl"
             className={`flex self-center h-96 shadow-[0_2px_16px_0_#121212]
-            bg-[#1E1E1E]/90 border border-neutral-700 ${options === 'subskrypcje' ? "h-[350px] sdbr:h-64" : ""}`}
+            bg-[#1E1E1E]/90 border border-neutral-700 ${options === 'subskrypcje' ? "h-[350px] sdbr:h-64" : "h-[450px] sdbr:h-96"}`}
             >
                 <ModalContent className='pt-4 pb-2'>
                     <>
                     <ModalBody
-                    className={`flex flex-row ${options === 'subskrypcje' ? 'sdbr:flex-row flex-col' : ''} relative`}>
+                    className={`flex sdbr:flex-row flex-col relative`}>
                         <RxCross2
                         className="absolute top-2 right-4 cursor-pointer text-gray-200 hover:brightness-75
                         transition ease-in-out duration-200"
@@ -313,7 +313,7 @@ export default function ChatLayout({ children }: { children: ReactNode }) {
                             ))}
                         </div>
                         {options === 'konto' ? 
-                        <div className="flex flex-col w-full space-y-4">
+                        <div className="flex flex-col w-full space-y-4 relative right-1 sdbr:right-0">
                             <div className="flex flex-row">
                                 <h1 className="font-heming text-2xl text-white">
                                     D
@@ -337,7 +337,7 @@ export default function ChatLayout({ children }: { children: ReactNode }) {
                                 </label>
                                 <div className="text-white font-outfit mt-1 p-2 border border-neutral-700 rounded-lg w-full">
                                     <div className="flex flex-row items-center justify-between">
-                                        <p>●●●●●●</p>
+                                        <p>●●●●●●●●●</p>
                                         <SmallButton
                                         text="Zmień hasło"
                                         onPress={() => router.push('/reset-password')}
@@ -363,7 +363,7 @@ export default function ChatLayout({ children }: { children: ReactNode }) {
                         :
                         <div>
                             <div className="border border-bigbutton/70 rounded-lg h-full bg-[#1E1E1E] w-[330px] p-4
-                            flex flex-col relative bottom-2">
+                            flex flex-col relative bottom-2 right-2 sdbr:right-0">
                                 <div className="flex flex-row justify-between items-center">
                                     <p className="font-heming text-3xl text-white">
                                         Pro
