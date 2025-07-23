@@ -286,21 +286,21 @@ export default function ChatLayout({ children }: { children: ReactNode }) {
             onOpenChange={setAccountActive}
             hideCloseButton={true}
             size="4xl"
-            className={`flex self-center mx-4 h-96 shadow-[0_2px_16px_0_#121212]
-            bg-[#1E1E1E]/90 border border-neutral-700 ${options === 'subskrypcje' ? "h-64" : ""}`}
+            className={`flex self-center h-96 shadow-[0_2px_16px_0_#121212]
+            bg-[#1E1E1E]/90 border border-neutral-700 ${options === 'subskrypcje' ? "h-[350px] sdbr:h-64" : ""}`}
             >
                 <ModalContent className='pt-4 pb-2'>
                     <>
                     <ModalBody
-                    className={`flex flex-row relative`}>
+                    className={`flex flex-row ${options === 'subskrypcje' ? 'sdbr:flex-row flex-col' : ''} relative`}>
                         <RxCross2
                         className="absolute top-2 right-4 cursor-pointer text-gray-200 hover:brightness-75
                         transition ease-in-out duration-200"
                         size={30}
                         onClick={() => setAccountActive(false)}
                         />
-                        <div className={`${options === 'subskrypcje' ? "w-[120px]" : "w-[136px]"} border-r border-r-neutral-700
-                        ${options === 'subskrypcje' ? 'relative bottom-2': ''}`}>
+                        <div className={`${options === 'subskrypcje' ? "w-[120px]" : "w-[136px]"} sdbr:border-r border-r-neutral-700
+                        ${options === 'subskrypcje' ? 'relative bottom-2': ''} relative sdbr:text-base sdbr:right-0 right-2`}>
                             {['konto', 'subskrypcje'].map((o, i) => (
                                 <div
                                 key={i}
@@ -337,7 +337,7 @@ export default function ChatLayout({ children }: { children: ReactNode }) {
                                 </label>
                                 <div className="text-white font-outfit mt-1 p-2 border border-neutral-700 rounded-lg w-full">
                                     <div className="flex flex-row items-center justify-between">
-                                        <p>●●●●●●●●●</p>
+                                        <p>●●●●●●</p>
                                         <SmallButton
                                         text="Zmień hasło"
                                         onPress={() => router.push('/reset-password')}
@@ -400,6 +400,7 @@ export default function ChatLayout({ children }: { children: ReactNode }) {
                                 text="Subskrybuj"
                                 width="w-full"
                                 className="mt-4"
+                                onPress={() => subscriptionRedirect()}
                                 />
                             </div>
                             {/* TODO: Subskrypcje */}
