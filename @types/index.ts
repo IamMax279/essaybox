@@ -31,6 +31,8 @@ export interface SubscriptionPurchaseResponse extends RestResponse {
 export interface UserData {
     email: string
     provider: string
+    subscribed: boolean
+    periodEndDate?: Date | undefined
 }
 
 export interface ParagraphData {
