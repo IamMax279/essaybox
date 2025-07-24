@@ -24,6 +24,7 @@ import {
 import { Button } from "@nextui-org/button"
 import SmallButton from "@/components/SmallButton";
 import { FaCheck } from "react-icons/fa6";
+import { format } from "date-fns";
 
 export default function ChatLayout({ children }: { children: ReactNode }) {
     const [clicked, setClicked] = useState<boolean>(false)
@@ -361,6 +362,7 @@ export default function ChatLayout({ children }: { children: ReactNode }) {
                             />
                         </div>
                         :
+                        !userData?.subscribed ?
                         <div>
                             <div className="border border-bigbutton/70 rounded-lg h-full bg-[#1E1E1E] w-[330px] p-4
                             flex flex-col relative bottom-2 right-2 sdbr:right-0">
@@ -405,6 +407,10 @@ export default function ChatLayout({ children }: { children: ReactNode }) {
                             </div>
                             {/* TODO: Subskrypcje */}
                         </div>
+                        :
+                        <p className="text-white">
+                            Twoja subskrypcja jest aktywna i wygaśnie {format(userData.periodEndDate!, 'dd.MM.yyyy')}.
+                        </p>
                         }
                     </ModalBody>
                     </>
