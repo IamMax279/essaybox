@@ -222,12 +222,19 @@ export class UserController {
             throw new Error("Użytkownik o takim id nie istnieje")
         }
 
+        const subscription = await prisma.subscription.findFirst({
+            where: { userId: user.id }
+        })
+        const isSubscribed = subscription && subscription.currentPeriodEnd > new Date()
+
         return {
             success: true,
             message: "Data found successfully",
             userData: {
                 email: user.email,
-                provider: user.provider
+                provider: user.provider,
+                subscribed: !!isSubscribed,
+                periodEndDate: subscription ? subscription.currentPeriodEnd : undefined
             }
         }
     }
