@@ -7,6 +7,25 @@ export class EssayController {
             throw new Error("Niekompletne dane")
         }
 
+        const user = await prisma.user.findFirst({
+            where: { id: userId }
+        })
+        if (!user) {
+            throw new Error("Id użytkownika nie zostało podane")
+        }
+
+        if (user.generationCount < 1) {
+            return { 
+                success: false,
+                message: "User essay generation count is insufficient"
+            }
+        }
+
+        await prisma.user.update({
+            where: { id: user.id },
+            data: { generationCount: user.generationCount - 1 }
+        })
+
         const trimmed = data.title.trim()
         const title = trimmed[0].toLocaleUpperCase() + trimmed.substring(1)
 

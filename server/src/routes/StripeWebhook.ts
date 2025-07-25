@@ -55,6 +55,11 @@ const webhook = async (req: Request, res: Response): Promise<any> => {
                     userId: user.id
                 }
             })
+
+            await prisma.user.update({
+                where: { id: user.id },
+                data: { generationCount: user.generationCount + 100 }
+            })
             
             console.log("current_period_start:", items[0]?.current_period_start);
             console.log("current_period_end:", items[0]?.current_period_end);
