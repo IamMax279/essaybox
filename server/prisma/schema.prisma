@@ -28,6 +28,7 @@ model User {
   passwordToken String?
   passwordTokenExpiry DateTime?
   stripeCustomerId String?
+  generationCount Int @default(1)
 
   essays Essay[]
   subscription Subscription?
