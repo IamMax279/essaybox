@@ -17,7 +17,7 @@ export interface EssayPortionsResponse extends AllEssaysResponse {
 }
 
 export interface EssayResponse extends RestResponse {
-    urlIdentifier: string
+    urlIdentifier?: string
 }
 
 export interface AccountDataResponse extends RestResponse {
