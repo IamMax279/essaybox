@@ -5,7 +5,6 @@ import Logo from "../../public/Logo.svg"
 import LogoWords from "../../public/LogoWords.svg"
 import BigButton from "@/components/BigButton";
 import { useRouter } from "next/navigation";
-import { useAnimation } from "@/hooks/useAnimation";
 import LogoWhite from "../../public/LogoWhite.svg"
 import DisplayInputField1 from "../../public/DisplayInputField1.svg"
 import DisplayInputField2 from "../../public/DisplayInputField2.svg"
@@ -18,7 +17,7 @@ import { GoDotFill } from "react-icons/go";
 import { useEffect, useState } from "react";
 
 export default function Home() {
-  const [animation, setAnimation] = useState<number>(3)
+  const [animation, setAnimation] = useState<number>(1)
   const router = useRouter()
 
   useEffect(() => {
