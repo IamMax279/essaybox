@@ -34,17 +34,18 @@ export default function Nowy() {
 
     const { mutate: handleGeneration, isPending } = useMutation({
         mutationFn: async (data: GenerationParams) => {
-            return await axios.post(
+            const response = await axios.post(
                 `${process.env.NEXT_PUBLIC_SERVER_URL}/ai/generate-essay`,
                 data,
                 { withCredentials: true }
             )
+            return response.data
         },
         onSuccess: (data) => {
             //trigger a refetch in the layout in order to update the essay list
             refetchEssays()
 
-            const id = data.data.urlIdentifier
+            const id = data.urlIdentifier
             router.push(`/chat/${id}?brandnew=true`)
         },
         onError: (error) => {
@@ -185,7 +186,7 @@ export default function Nowy() {
                 </div>
                 <DropdownOptions
                 text='Teza'
-                className='mt-5'
+                className='mt-5 shadow-[0_2px_6px_0_#121212]'
                 items={Array.of(
                     { key: "ai_generated", value: "AI generated" },
                     { key: "wlasna", value: "Własna" }
@@ -210,7 +211,7 @@ export default function Nowy() {
                 }
                 <DropdownOptions
                 text='Liczba akapitów'
-                className='mt-5'
+                className='mt-5 shadow-[0_2px_6px_0_#121212]'
                 items={Array.of(
                     { key: "1", value: "1" },
                     { key: "2", value: "2" },
@@ -275,7 +276,7 @@ export default function Nowy() {
                 <BigButton
                 text='Generuj'
                 width="sm:w-[344px] w-[248px]"
-                className='mt-8'
+                className='mt-8 shadow-[0_2px_6px_0_#121212]'
                 type='submit'
                 loading={isPending}
                 />
