@@ -294,12 +294,13 @@ export default function ChatLayout({ children }: { children: ReactNode }) {
                     <>
                     <ModalBody
                     className={`flex sdbr:flex-row flex-col relative`}>
+                        <div className="absolute -top-3 right-0 p-4 z-50">
                         <RxCross2
-                        className="absolute top-0 right-4 cursor-pointer text-gray-200 hover:brightness-75
-                        transition ease-in-out duration-200"
-                        size={30}
-                        onClick={() => setAccountActive(false)}
+                            className="cursor-pointer text-gray-200 hover:brightness-75 transition ease-in-out duration-200"
+                            size={30}
+                            onClick={() => setAccountActive(false)}
                         />
+                        </div>
                         <div className={`${options === 'subskrypcje' ? "w-[120px]" : "w-[136px]"} sdbr:border-r border-r-neutral-700
                         ${options === 'subskrypcje' ? 'relative bottom-2': ''} relative sdbr:text-base sdbr:right-0 right-2`}>
                             {['konto', 'subskrypcje'].map((o, i) => (
@@ -314,7 +315,7 @@ export default function ChatLayout({ children }: { children: ReactNode }) {
                             ))}
                         </div>
                         {options === 'konto' ? 
-                        <div className="flex flex-col w-full space-y-4 relative right-1 sdbr:right-0">
+                        <div className="flex flex-col w-full space-y-4 relative mx-2 right-1 sdbr:right-0">
                             <div className="flex flex-row">
                                 <h1 className="font-heming text-2xl text-white">
                                     D
