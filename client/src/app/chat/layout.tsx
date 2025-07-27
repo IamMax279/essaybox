@@ -287,15 +287,15 @@ export default function ChatLayout({ children }: { children: ReactNode }) {
             onOpenChange={setAccountActive}
             hideCloseButton={true}
             size="4xl"
-            className={`flex self-center h-96 shadow-[0_2px_16px_0_#121212]
-            bg-[#1E1E1E]/90 border border-neutral-700 ${options === 'subskrypcje' ? "h-[350px] sdbr:h-64" : "h-[450px] sdbr:h-96"}`}
+            className={`flex self-center shadow-[0_2px_16px_0_#121212]
+            bg-[#1E1E1E]/90 border border-neutral-700 ${options === 'subskrypcje' ? "h-[350px] sdbr:h-64" : "h-[450px] sdbr:h-[424px]"}`}
             >
                 <ModalContent className='pt-4 pb-2'>
                     <>
                     <ModalBody
                     className={`flex sdbr:flex-row flex-col relative`}>
                         <RxCross2
-                        className="absolute top-2 right-4 cursor-pointer text-gray-200 hover:brightness-75
+                        className="absolute top-0 right-4 cursor-pointer text-gray-200 hover:brightness-75
                         transition ease-in-out duration-200"
                         size={30}
                         onClick={() => setAccountActive(false)}
@@ -322,6 +322,14 @@ export default function ChatLayout({ children }: { children: ReactNode }) {
                                 <h1 className="font-heming text-2xl text-white relative right-[3px]">
                                     ane Konta
                                 </h1>
+                            </div>
+                            <div className="flex flex-row items-center">
+                                <p className="text-white font-outfit">
+                                    Pozostało rozprawek:
+                                </p>
+                                <p className="text-white font-outfit relative left-1 top-[1px]">
+                                    {userData?.generationCount}
+                                </p>
                             </div>
                             <div className="flex flex-col w-full mt-2">
                                 <label className="text-white font-heming">
