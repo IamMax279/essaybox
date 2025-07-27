@@ -33,6 +33,7 @@ export interface UserData {
     provider: string
     subscribed: boolean
     periodEndDate?: Date | undefined
+    generationCount: number
 }
 
 export interface ParagraphData {

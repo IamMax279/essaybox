@@ -234,7 +234,8 @@ export class UserController {
                 email: user.email,
                 provider: user.provider,
                 subscribed: !!isSubscribed,
-                periodEndDate: subscription ? subscription.currentPeriodEnd : undefined
+                periodEndDate: subscription ? subscription.currentPeriodEnd : undefined,
+                generationCount: user.generationCount
             }
         }
     }
