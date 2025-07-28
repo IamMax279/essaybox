@@ -4,6 +4,7 @@ import { AIController } from "../controllers/AIController";
 import { EssayController } from "../controllers/EssayController";
 import { isAuthenticated } from "../middleware/AuthMiddleware";
 import type { EssayData, GenerationParams } from "../../../@types";
+import prisma from "../../prisma/PrismaClient";
 
 const aiRouter = Router()
 
@@ -28,13 +29,26 @@ const generateEssay = async (req: Request, res: Response): Promise<any> => {
             lowerBound,
             upperBound
         }
-        const result = await AIController.generateEssay(params)
 
         let userId
         if (req.isAuthenticated() && req.user) {
             const user = req.user as { id: bigint }
             userId = user.id
         }
+
+        const user = await prisma.user.findFirst({
+            where: { id: userId }
+        })
+
+        if (!user) {
+            throw new Error("Id użytkownika nie zostało podane")
+        }
+        if (user.generationCount < 1) {
+            throw new Error("Użytkownik nie może już generować rozprawek")
+        }
+
+        // this right here costs money - important
+        const result = await AIController.generateEssay(params)
 
         const response = await EssayController.createEssay(
             {
@@ -52,7 +66,8 @@ const generateEssay = async (req: Request, res: Response): Promise<any> => {
         console.log("ERROR:", error)
         if (error instanceof Error && (
             error.message.includes("Nie wszystkie pola") ||
-            error.message.includes("Coś poszło nie tak")
+            error.message.includes("Coś poszło nie tak") ||
+            error.message.includes("Użytkownik nie może")
         )) {
             return res.status(400).json({
                 success: false,
