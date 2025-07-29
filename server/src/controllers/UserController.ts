@@ -240,7 +240,7 @@ export class UserController {
         }
     }
 
-    static async deleteUserAccount(userId: bigint): Promise<RestResponse> {
+    static async deleteUserAccount(userId: bigint, password: string | undefined): Promise<RestResponse> {
         if (!userId) {
             throw new Error("Id użytkownika nie zostało podane")
         }
@@ -250,6 +250,13 @@ export class UserController {
         })
         if (!user) {
             throw new Error("Użytkownik o takim id nie istnieje")
+        }
+
+        if (user.provider === 'local') {
+            const areSame = await argon2.verify(user.password, password!)
+            if (!areSame) {
+                throw new Error("Złe hasło")
+            }
         }
 
         await prisma.$transaction([

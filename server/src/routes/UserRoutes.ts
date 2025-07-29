@@ -299,18 +299,37 @@ const logout = (req: Request, res: Response) => {
 
 const deleteAccount = async (req: Request, res: Response): Promise<any> => {
     try {
+        const { password } = req.body
+
         let userId
         if (req.isAuthenticated() && req.user) {
             const user = req.user as { id: bigint }
             userId = user.id
         }
 
-        const result = await UserController.deleteUserAccount(userId!)
+        const result = await UserController.deleteUserAccount(userId!, password)
+
+        req.logOut?.((err) => {
+            if (err) {
+                return res.status(500).json({ success: false, message: "Logout failed" })
+            }
+
+            req.session.destroy(() => {
+                res.clearCookie('connect.sid', {
+                    path: '/',
+                    httpOnly: true,
+                    secure: process.env.NODE_ENV === "production",
+                    sameSite: "lax"
+                })
+            })
+        })
+
         return res.status(200).json(result)
     } catch (error) {
         if (error instanceof Error && (
             error.message.includes("Id użytkownika") ||
-            error.message.includes("Użytkownik o")
+            error.message.includes("Użytkownik o") ||
+            error.message.includes("Złe hasło")
         )) {
             return res.status(400).json({
                 success: false,
@@ -373,7 +392,7 @@ userRouter.get(
     '/user/logout',
     logout
 )
-userRouter.get(
+userRouter.post(
     '/user/delete-account',
     //isAuthenticated,
     deleteAccount

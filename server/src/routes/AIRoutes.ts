@@ -63,7 +63,6 @@ const generateEssay = async (req: Request, res: Response): Promise<any> => {
             urlIdentifier: response.urlIdentifier
         })
     } catch (error) {
-        console.log("ERROR:", error)
         if (error instanceof Error && (
             error.message.includes("Nie wszystkie pola") ||
             error.message.includes("Coś poszło nie tak") ||
