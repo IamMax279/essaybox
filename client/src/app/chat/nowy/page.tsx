@@ -8,11 +8,18 @@ import BigButton from '@/components/BigButton';
 import React, { useEffect, useState } from 'react';
 import { v4 as uuidv4 } from "uuid";
 import { useMutation } from '@tanstack/react-query';
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
 import Bounds from '@/components/Bounds';
 import type { ParagraphData, GenerationParams } from "../../../../../@types"
 import { useRouter } from 'next/navigation';
 import { useEssayList } from '@/providers/EssayListProvider';
+import {
+  Modal,
+  ModalContent,
+  ModalBody,
+  ModalFooter
+} from "@heroui/modal";
+import { Button } from "@nextui-org/button"
 
 export default function Nowy() {
     const [topic, setTopic] = useState<string>("")
@@ -27,6 +34,7 @@ export default function Nowy() {
     ])
     const [topicError, setTopicError] = useState<boolean>(false)
     const [minmaxError, setMinmaxError] = useState<boolean>(false)
+    const [generationError, setGenerationError] = useState<boolean>(false)
 
     const { refetchEssays } = useEssayList()
 
@@ -42,14 +50,21 @@ export default function Nowy() {
             return response.data
         },
         onSuccess: (data) => {
+            setGenerationError(false)
             //trigger a refetch in the layout in order to update the essay list
+            console.log("DATAAAA:", data)
             refetchEssays()
 
             const id = data.urlIdentifier
             router.push(`/chat/${id}?brandnew=true`)
         },
-        onError: (error) => {
+        onError: (error: any) => {
             console.log("error:", error)
+            if (error instanceof AxiosError) {
+                if (error.response?.data.message === 'Użytkownik nie może już generować rozprawek') {
+                    setGenerationError(true)
+                }
+            }
         }
     })
 
@@ -281,6 +296,25 @@ export default function Nowy() {
                 loading={isPending}
                 />
             </form>
+            <Modal
+            isOpen={generationError}
+            isDismissable={true}
+            hideCloseButton={false}
+            onClose={() => setGenerationError(false)}
+            classNames={{
+                closeButton: "hover:bg-[#1E1E1E] active:bg-[#1E1E1E] text-white"
+            }}
+            >
+                <ModalContent className='bg-[#1E1E1E] pt-4 pb-2'>
+                    <>
+                    <ModalBody>
+                        <p className='text-center text-white text-lg pb-2'>
+                            Limit rozprawek został wykorzystany.
+                        </p>
+                    </ModalBody>
+                    </>
+                </ModalContent>
+            </Modal>
         </div>
     )
 }
