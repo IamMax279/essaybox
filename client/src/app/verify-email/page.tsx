@@ -66,7 +66,7 @@ export default function VerifyEmail() {
                     </ModalBody>
                     <ModalFooter className='flex flex-row justify-center items-center gap-4'>
                         <Button className='bg-bigbutton font-semibold text-white
-                        hover:brightness-90 transition ease-in-out duration-200
+                        hover:brightness-110 transition ease-in-out duration-200
                         px-8 font-outfit'
                         onPress={() => router.replace('/sign-in')}>
                         OK
@@ -89,8 +89,8 @@ export default function VerifyEmail() {
                         </p>
                     </ModalBody>
                     <ModalFooter className='flex flex-row justify-center items-center gap-4'>
-                        <Button className='bg-purchaseButton font-semibold text-white
-                        hover:brightness-90 transition ease-in-out duration-200
+                        <Button className='bg-bigbutton font-semibold text-white
+                        hover:brightness-110 transition ease-in-out duration-200
                         px-8'
                         onPress={() => router.replace('/')}>
                         OK
