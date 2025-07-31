@@ -2,11 +2,13 @@
 
 <img width="1920" height="915" alt="image" src="https://github.com/user-attachments/assets/b4a31b66-ed19-4c73-b850-252a822e12e9" />
 
-<div className="flex self-center">
+<p align="center">
   <img width="575" height="757" alt="image" src="https://github.com/user-attachments/assets/a992de49-312f-4d6d-87bd-df40aa09034b" />
-</div>
+</p>
 
-<img width="949" height="891" alt="image" src="https://github.com/user-attachments/assets/de84d001-11f6-4829-a03d-ced9a1ad6cc5" />
+<p align="center">
+  <img width="949" height="891" alt="image" src="https://github.com/user-attachments/assets/de84d001-11f6-4829-a03d-ced9a1ad6cc5" />
+</p>
 
 
 # EssayBox - AI essay generator
