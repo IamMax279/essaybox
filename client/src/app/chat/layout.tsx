@@ -34,6 +34,8 @@ export default function ChatLayout({ children }: { children: ReactNode }) {
     const [accountActive, setAccountActive] = useState<boolean>(false)
     const [userData, setUserData] = useState<UserData | null>(null)
     const [options, setOptions] = useState<'konto' | 'subskrypcje'>('konto')
+    const [confirmationVisible, setConfirmationVisible] = useState<boolean>(false)
+    const [deleteError, setDeleteError] = useState<string | null>(null)
 
     const router = useRouter()
 
@@ -102,6 +104,28 @@ export default function ChatLayout({ children }: { children: ReactNode }) {
         },
         onError: (error) => {
             console.error(error)
+        }
+    })
+
+    const { mutate: handleDelete, isPending: isDeleting } = useMutation({
+        mutationFn: async () => {
+            const response = await axios.post(
+                `${process.env.NEXT_PUBLIC_SERVER_URL}/user/delete-account`,
+                {},
+                { withCredentials: true }
+            )
+
+            return response.data
+        },
+        onSuccess: (data) => {
+            console.log("data:", data)
+            if (data.success) {
+                router.replace('/sign-in')
+            }
+        },
+        onError: (error: any) => {
+            console.log("error:", error)
+            setDeleteError(error.response.data.message || error.message)
         }
     })
 
@@ -367,7 +391,13 @@ export default function ChatLayout({ children }: { children: ReactNode }) {
                             className="text-white bg-red-800"
                             width="w-32"
                             border={false}
-                            onPress={() => router.push('/reset-password')}
+                            onPress={() => {
+                                if (userData?.provider === 'local') {
+                                    router.push('/delete-account')
+                                } else {
+                                    setConfirmationVisible(true)
+                                }
+                            }}
                             />
                         </div>
                         :
@@ -426,6 +456,40 @@ export default function ChatLayout({ children }: { children: ReactNode }) {
                 </ModalContent>
             </Modal>
             }
+            <Modal
+            isOpen={confirmationVisible}
+            isDismissable={true}
+            hideCloseButton={false}
+            onClose={() => setConfirmationVisible(false)}
+            classNames={{
+                closeButton: "hover:bg-[#1E1E1E] active:bg-[#1E1E1E] text-white"
+            }}
+            >
+                <ModalContent className='bg-[#1E1E1E] pt-4 pb-2'>
+                    <>
+                    <ModalBody>
+                        <p className='text-center text-white text-lg'>
+                            Czy na pewno chcesz usunąć swoje konto?
+                        </p>
+                    </ModalBody>
+                    <ModalFooter className='flex flex-row justify-center items-center gap-4'>
+                        <Button className='bg-bigbutton font-semibold text-white
+                        hover:brightness-90 transition ease-in-out duration-200
+                        px-8 py-2 font-outfit'
+                        onPress={() => handleDelete()}
+                        isLoading={isDeleting}>
+                        TAK
+                        </Button>
+                        <Button className='bg-bigbutton font-semibold text-white
+                        hover:brightness-90 transition ease-in-out duration-200
+                        px-8 py-2 font-outfit'
+                        onPress={() => setConfirmationVisible(false)}>
+                        NIE
+                        </Button>
+                    </ModalFooter>
+                    </>
+                </ModalContent>
+            </Modal>
         </EssayListContext>
     )
 }
