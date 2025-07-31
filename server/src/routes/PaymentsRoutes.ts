@@ -33,7 +33,7 @@ const subscribe = async (req: Request, res: Response): Promise<any> => {
 
 paymentsRouter.get(
     '/payments/subscribe',
-    //isAuthenticated,
+    isAuthenticated,
     subscribe
 )
 

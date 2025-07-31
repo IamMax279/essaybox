@@ -366,22 +366,22 @@ userRouter.post(
 )
 userRouter.post(
     '/user/get-essay',
-    //isAuthenticated
+    isAuthenticated,
     getEssay
 )
 userRouter.get(
     '/user/get-all-essays',
-    //isAuthenticated
+    isAuthenticated,
     getAllEssays
 )
 userRouter.post(
     '/user/get-n-essays',
-    //isAuthenticated,
+    isAuthenticated,
     getNEssays
 )
 userRouter.get(
     '/user/get-user-account-data',
-    //isAuthenticated,
+    isAuthenticated,
     getUserAccountData
 )
 userRouter.get(
@@ -394,7 +394,7 @@ userRouter.get(
 )
 userRouter.post(
     '/user/delete-account',
-    //isAuthenticated,
+    isAuthenticated,
     deleteAccount
 )
 

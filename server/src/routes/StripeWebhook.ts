@@ -19,17 +19,10 @@ const webhook = async (req: Request, res: Response): Promise<any> => {
             process.env.STRIPE_WEBHOOK_SECRET!
         )
     } catch (error) {
-        console.log("ERROR:", error)
         return res.status(400).json({ "message": `Webhook Error: ${(error as Error).message}` })
     }
 
-    console.log("EVENT:", event.type)
-
     switch (event.type) {
-        case 'checkout.session.completed':
-            //TODO: implement logic
-            console.log("CHECKOUT SESSION COMPLETED")
-            break
         case 'customer.subscription.created':
             const subscription = event.data.object as Stripe.Subscription
             const stripeSubscriptionId = subscription.id
@@ -44,7 +37,6 @@ const webhook = async (req: Request, res: Response): Promise<any> => {
                 where: { stripeCustomerId }
             })
             if (!user) {
-                console.log("User not found")
                 break
             }
 
@@ -61,15 +53,6 @@ const webhook = async (req: Request, res: Response): Promise<any> => {
                 data: { generationCount: user.generationCount + 100 }
             })
             
-            console.log("current_period_start:", items[0]?.current_period_start);
-            console.log("current_period_end:", items[0]?.current_period_end);
-            console.log("periodEnd:", periodEnd);
-            //TODO: implement logic
-            console.log("CUSTOMER SUBSCRIPTION CREATED")
-            break
-        case 'customer.subscription.deleted':
-            //TODO: implement logic
-            console.log("CUSTOMER SUBSCRIPTION DELETED")
             break
     }
 
@@ -82,7 +65,7 @@ const webhook = async (req: Request, res: Response): Promise<any> => {
 stripeRouter.post(
     '/stripe/webhook',
     stripeMiddleware,
-    //isAuthenticated,
+    isAuthenticated,
     webhook
 )
 

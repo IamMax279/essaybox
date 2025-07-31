@@ -83,7 +83,7 @@ const generateEssay = async (req: Request, res: Response): Promise<any> => {
 
 aiRouter.post(
     '/ai/generate-essay',
-    //isAuthenticated,
+    isAuthenticated,
     generateEssay
 )
 
