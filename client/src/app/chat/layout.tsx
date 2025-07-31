@@ -1,5 +1,6 @@
 "use client"
 
+import 'react-toastify/dist/ReactToastify.css';
 import { ReactNode, useEffect } from "react";
 import Image from "next/image";
 import LogoWhite from "../../../public/LogoWhite.svg"
@@ -27,6 +28,7 @@ import { FaCheck } from "react-icons/fa6";
 import { format } from "date-fns";
 import { useDispatch } from "react-redux";
 import { setIsSubscribed } from "../redux/Slices";
+import { ToastContainer, toast } from "react-toastify";
 
 export default function ChatLayout({ children }: { children: ReactNode }) {
     const [clicked, setClicked] = useState<boolean>(false)
@@ -58,8 +60,8 @@ export default function ChatLayout({ children }: { children: ReactNode }) {
             setEssays(data.essays)
             setHasMore(data.hasMore)
         },
-        onError: (error) => {
-
+        onError: (error: any) => {
+            notify(error.response.data.message || error.message || "Ups! Coś poszło nie tak")
         }
     })
 
@@ -76,8 +78,9 @@ export default function ChatLayout({ children }: { children: ReactNode }) {
 
             dispatch(setIsSubscribed(data.userData.subscribed))
         },
-        onError: (error) => {
-
+        onError: (error: any) => {
+            console.log("error:", error)
+            notify(error?.response?.data?.message || error?.message || "Ups! Coś poszło nie tak")
         }
     })
 
@@ -92,8 +95,8 @@ export default function ChatLayout({ children }: { children: ReactNode }) {
         onSuccess: (data) => {
             window.location.href = data.url
         },
-        onError: (error) => {
-
+        onError: (error: any) => {
+            notify(error.response.data.message || error.message || "Ups! Coś poszło nie tak")
         }
     })
 
@@ -108,8 +111,8 @@ export default function ChatLayout({ children }: { children: ReactNode }) {
         onSuccess: (data) => {
             window.location.href = '/sign-in'
         },
-        onError: (error) => {
-
+        onError: (error: any) => {
+            notify(error.response.data.message || error.message || "Ups! Coś poszło nie tak")
         }
     })
 
@@ -140,8 +143,25 @@ export default function ChatLayout({ children }: { children: ReactNode }) {
 
     const refetchEssays = () => getNEssays()
 
+    const notify = (message: string) => {
+        toast.info(`${message}`, {
+            position: 'top-center',
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: 0,
+            theme: 'colored',
+            style: { background: '#1E1E1E' },
+        });
+    }
+
     return (
         <EssayListContext value={{ essays, setEssays, refetchEssays }}>
+            <ToastContainer
+            className="relative z-50"
+            />
             <div className="flex flex-row bg-[#1E1E1E] relative">
                 <div className="absolute top-8 sdbr:right-8 right-5">
                     <MdAccountCircle

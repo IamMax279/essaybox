@@ -31,7 +31,6 @@ export default function VerifyEmail() {
                 { token }
             )
 
-            console.log(res)
             if (res.data.success) {
                 setSuccess(true)
             }
