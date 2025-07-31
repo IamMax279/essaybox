@@ -51,7 +51,7 @@ const convertToPdf = async (req: Request, res: Response): Promise<any> => {
         </html>
         `;
         const tempDir = os.tmpdir()
-        const tempFilePath = path.join(tempDir, `${title.replace(/ /g, '-')}-${uuidv4()}.html`)
+        const tempFilePath = path.join(tempDir, `${title.replace(/ /g, '-').replace(/[\s<>:"/\\|?*]+/g, "")}-${uuidv4()}.html`)
         await fs.writeFile(tempFilePath, htmlContent, "utf-8")
 
         const result = await convertApi.convert('pdf', {
@@ -66,6 +66,7 @@ const convertToPdf = async (req: Request, res: Response): Promise<any> => {
             message: pdfUrl
         })
     } catch (error) {
+        console.log("ERROR:", error)
         return res.status(500).json({
             success: false,
             message: "Internal server error"
