@@ -146,7 +146,8 @@ export class UserController {
         return {
             success: true,
             message: "Essay found successfully",
-            essay: essay.content
+            essay: essay.content,
+            title: essay.title
         }
     }
 

@@ -1,4 +1,4 @@
-import { NextFunction, Request, Response } from "express";
+import type { NextFunction, Request, Response } from "express";
 import prisma from "../../prisma/PrismaClient";
 
 export async function isSubscribed(req: Request, res: Response, next: NextFunction) {
