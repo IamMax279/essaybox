@@ -8,19 +8,11 @@ import BigButton from "@/components/BigButton"
 import Image from "next/image"
 import Logo from "../../../public/Logo.svg"
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa"
-import {
-  Modal,
-  ModalContent,
-  ModalBody,
-  ModalFooter
-} from "@heroui/modal";
-import { Button } from "@nextui-org/button"
 
 export default function DeleteAccount() {
     const [password, setPassword] = useState<string>("")
     const [deleteError, setDeleteError] = useState<string | null>(null)
     const [secure, setSecure] = useState<boolean>(true)
-    const [deletedSuccessfully, setDeletedSuccessfully] = useState<boolean>(false)
 
     const router = useRouter()
 
@@ -38,7 +30,9 @@ export default function DeleteAccount() {
         },
         onSuccess: (data) => {
             console.log("data:", data)
-            setDeletedSuccessfully(data.success)
+            if (data.success) {
+                router.replace('/sign-in')
+            }
         },
         onError: (error: any) => {
             console.log("error:", error)
@@ -101,29 +95,6 @@ export default function DeleteAccount() {
                 type="submit"
                 />
             </form>
-            <Modal
-            isOpen={deletedSuccessfully}
-            isDismissable={false}
-            hideCloseButton={true}
-            >
-                <ModalContent className='bg-white pt-4 pb-2'>
-                    <>
-                    <ModalBody>
-                        <p className='text-center text-lg'>
-                            Konto zostało usunięte. 
-                        </p>
-                    </ModalBody>
-                    <ModalFooter className='flex flex-row justify-center items-center gap-4'>
-                        <Button className='bg-bigbutton font-semibold text-white
-                        hover:brightness-110 transition ease-in-out duration-200
-                        px-8 py-2 font-outfit'
-                        onPress={() => router.replace('/sign-in')}>
-                        OK
-                        </Button>
-                    </ModalFooter>
-                    </>
-                </ModalContent>
-            </Modal>
         </div>
     )
 }
