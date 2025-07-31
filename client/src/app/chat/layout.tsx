@@ -59,7 +59,7 @@ export default function ChatLayout({ children }: { children: ReactNode }) {
             setHasMore(data.hasMore)
         },
         onError: (error) => {
-            console.log("Error fetching user's essays:", error)
+
         }
     })
 
@@ -72,13 +72,12 @@ export default function ChatLayout({ children }: { children: ReactNode }) {
             return response.data
         },
         onSuccess: (data) => {
-            console.log("response:", data)
             setUserData(data.userData)
 
             dispatch(setIsSubscribed(data.userData.subscribed))
         },
         onError: (error) => {
-            console.log(error)
+
         }
     })
 
@@ -94,7 +93,7 @@ export default function ChatLayout({ children }: { children: ReactNode }) {
             window.location.href = data.url
         },
         onError: (error) => {
-            console.log("ERROROR", error)
+
         }
     })
 
@@ -110,7 +109,7 @@ export default function ChatLayout({ children }: { children: ReactNode }) {
             window.location.href = '/sign-in'
         },
         onError: (error) => {
-            console.error(error)
+
         }
     })
 
@@ -125,13 +124,11 @@ export default function ChatLayout({ children }: { children: ReactNode }) {
             return response.data
         },
         onSuccess: (data) => {
-            console.log("data:", data)
             if (data.success) {
                 router.replace('/sign-in')
             }
         },
         onError: (error: any) => {
-            console.log("error:", error)
             setDeleteError(error.response.data.message || error.message)
         }
     })

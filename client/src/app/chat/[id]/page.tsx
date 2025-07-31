@@ -44,7 +44,6 @@ export default function Generated() {
         onSuccess: (data) => {
             setEssay(data.essay)
             setEssayTitle(data.title)
-            console.log(data)
         },
         onError: (error) => {
             router.replace('/chat/nowy')
@@ -65,7 +64,7 @@ export default function Generated() {
             window.open(data.message, "_blank")
         },
         onError: (error) => {
-            console.log("ERRRORORO:", error)
+            
         }
     })
 
@@ -73,8 +72,6 @@ export default function Generated() {
         if (id) {
             getEssay(id)
         }
-
-        console.log("id:", id)
     }, [id])
 
     useEffect(() => {

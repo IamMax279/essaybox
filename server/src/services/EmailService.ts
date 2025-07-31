@@ -21,7 +21,6 @@ export class EmailService {
                 message: "Email sent successfully"
             }
         } catch (error) {
-            console.log("Error sending email:", error)
             throw new Error(`Coś poszło nie tak. Spróbuj ponownie później.`)
         }
     }

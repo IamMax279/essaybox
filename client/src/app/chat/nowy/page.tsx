@@ -54,14 +54,12 @@ export default function Nowy() {
         onSuccess: (data) => {
             setGenerationError(false)
             //trigger a refetch in the layout in order to update the essay list
-            console.log("DATAAAA:", data)
             refetchEssays()
 
             const id = data.urlIdentifier
             router.push(`/chat/${id}?brandnew=true`)
         },
         onError: (error: any) => {
-            console.log("error:", error)
             if (error instanceof AxiosError) {
                 if (error.response?.data.message === 'Użytkownik nie może już generować rozprawek') {
                     setGenerationError(true)

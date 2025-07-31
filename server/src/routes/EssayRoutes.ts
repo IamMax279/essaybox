@@ -66,7 +66,6 @@ const convertToPdf = async (req: Request, res: Response): Promise<any> => {
             message: pdfUrl
         })
     } catch (error) {
-        console.log(error)
         return res.status(500).json({
             success: false,
             message: "Internal server error"

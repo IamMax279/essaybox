@@ -15,7 +15,6 @@ const subscribe = async (req: Request, res: Response): Promise<any> => {
         const result = await PaymentsController.subscribe(userId!)
         return res.status(200).json(result)
     } catch (error) {
-        console.log("BLAD:", error)
         if (error instanceof Error && (
             error.message.includes("Użytkownik z")
         )) {

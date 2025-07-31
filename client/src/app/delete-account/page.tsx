@@ -29,13 +29,11 @@ export default function DeleteAccount() {
             return response.data
         },
         onSuccess: (data) => {
-            console.log("data:", data)
             if (data.success) {
                 router.replace('/sign-in')
             }
         },
         onError: (error: any) => {
-            console.log("error:", error)
             setDeleteError(error.response.data.message || error.message)
         }
     })
