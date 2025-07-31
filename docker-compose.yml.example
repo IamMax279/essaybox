@@ -11,6 +11,7 @@ services:
       - essaybox-network
     depends_on:
       - server
+
   server:
     build:
       context: ./server
@@ -20,15 +21,16 @@ services:
     networks:
       - essaybox-network
     env_file:
-      - server/.env
+      - server/.env.example
     depends_on:
       - db
+
   db:
     image: postgres
     environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: root
-      POSTGRES_DB: essaybox
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
     networks:
       - essaybox-network
     ports:
