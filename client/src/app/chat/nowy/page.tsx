@@ -16,10 +16,10 @@ import { useEssayList } from '@/providers/EssayListProvider';
 import {
   Modal,
   ModalContent,
-  ModalBody,
-  ModalFooter
+  ModalBody
 } from "@heroui/modal";
-import { Button } from "@nextui-org/button"
+import { useSelector } from 'react-redux';
+import type { RootState } from '@/app/redux/Store';
 
 export default function Nowy() {
     const [topic, setTopic] = useState<string>("")
@@ -39,6 +39,8 @@ export default function Nowy() {
     const { refetchEssays } = useEssayList()
 
     const router = useRouter()
+
+    const isSubscribed = useSelector((state: RootState) => state.subscribedReducer.isSubscribed)
 
     const { mutate: handleGeneration, isPending } = useMutation({
         mutationFn: async (data: GenerationParams) => {
@@ -227,11 +229,19 @@ export default function Nowy() {
                 <DropdownOptions
                 text='Liczba akapitów'
                 className='mt-5 shadow-[0_2px_6px_0_#121212]'
-                items={Array.of(
+                items={
+                isSubscribed ?
+                Array.of(
                     { key: "1", value: "1" },
                     { key: "2", value: "2" },
                     { key: "3", value: "3" }
-                )}
+                )
+                :
+                Array.of(
+                    { key: "1", value: "1" },
+                    { key: "2", value: "2" }
+                )
+                }
                 mainItem='2'
                 textStyles='px-4'
                 onChange={handleParasAmountChange}

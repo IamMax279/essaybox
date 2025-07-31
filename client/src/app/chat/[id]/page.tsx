@@ -7,15 +7,17 @@ import axios from "axios"
 import { useTypewriter } from "@/hooks/useTypewriter"
 import Logo from "../../../../public/LogoWhite.svg"
 import Image from "next/image"
-import html2canvas from "html2canvas"
-import { jsPDF } from "jspdf"
 import SmallButton from "@/components/SmallButton"
+import { useSelector } from "react-redux"
+import { RootState } from "@/app/redux/Store"
 
 export default function Generated() {
     const [essay, setEssay] = useState<string | null>(null)
     const [essayTitle, setEssayTitle] = useState<string>("")
     const [typewriterDone, setTypewriterDone] = useState<boolean>(false)
     const [typewriterAllowed, setTypewriterAllowed] = useState<boolean>(false)
+
+    const isSubscribed = useSelector((state: RootState) => state.subscribedReducer.isSubscribed)
 
     const printRef = useRef(null)
     //search params są po "?" w url
@@ -123,11 +125,13 @@ export default function Generated() {
                         </span>
                     </div>
                 </div>
+                {isSubscribed &&
                 <SmallButton
                 onPress={() => convertToPdf()}
                 text="Pobierz PDF"
                 className="text-white -mt-6 mb-8"
                 />
+                }
             </div>
             }
         </div>

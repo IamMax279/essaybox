@@ -25,6 +25,8 @@ import { Button } from "@nextui-org/button"
 import SmallButton from "@/components/SmallButton";
 import { FaCheck } from "react-icons/fa6";
 import { format } from "date-fns";
+import { useDispatch } from "react-redux";
+import { setIsSubscribed } from "../redux/Slices";
 
 export default function ChatLayout({ children }: { children: ReactNode }) {
     const [clicked, setClicked] = useState<boolean>(false)
@@ -39,19 +41,22 @@ export default function ChatLayout({ children }: { children: ReactNode }) {
 
     const router = useRouter()
 
+    const dispatch = useDispatch()
+
     const { mutate: getNEssays, isPending } = useMutation({
         mutationFn: async () => {
-            return await axios.post(
+            const response = await axios.post(
                 `${process.env.NEXT_PUBLIC_SERVER_URL}/user/get-n-essays`,
                 { n: initialAmount },
                 { withCredentials: true }
             )
+            return response.data
         },
         onSuccess: (data) => {
             setInitialAmount(prev => prev + 20)
 
-            setEssays(data.data.essays)
-            setHasMore(data.data.hasMore)
+            setEssays(data.essays)
+            setHasMore(data.hasMore)
         },
         onError: (error) => {
             console.log("Error fetching user's essays:", error)
@@ -69,6 +74,8 @@ export default function ChatLayout({ children }: { children: ReactNode }) {
         onSuccess: (data) => {
             console.log("response:", data)
             setUserData(data.userData)
+
+            dispatch(setIsSubscribed(data.userData.subscribed))
         },
         onError: (error) => {
             console.log(error)
