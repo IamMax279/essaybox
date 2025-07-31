@@ -9,10 +9,22 @@ authRouter.get(
 )
 authRouter.get(
     '/auth/google/callback',
-    passport.authenticate("google", {
-        successRedirect: process.env.CLIENT_URL + "/chat/nowy",
-        failureRedirect: process.env.CLIENT_URL + "/sign-in"
-    })
+    (req, res, next) => {
+        passport.authenticate("google", (err: any, user: any) => {
+            if (err) {
+                return res.redirect(process.env.CLIENT_URL! + `/sign-in?error=${encodeURIComponent(err.message)}`)
+            }
+            if (!user) {
+                return res.redirect(process.env.CLIENT_URL + '/sign-in')
+            }
+            req.logIn(user, (err) => {
+                if (err) {
+                    return res.redirect(process.env.CLIENT_URL + '/sign-in?error=Session%20error')
+                }
+                return res.redirect(process.env.CLIENT_URL + '/chat/nowy')
+            })
+        })(req, res, next)
+    }
 )
 
 export default authRouter

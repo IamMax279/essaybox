@@ -30,6 +30,10 @@ passport.use(
                     })
                 }
 
+                if (user.provider === 'local') {
+                    return done(new Error("Użyj hasła i adresu e-mail aby zalogować się na to konto.",), false)
+                }
+
                 return done(null, user)
             } catch (error) {
                 return done(error, false)
