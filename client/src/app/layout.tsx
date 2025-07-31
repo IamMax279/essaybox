@@ -4,6 +4,8 @@ import { Geist, Geist_Mono } from "next/font/google";
 import { QueryClientProvider, QueryClient } from "@tanstack/react-query";
 import "./globals.css";
 import { useState } from "react";
+import { store } from "./redux/Store";
+import { Provider } from "react-redux";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -27,9 +29,11 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <QueryClientProvider client={queryClient}>
-          {children}
-        </QueryClientProvider>
+        <Provider store={store}>
+          <QueryClientProvider client={queryClient}>
+            {children}
+          </QueryClientProvider>
+        </Provider>
       </body>
     </html>
   );
