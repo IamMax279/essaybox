@@ -16,27 +16,6 @@ export const p = ({
   parasAmount,
   parasData
 }: PromptProps) => {
-  let rozwiniecie = ""
-  if (parasData && parasData.length) {
-    rozwiniecie = parasData.map((para, idx) => `
-      W AKAPICIE ${idx + 1} I NIGDZIE INDZIEJ UŻYJ:
-      ${para.customArgument ? `Argument: ${para.customArgument}` : undefined}
-      ${para.customPrzyklad ? `Przykład: ${para.customPrzyklad}` : undefined}
-      ${para.customKontekst ? `Kontekst: ${para.customKontekst}` : undefined}
-    `).join('\n')
-  }
-
-  let test = ""
-  if (parasData && parasData.length) {
-    test = parasData.map((para, idx) => `
-      W AKAPICE ${idx + 1} ZASTOSUJ:
-      ${para.customArgument ? `UŻYJ ARGUMENTU: ${para.customArgument}` : "NAPISZ ARGUMENT"}
-      ${para.customPrzyklad ? `UŻYJ PRZYKLADU: ${para.customPrzyklad}` : "NAPISZ PRZYKLAD"}
-      ${para.customKontekst ? `UŻYJ KONTEKSTU: ${para.customKontekst}` : "NAPISZ KONTEKSTU"}
-    `)
-    .join('\n')
-  }
-
   const paragraphs = []
   if (parasData && parasData.length) {
     for (let i = 0; i < parasData.length; i++) {
