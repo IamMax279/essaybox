@@ -1,4 +1,4 @@
-import type { SubscriptionPurchaseResponse } from "../../../@types";
+import type { SubscriptionPurchaseResponse } from "../types/types";
 import Stripe from "stripe"
 import prisma from "../../prisma/PrismaClient";
 

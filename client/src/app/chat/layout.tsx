@@ -10,7 +10,7 @@ import { RxCross2 } from "react-icons/rx"
 import { useState } from "react";
 import { useMutation } from "@tanstack/react-query";
 import axios from "axios";
-import type { EssayData, UserData } from "../../../../@types";
+import type { EssayData, UserData } from "../../types/types";
 import { useRouter } from "next/navigation";
 import { IoCreateOutline } from "react-icons/io5";
 import BigButton from "@/components/BigButton";

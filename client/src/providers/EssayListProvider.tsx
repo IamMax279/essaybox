@@ -1,5 +1,5 @@
 import React, { createContext, useContext } from "react";
-import type { EssayData } from "../../../@types";
+import type { EssayData } from "../types/types";
 
 export interface EssayListContextType {
     essays: EssayData[]

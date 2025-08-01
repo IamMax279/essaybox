@@ -1,4 +1,4 @@
-import type { AIResponse, GenerationParams } from "../../../@types";
+import type { AIResponse, GenerationParams } from "../types/types";
 import { p } from "../constants/BasicPrompts"
 import { OpenAI } from "openai"
 

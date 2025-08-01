@@ -10,8 +10,8 @@ import { v4 as uuidv4 } from "uuid";
 import { useMutation } from '@tanstack/react-query';
 import axios, { AxiosError } from 'axios';
 import Bounds from '@/components/Bounds';
-import type { ParagraphData, GenerationParams } from "../../../../../@types"
-import { useRouter, useSearchParams } from 'next/navigation';
+import type { ParagraphData, GenerationParams } from "../../../types/types"
+import { useRouter } from 'next/navigation';
 import { useEssayList } from '@/providers/EssayListProvider';
 import {
   Modal,

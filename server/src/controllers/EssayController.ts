@@ -1,4 +1,4 @@
-import type { EssayData, EssayResponse, RestResponse } from "../../../@types";
+import type { EssayData, EssayResponse, RestResponse } from "../types/types";
 import prisma from "../../prisma/PrismaClient";
 
 export class EssayController {

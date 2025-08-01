@@ -3,7 +3,7 @@ import type { Request, Response } from "express";
 import { AIController } from "../controllers/AIController";
 import { EssayController } from "../controllers/EssayController";
 import { isAuthenticated } from "../middleware/AuthMiddleware";
-import type { EssayData, GenerationParams } from "../../../@types";
+import type { EssayData, GenerationParams } from "../types/types";
 import prisma from "../../prisma/PrismaClient";
 
 const aiRouter = Router()

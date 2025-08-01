@@ -1,6 +1,6 @@
 import prisma from "../../prisma/PrismaClient"
 import argon2 from "argon2"
-import { AccountDataResponse, AIResponse, AllEssaysResponse, EssayData, EssayPortionsResponse, RestResponse } from "../../../@types"
+import { AccountDataResponse, AIResponse, AllEssaysResponse, EssayData, EssayPortionsResponse, RestResponse } from "../types/types"
 import { EmailService } from "../services/EmailService"
 import { AuthService } from "../services/AuthService"
 

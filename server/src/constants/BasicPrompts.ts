@@ -1,4 +1,4 @@
-import { ParagraphData } from "../../../@types"
+import { ParagraphData } from "../types/types"
 
 export interface PromptProps {
   topic: string
