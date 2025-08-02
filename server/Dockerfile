@@ -6,6 +6,7 @@ COPY prisma ./prisma
 COPY tsconfig.json ./
 RUN npx prisma generate
 COPY src ./src
+COPY init_sesh_table.sh ./
 RUN npm run build
 RUN npm prune --production
 
@@ -16,7 +17,10 @@ COPY --from=build /app/prisma ./prisma
 COPY --from=build /app/package.json ./
 COPY --from=build /app/package-lock.json ./
 COPY --from=build /app/node_modules ./node_modules
+COPY --from=build /app/init_sesh_table.sh ./
 ENV NODE_ENV=production
 ENV PORT=3001
 EXPOSE 3001
-CMD npx prisma migrate deploy && npm run start:prod
+RUN apk add --no-cache postgresql-client
+RUN chmod +x init_sesh_table.sh
+CMD ./init_sesh_table.sh && npx prisma migrate deploy && npm run start:prod
