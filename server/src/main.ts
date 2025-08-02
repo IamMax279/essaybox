@@ -10,21 +10,39 @@ import aiRouter from "./routes/AIRoutes";
 import essayRouter from "./routes/EssayRoutes";
 import paymentsRouter from "./routes/PaymentsRoutes"
 import stripeRouter from "./routes/StripeWebhook";
+import transactionRouter from "./routes/TransactionRoutes";
+import pgSession from "connect-pg-simple";
 
 dotenv.config()
 const app = express()
 
+const sesh = pgSession(session)
+
 // middleware/other tools
+const allowedOrigins = [
+    process.env.CLIENT_URL,
+    process.env.CLIENT_CONTAINER_URL
+]
+
 app.use(cors({
-    origin: process.env.CLIENT_URL,
+    origin: (origin, callback) => {
+        if (!origin || allowedOrigins.includes(origin)) {
+            callback(null, true)
+        } else {
+            callback(new Error("origin not allowed"))
+        }
+    },
     credentials: true
 }))
 app.use(session({
+    store: new sesh({
+        conString: process.env.DATABASE_URL
+    }),
     secret: process.env.SESSION_SECRET!,
     resave: false,
     saveUninitialized: false,
     cookie: {
-        secure: process.env.NODE_ENV === "production",
+        secure: false, // for docker network communication
         httpOnly: true,
         sameSite: "lax",
         maxAge: 1000 * 60 * 60 * 24 * 7
@@ -42,6 +60,7 @@ app.use(authRouter)
 app.use(aiRouter)
 app.use(essayRouter)
 app.use(paymentsRouter)
+app.use(transactionRouter)
 
 const PORT = process.env.PORT || 3001
 app.listen(PORT)

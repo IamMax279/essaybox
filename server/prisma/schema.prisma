@@ -6,7 +6,6 @@
 
 generator client {
   provider = "prisma-client-js"
-  output   = "../src/generated/prisma"
 }
 
 datasource db {
@@ -61,4 +60,8 @@ model Subscription {
   user User @relation(fields: [userId], references: [id])
 
   @@map("subscriptions")
+}
+
+model Transaction {
+  id String @id @default(uuid())
 }

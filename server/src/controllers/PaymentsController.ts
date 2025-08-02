@@ -27,6 +27,10 @@ export class PaymentsController {
             })
         }
 
+        const transaction = await prisma.transaction.create({
+            data: {}
+        })
+
         const session = await stripe.checkout.sessions.create({
             payment_method_types: ['card'],
             mode: 'subscription',
@@ -34,8 +38,8 @@ export class PaymentsController {
                 { price: 'price_1RjPmfIqrP8tyF9HaIcVL572', quantity: 1 }
             ],
             customer: stripeCustomerId,
-            success_url: `http://localhost:3000/chat/nowy?success=true`,
-            cancel_url: `http://localhost:3000/chat/nowy?success=false`
+            success_url: `http://localhost:3000/chat/nowy?success=${transaction}`,
+            cancel_url: `http://localhost:3000/chat/nowy`
         })
         
         return {
