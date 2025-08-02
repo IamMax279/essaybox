@@ -11,7 +11,8 @@ import Image from "next/image"
 import SmallButton from "@/components/SmallButton"
 import { useSelector } from "react-redux"
 import { RootState } from "@/app/redux/Store"
-import { ToastContainer, toast } from "react-toastify"
+import { ToastContainer } from "react-toastify"
+import { notify } from '@/utils/NotificationUtils';
 
 export default function Generated() {
     const [essay, setEssay] = useState<string | null>(null)
@@ -22,7 +23,6 @@ export default function Generated() {
 
     const isSubscribed = useSelector((state: RootState) => state.subscribedReducer.isSubscribed)
 
-    const printRef = useRef(null)
     //search params są po "?" w url
     //params są bezpośrednio w url, przed "?"
     const params = useParams()
@@ -90,20 +90,6 @@ export default function Generated() {
         }
     }, [brandNew])
 
-    const notify = (message: string) => {
-        toast.info(`${message}`, {
-            position: 'top-center',
-            autoClose: 3000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: 0,
-            theme: 'colored',
-            style: { background: '#1E1E1E' },
-        });
-    }
-
     return (
         <div>
             <ToastContainer/>
@@ -133,9 +119,8 @@ export default function Generated() {
                     />
                     <div className="font-mono text-base leading-relaxed p-6 w-full min-h-12 
                     whitespace-pre-wrap break-words text-gray-200">
-                        <span className="tracking-wide font-outfit"
-                        ref={printRef}>
-                            {essay}
+                        <span className="tracking-wide font-outfit">
+                            {(typewriterDone || !brandNew) ? essay : ""}
                         </span>
                     </div>
                 </div>
