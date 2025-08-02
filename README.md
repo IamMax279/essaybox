@@ -17,7 +17,31 @@ Run the whole project using docker-compose:
 ```bash
 docker-compose up --build
 ```
-If you also want to use stripe subscriptions, make sure to also run the following command on your machine:
+If you want to use stripe subscriptions, make sure to also run the following command on your machine:
 ```bash
 stripe listen --forward-to http://localhost:<server-port>/stripe/webhook
 ```
+
+# 2. Overall project information
+My project makes use of a variety of technologies, including:
+## Frontend:
+- Nextjs
+- Tailwindcss
+- React Query
+- HeroUI
+- Formik and Yup
+
+## Backend:
+- Expressjs
+- Prisma
+- Postgresql
+- Authentication with Passportjs, Oauth2 and Express-session
+- OpenAI API
+- Stripe API
+- Resend API
+- Bash
+
+## DevOps elements:
+- Docker
+- Docker-compose
+- Github Actions
