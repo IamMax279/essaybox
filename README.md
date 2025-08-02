@@ -8,11 +8,11 @@
 
 # EssayBox - AI essay generator
 > [!NOTE]
-> This project's purpose is to unitile the OpenAI API using a parametrized prompt that will generate efficient, middle-school-level essays.
+> This project's purpose is to utilize the OpenAI API using a parametrized prompt that will generate efficient, middle-school-level essays.
 
 # 1. Running the project
 > [!IMPORTANT]
-> Before proceding, make sure you've implemented client-side/server-side environment variables needed. I'd also like to mention that while you absolutely can run this project, its primary intent is to display my coding skills.
+> Before proceeding, make sure you've set up client-side/server-side environment variables needed. I'd also like to mention that while you absolutely can run this project, the main project purpose is to display my fullstack coding skills.
 Run the whole project using docker-compose:
 ```bash
 docker-compose up --build
@@ -22,7 +22,14 @@ If you want to use stripe subscriptions, make sure to also run the following com
 stripe listen --forward-to http://localhost:<server-port>/stripe/webhook
 ```
 
-# 2. Overall project information
+# 2. Some features
+- AI-generated essays based on user prompts
+- Stripe-powered subscription system
+- OAuth2 + Passportjs auth system
+- User verification via Resend email API
+- Freemium payments model (first essay free, then buy subscription)
+
+# 3. Tech-stack
 My project makes use of a variety of technologies, including:
 ## Frontend:
 - Nextjs
