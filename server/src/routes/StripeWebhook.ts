@@ -65,7 +65,6 @@ const webhook = async (req: Request, res: Response): Promise<any> => {
 stripeRouter.post(
     '/stripe/webhook',
     stripeMiddleware,
-    isAuthenticated,
     webhook
 )
 
