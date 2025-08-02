@@ -29,8 +29,7 @@ export default function SignIn() {
             )
         },
         onSuccess: (data) => {
-            window.location.href = "/chat/nowy"
-            //router.push("/chat/nowy")
+            router.push("/chat/nowy")
         },
         onError: (error: any) => {
             setSignInError(error.response?.data.message || error.message)
@@ -134,7 +133,6 @@ export default function SignIn() {
                 <BigButton
                 text="Dalej"
                 width="sm:w-[344px] w-[248px]"
-                onPress={() => {}}
                 className="mt-3"
                 loading={isPending}
                 type="submit"

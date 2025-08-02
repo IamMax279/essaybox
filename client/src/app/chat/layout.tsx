@@ -28,7 +28,8 @@ import { FaCheck } from "react-icons/fa6";
 import { format } from "date-fns";
 import { useDispatch } from "react-redux";
 import { setIsSubscribed } from "../redux/Slices";
-import { ToastContainer, toast } from "react-toastify";
+import { ToastContainer } from "react-toastify";
+import { notify } from '@/utils/NotificationUtils';
 
 export default function ChatLayout({ children }: { children: ReactNode }) {
     const [clicked, setClicked] = useState<boolean>(false)
@@ -79,7 +80,6 @@ export default function ChatLayout({ children }: { children: ReactNode }) {
             dispatch(setIsSubscribed(data.userData.subscribed))
         },
         onError: (error: any) => {
-            console.log("error:", error)
             notify(error?.response?.data?.message || error?.message || "Ups! Coś poszło nie tak")
         }
     })
@@ -142,20 +142,6 @@ export default function ChatLayout({ children }: { children: ReactNode }) {
     }, [])
 
     const refetchEssays = () => getNEssays()
-
-    const notify = (message: string) => {
-        toast.info(`${message}`, {
-            position: 'top-center',
-            autoClose: 3000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: 0,
-            theme: 'colored',
-            style: { background: '#1E1E1E' },
-        });
-    }
 
     return (
         <EssayListContext value={{ essays, setEssays, refetchEssays }}>
