@@ -10,7 +10,7 @@ export async function middleware(request: NextRequest) {
 
   if (authPages.some((page) => pathname.startsWith(page)) || pathname === '/') {
     const response = await fetch(
-      `${process.env.NEXT_PUBLIC_SERVER_URL}/user/is-logged-in`,
+      `${process.env.SERVER_URL}/user/is-logged-in`,
       { 
         method: 'GET',
         headers: {
@@ -27,7 +27,7 @@ export async function middleware(request: NextRequest) {
 
   if (authorized.some((page) => pathname.startsWith(page))) {
     const response = await fetch(
-      `${process.env.NEXT_PUBLIC_SERVER_URL}/user/is-logged-in`,
+      `${process.env.SERVER_URL}/user/is-logged-in`,
       { 
         method: 'GET',
         headers: {
@@ -47,7 +47,7 @@ export async function middleware(request: NextRequest) {
     const uuid = parts[2]
 
     const response = await fetch(
-      `${process.env.NEXT_PUBLIC_SERVER_URL}/essay/find-by-uuid`,
+      `${process.env.SERVER_URL}/essay/find-by-uuid`,
       {
         method: 'POST',
         headers: {
@@ -65,7 +65,7 @@ export async function middleware(request: NextRequest) {
 
   if (pathname.startsWith('/reset-password')) {
     const response = await fetch(
-      `${process.env.NEXT_PUBLIC_SERVER_URL}/user/is-logged-in`,
+      `${process.env.SERVER_URL}/user/is-logged-in`,
       { 
         method: 'GET',
         headers: {
